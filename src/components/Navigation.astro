@@ -1,0 +1,32 @@
+---
+import LogoImage from '../assets/logo.png';
+const links = [
+    { href: '/', text: 'Inicio' },
+    { href: '/servicios', text: 'Servicios' },
+    { href: '/contacto', text: 'Contacto' },
+]
+---
+
+<header class="fixed top-0 w-full z-50">
+    <nav class="flex items-center justify-between py-8 px-4 md:px-0   text-white max-w-screen-xl mx-auto">
+        <div class="backdrop-blur-xl bg-neutral-950/50 p-2 rounded-lg">
+            <a href="/">
+                <img src={LogoImage.src} alt="Logo" class="h-10 w-10" />
+            </a>
+        </div>
+        <div class="md:hidden">
+            <button class="text-gray-200 hover:text-gray-300 focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+        <ul class="hidden md:flex space-x-4 backdrop-blur-md bg-neutral-950/50 rounded-lg">
+            {links.map(link => (
+                <li class="text-gray-200 hover:text-gray-300 transition-colors duration-200 px-6 py-3 rounded-lg">
+                    <a href={link.href} class="hover:text-gray-300">{link.text}</a>
+                </li>
+            ))}
+        </ul>
+    </nav>
+</header>

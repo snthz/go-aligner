@@ -1,17 +1,11 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Image } from 'astro:assets';
-import logo from '../assets/logo.png';
+import Hero from "../components/Hero.astro";
+import Quote from "../components/Quote.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-	<div class="h-screen flex items-center justify-center bg-black">
-		<Image
-			src={logo}
-			alt="Logo"
-			width={150}
-			height={150}
-		/>
-		
-	</div>
+  <Hero />
+<Quote/>
+<section class="h-screen"></section>
 </Layout>
