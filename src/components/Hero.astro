@@ -2,6 +2,7 @@
 import LogoImage from "../assets/logo.png";
 import GoVideo from "../assets/go-video.mp4";
 import ShineIcon from "../icons/ShineIcon.astro";
+import RetainerImage from "../assets/retainer.jpg";
 const features = [
     "Retenedores Personalizados",
     "Comodidad y Estilo",
@@ -23,20 +24,15 @@ const features = [
         ))}
       </div>
     </div>
-    <!-- Hero Video -->
+    <!-- Hero Image Retainer -->
     <div class="mt-2 rounded-t-2xl overflow-hidden shadow-lg h-screen hero-video-container w-full relative">
-        <div class="absolute inset-0 bg-neutral-950 opacity-50"></div>
-    
-      <video
-        autoplay
-        loop
-        muted
-        playsinline
-        class="w-full h-full object-cover grayscale"
-      >
-        <source src={GoVideo} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+        <!-- <div class="absolute inset-0 bg-neutral-950 opacity-50"></div> -->
+
+      <img
+        src={RetainerImage.src}
+        alt="Retenedor Dental"
+        class="w-full h-full object-cover aspect-square"
+      />
     </div>
   </div>
   <!-- Hero Image -->
