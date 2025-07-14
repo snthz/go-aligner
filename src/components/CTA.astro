@@ -1,0 +1,113 @@
+---
+import { Image } from "astro:assets";
+import Image1 from "../assets/img-4.jpg";
+---
+
+<section class="relative py-[10em] overflow-hidden">
+  <!-- Imagen con blur y sin bordes blancos -->
+  <div class="absolute inset-0 z-0">
+    <Image
+      src={Image1}
+      alt="Fondo sonrisa"
+      class="w-full h-full object-cover scale-110 filter blur-md "
+    />
+    <div class="absolute inset-0 bg-black/60 "></div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="relative z-10 text-center text-white max-w-2xl mx-auto px-6 flex justify-center items-center flex-col">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">¡Sonríe con confianza!</h1>
+    <p class="text-lg md:text-xl text-neutral-200">
+      Transforma tu sonrisa con nuestros alineadores dentales invisibles. Agenda
+      tu consulta hoy y da el primer paso hacia una sonrisa perfecta.
+    </p>
+
+    <!-- Botón de play -->
+    <button
+      id="open-video"
+      class="mt-10 relative w-16 h-16 rounded-full border-2 border-white flex items-center justify-center hover:scale-105 transition-transform"
+    >
+      <!-- Icono Play -->
+      <svg
+        class="w-6 h-6 text-white z-10"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path d="M8 5v14l11-7z"></path>
+      </svg>
+      <!-- Pulse animado -->
+      <span
+        class="absolute inset-0 rounded-full border-2 border-white animate-ping-slow z-0"
+      ></span>
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div
+    id="video-modal"
+    class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden items-center justify-center p-4"
+  >
+    <div class="relative w-full max-w-3xl aspect-video">
+      <iframe
+        class="w-full h-full rounded-lg"
+        src="https://www.youtube.com/embed/Ls5XeHnOZek"
+        title="Video"
+        frameborder="0"
+        allowfullscreen></iframe>
+      <!-- Cerrar -->
+    </div>
+    <button
+      id="close-video"
+      class="absolute top-[2em] right-[2em] text-white text-2xl font-bold cursor-pointer"
+    >
+      <svg 
+      height="24" width="24" fill="none"
+      viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+        ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+          id="SVGRepo_tracerCarrier"
+          stroke-linecap="round"
+          stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+          <path
+            d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z"
+            fill="#ffffff"></path>
+        </g></svg
+      >
+    </button>
+  </div>
+
+  <style>
+    .animate-ping-slow {
+      animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    @keyframes ping-slow {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      75%,
+      100% {
+        transform: scale(1.8);
+        opacity: 0;
+      }
+    }
+  </style>
+
+  <script type="module">
+    const openBtn = document.getElementById("open-video");
+    const modal = document.getElementById("video-modal");
+    const closeBtn = document.getElementById("close-video");
+
+    openBtn.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      modal.classList.remove("flex");
+      modal.classList.add("hidden");
+      // Detener video al cerrar
+      const iframe = modal.querySelector("iframe");
+      iframe.src = iframe.src;
+    });
+  </script>
+</section>

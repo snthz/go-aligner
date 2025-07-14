@@ -1,0 +1,68 @@
+---
+import { Image } from "astro:assets";
+import Image1 from "../assets/img-1.jpg";
+import Image2 from "../assets/img-2.jpg";
+import Image3 from "../assets/img-3.jpg";
+import Image4 from "../assets/img-4.jpg";
+import Image5 from "../assets/img-5.jpg";
+import Image6 from "../assets/img-6.jpg";
+
+const images = [
+  { src: Image1, alt: "Imagen 1" },
+  { src: Image2, alt: "Imagen 2" },
+  { src: Image3, alt: "Imagen 3" },
+  { src: Image4, alt: "Imagen 4" },
+  { src: Image5, alt: "Imagen 5" },
+  { src: Image6, alt: "Imagen 6" },
+];
+---
+
+<section class="bg-neutral-950 text-white ">
+  <div class="max-w-screen-xl mx-auto px-6 py-16">
+    <h2 class="text-4xl md:text-6xl font-bold  mb-5">Resultados destacados</h2>
+    <p class="text-neutral-300 text-lg mb-10">
+      Descubre cómo nuestros alineadores han transformado las sonrisas de nuestros pacientes. Cada imagen representa un
+      testimonio de nuestro compromiso con la excelencia y la innovación en ortodoncia digital.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-2">
+      {images.map((image, i) => (
+        <div class="image-wrapper group relative h-[300px] overflow-hidden s shadow-md" id={`image-${i}`}>
+          <Image
+            src={image.src}
+            alt={image.alt}
+            class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from 'gsap'
+  import ScrollTrigger from 'gsap/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  const images = document.querySelectorAll('.image-wrapper')
+
+  images.forEach((el, i) => {
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: i * 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+        },
+      }
+    )
+  })
+</script>

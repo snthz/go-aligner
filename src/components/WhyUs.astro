@@ -1,0 +1,72 @@
+---
+import BriefcaseIcon from '../icons/BriefcaseIcon.astro'
+import QualityIcon from '../icons/QualityIcon.astro'
+import TargetIcon from '../icons/TargetIcon.astro'
+
+const texts = [
+  {
+    titleGray: 'Precisión en cada',
+    titleWhite: 'diseño',
+    icon: TargetIcon,
+  },
+  {
+    titleGray: 'Técnicos con',
+    titleWhite: 'experiencia',
+    icon: BriefcaseIcon,
+  },
+  {
+    titleGray: 'Elaborado con materiales',
+    titleWhite: 'de alta calidad',
+    icon: QualityIcon,
+  },
+]
+---
+
+<section class="bg-white py-24">
+  <div class="max-w-6xl mx-auto px-6  text-center ">
+    <h2 class="text-4xl md:text-6xl font-bold text-gray-900 mb-10 ">¿Por qué elegirnos?</h2>
+    <p class="text-gray-600 text-lg mb-12">
+      En <span class="font-semibold">Go Aligners</span> nos especializamos en ofrecer soluciones de ortodoncia digital
+      personalizadas, combinando tecnología avanzada con un equipo de expertos para garantizar resultados óptimos.
+    </p>
+    <div class="grid md:grid-cols-3 gap-10 ">
+      {texts.map((item, i) => (
+        <div
+          class="why-item flex flex-col pt-14  items-center justify-start bg-neutral-950 p-10 shadow-lg transition-transform hover:scale-105"
+          id={`why-item-${i}`}
+        >
+          <item.icon />
+          <h3 class="text-2xl font-medium mt-20 text-center">
+            <span class="text-neutral-400">{item.titleGray}</span>
+            <br />
+            <span class="text-white font-semibold">{item.titleWhite}</span>
+          </h3>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script >
+  import gsap from 'gsap'
+  import ScrollTrigger from 'gsap/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  document.querySelectorAll('.why-item').forEach((el, i) => {
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: i * 0.1,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+        },
+      }
+    )
+  })
+</script>
