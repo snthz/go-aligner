@@ -3,6 +3,7 @@ import LogoImage from "../assets/logo.png";
 import GoVideo from "../assets/go-video.mp4";
 import ShineIcon from "../icons/ShineIcon.astro";
 import RetainerImage from "../assets/retainer.jpg";
+import { Image } from "astro:assets";
 const features = [
     "Retenedores Personalizados",
     "Comodidad y Estilo",
@@ -28,10 +29,10 @@ const features = [
     <div class="mt-2 rounded-t-2xl overflow-hidden shadow-lg h-screen hero-video-container w-full relative">
         <!-- <div class="absolute inset-0 bg-neutral-950 opacity-50"></div> -->
 
-      <img
-        src={RetainerImage.src}
-        alt="Retenedor Dental"
-        class="w-full h-full object-cover aspect-square"
+      <Image
+        src={RetainerImage}
+        alt="Hero Image"
+        class="w-full h-full object-cover"
       />
     </div>
   </div>
