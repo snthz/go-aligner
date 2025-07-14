@@ -2,66 +2,146 @@
 import LogoImage from "../assets/logo.png";
 const links = [
   { href: "/", text: "Inicio" },
-  { href: "/servicios", text: "Servicios" },
+  { href: "/#servicios", text: "Servicios" },
+  { href: "/#nuestro-trabajo", text: "Nuestro trabajo" },
+  { href: "/#por-que-elegirnos", text: "¿Por qué elegirnos?" },
 ];
 ---
 
 <header class="fixed top-0 w-full z-50">
   <nav
-    class="flex items-center justify-between py-8 px-4 md:px-0 text-white max-w-screen-xl mx-auto"
+    class="flex items-center justify-between py-6 px-4 md:px-0 text-white max-w-screen-xl mx-auto"
   >
+    <!-- Logo -->
     <div class="backdrop-blur-xl bg-neutral-950/50 p-2 rounded-lg">
       <a href="/">
         <img src={LogoImage.src} alt="Logo" class="h-10 w-10" />
       </a>
     </div>
-    <div class="md:hidden">
-      <button class="text-gray-200 hover:text-gray-300 focus:outline-none">
-        <svg
-          class="w-8 h-8"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
-      </button>
-    </div>
-    <ul
-      class="hidden md:flex space-x-4 backdrop-blur-md bg-neutral-950/50 rounded-lg p-1"
-    >
+
+    <!-- Desktop Nav -->
+    <ul class="flex backdrop-blur-md bg-neutral-950/50 rounded-lg p-1">
       {
         links.map((link) => (
-          <li class="text-gray-200 hover:text-gray-300 transition-colors duration-200 px-6 py-2 rounded-lg">
-            <a href={link.href} class="hover:text-gray-300">
-              {link.text}
-            </a>
+          <li class="hidden md:block text-gray-200 hover:text-gray-300 transition px-6 py-2 rounded-lg">
+            <a href={link.href}>{link.text}</a>
           </li>
         ))
       }
       <li
-        class="bg-white text-neutral-950 transition-colors duration-200 px-6 py-2 rounded-lg"
+        class="bg-white text-neutral-950 px-6 py-2 rounded-lg flex items-center"
       >
-        <a href="/contacto" class="hover:text-gray-300">Contacto</a>
+        <a
+          href="https://wa.link/42atxt"
+          target="_blank"
+          class="hover:text-gray-300">Contacto</a
+        >
         <svg
           xmlns="http://www.w3.org/2000/svg"
+          class="ml-2"
           width="24"
           height="24"
-          viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="inline-block ml-2"
-          ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
         >
+          <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+        </svg>
+      </li>
+      <li>
+        <!-- Mobile Menu Button -->
+        <button
+        
+          class="mobile-toggle md:hidden cursor-pointer text-gray-200 hover:text-gray-300 focus:outline-none z-50 relative px-6 flex justify-center items-center py-2"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
       </li>
     </ul>
   </nav>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="md:hidden fixed top-0 left-0 w-full h-full bg-neutral-950/90 bg-opacity-95 backdrop-blur-lg flex flex-col items-center justify-center space-y-6 opacity-0 pointer-events-none transition-opacity duration-300"
+  >
+    <div class="flex flex-col items-center space-y-10  ">
+      <button
+        class="mobile-toggle absolute top-6 right-6 text-white focus:outline-none cursor-pointer"
+      >
+       <svg 
+      height="24" width="24" fill="none"
+      viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+        ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+          id="SVGRepo_tracerCarrier"
+          stroke-linecap="round"
+          stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+          <path
+            d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z"
+            fill="#ffffff"></path>
+        </g></svg
+      >
+      </button>
+
+
+      {
+        links.map((link) => (
+          <a
+            name="link-mob"
+            href={link.href}
+            class="text-white text-xl font-medium hover:text-neutral-400 transition"
+          >
+            {link.text}
+          </a>
+        ))
+      }
+      <a
+        href="https://wa.link/42atxt"
+        target="_blank"
+        class="text-white border border-white px-6 py-2 rounded-full hover:bg-white hover:text-neutral-900 transition"
+      >
+        Contacto
+      </a>
+    </div>
+  </div>
+
+  <script is:inline>
+    const toggles = document.getElementsByClassName("mobile-toggle");
+    const menu = document.getElementById("mobile-menu");
+
+    // Toggle the mobile menu
+    Array.from(toggles).forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        menu.classList.toggle("opacity-100");
+        menu.classList.toggle("pointer-events-auto");
+        menu.classList.toggle("opacity-0");
+        menu.classList.toggle("pointer-events-none");
+      });
+    });
+
+
+    const linksMob = document.querySelectorAll(
+      "#mobile-menu a[name='link-mob']"
+    );
+    // when a mobile link is clicked, close the menu
+    linksMob.forEach((link) => {
+      link.addEventListener("click", () => {
+        menu.classList.remove("opacity-100", "pointer-events-auto");
+        menu.classList.add("opacity-0", "pointer-events-none");
+      });
+    });
+  </script>
 </header>
