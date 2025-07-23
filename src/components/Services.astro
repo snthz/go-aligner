@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import PatternSvg from '../assets/pattern.svg';
+
 const services = [
   {
     title: 'Diseño digital de tratamientos',
@@ -35,48 +38,75 @@ const services = [
 ];
 ---
 
-<section id="servicios" class="bg-neutral-950 text-white">
-  <div class="max-w-5xl mx-auto px-6 py-24">
-    <h2 class="text-4xl md:text-6xl font-bold mb-10 text-left ">Servicios</h2>
+<section id="servicios" class="relative bg-neutral-950 text-white overflow-hidden py-28">
+  <!-- Background -->
+  <div class="absolute inset-0 z-0">
+    <Image
+      src={PatternSvg}
+      alt="Background pattern"
+      class="w-full h-full object-cover opacity-[0.02]"
+    />
+    <div class="absolute bottom-0 right-0 w-80 h-80 bg-cyan-400/10 blur-3xl rounded-full animate-pulse z-0"></div>
+  </div>
 
-    <div class="space-y-10">
+  <div class="relative z-10 max-w-6xl mx-auto px-6">
+    <h2 class="text-4xl md:text-6xl font-bold mb-6 text-center">
+      Nuestros <span class="playfair italic">servicios</span>
+    </h2>
+    <p class="text-neutral-300 text-lg mb-12 text-center max-w-3xl mx-auto">
+      En <span class="font-semibold">Go Aligners</span> ofrecemos una amplia gama de servicios de ortodoncia digital para clínicas y ortodoncistas, garantizando precisión, calidad y soporte técnico especializado.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-10">
       {services.map((item, i) => (
-        <div class="service-item flex flex-col gap-3" id={`service-${i}`}>
-          <div class="flex items-start gap-6">
-            <span class="text-slate-400 text-xl font-bold min-w-[30px]">{String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <h3 class=" font-bold text-white text-lg md:text-xl mb-1">{item.title}</h3>
-              <p class="text-neutral-400 text-base leading-relaxed">{item.description}</p>
+        <div
+          class="service-card relative p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 shadow-md hover:shadow-xl transition-all duration-300 group overflow-hidden"
+          id={`service-${i}`}
+        >
+          <div class="absolute -top-8 -left-8 w-28 h-28 bg-white/10 blur-2xl rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-700 z-0 pointer-events-none"></div>
+
+          <div class="relative z-10">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="text-sm font-semibold px-3 py-1 bg-white/10 rounded-full border border-white/20 text-white">
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <h3 class="text-xl font-semibold">{item.title}</h3>
             </div>
+            <hr class="border-white/10 mb-4" />
+            <p class="text-neutral-300 text-base leading-relaxed">{item.description}</p>
           </div>
-          <hr class="border-gray-700 mt-4" />
         </div>
       ))}
     </div>
   </div>
 </section>
 
-<script >
-  import gsap from 'gsap'
-  import ScrollTrigger from 'gsap/ScrollTrigger'
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-  gsap.registerPlugin(ScrollTrigger)
+  gsap.registerPlugin(ScrollTrigger);
 
-  document.querySelectorAll('.service-item').forEach((el, i) => {
-    gsap.fromTo(
-      el,
-      { opacity: 0, x: -40 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.9,
-        delay: i * 0.05,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 90%',
+  // Animación más limpia con ScrollTrigger.batch()
+  ScrollTrigger.batch(".service-card", {
+    onEnter: batch => {
+      gsap.fromTo(batch,
+        {
+          y: 40,
+          opacity: 0,
+          filter: 'blur(4px)',
         },
-      }
-    )
-  })
+        {
+          y: 0,
+          opacity: 1,
+          filter: 'blur(0px)',
+          duration: 1,
+          stagger: 0.15,
+          ease: "power3.out",
+        }
+      );
+    },
+    once: true,
+    start: "top 90%",
+  });
 </script>

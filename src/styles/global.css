@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
 *{
-    font-family: "Inter", sans-serif;
+    font-family: "Clash Grotesk", sans-serif;
+}   
+
+.playfair{
+    font-family: "Playfair Display", serif;
+
+}
+
+/* import font ClashGrotesk-Variable.ttf */
+@font-face {
+    font-family: 'Clash Grotesk';
+    src: url('../assets/fonts/ClashGrotesk-Variable.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
 }

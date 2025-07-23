@@ -1,69 +1,119 @@
 ---
-import LogoImage from "../assets/logo.png";
-import GoVideo from "../assets/go-video.mp4";
-import ShineIcon from "../icons/ShineIcon.astro";
-import RetainerImage from "../assets/retainer.jpg";
 import { Image } from "astro:assets";
-const features = [
-    "Retenedores Personalizados",
-    "Comodidad y Estilo",
-    "Protección Dental",
-    "Resultados Duraderos",
-]
+import AlignerTransparent from "../assets/aligner-transparent.png";
 ---
 
-<section class="relative bg-neutral-900">
-  <div class="flex flex-col items-center justify-center min-h-screen">
-    <!-- Hero Text -->
-    <div class="flex flex-col items-center justify-center text-center  w-full mx-auto mt-28 md:mt-40 py-5 px-2 md:px-0">
-      <h1 class="text-white text-[2.5em] md:text-[6em] leading-[0.8em] font-bold">Sonríe sin límites</h1>
-      <div class="flex items-center justify-center mt-4 gap-6 flex-wrap">
-        {features.map((feature, idx) => (
-          <span class="text-white   text-sm flex items-center  leading-0 -my-2">{feature}
-          {idx < features.length - 1 ? <ShineIcon size="10" class="ml-4 fill-white" />: null}
-          </span>
-        ))}
-      </div>
-    </div>
-    <!-- Hero Image Retainer -->
-    <div class="mt-2 rounded-t-2xl overflow-hidden shadow-lg h-screen hero-video-container w-full relative">
-        <!-- <div class="absolute inset-0 bg-neutral-950 opacity-50"></div> -->
+<section class="relative min-h-dvh bg-neutral-950 overflow-hidden flex items-center justify-center py-28 md:py-32 text-white">
+  <!-- Texto de fondo -->
+  <h1 class="absolute z-0 text-white text-[16vw] md:text-[10vw] font-extrabold uppercase leading-none opacity-10 tracking-tight pointer-events-none select-none text-center w-full">
+    Go Aligner
+  </h1>
 
-      <Image
-        src={RetainerImage}
-        alt="Hero Image"
-        class="w-full h-full object-cover"
-      />
-    </div>
-  </div>
-  <!-- Hero Image -->
-  <div class="absolute w-full md:w-1/2 -left-[6em] top-[10em] z-[-1] opacity-10">
-    <img
-    
-      src={LogoImage.src}
-      alt="Hero Image"
-      class="w-full h-full object-cover"
+  <!-- Glow central -->
+  <div class="absolute w-[300px] h-[300px] md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0"></div>
+
+  <!-- Imagen del alineador -->
+  <div class="relative z-10 w-[clamp(220px,60vw,620px)] h-[clamp(220px,60vw,620px)] flex items-center justify-center">
+    <Image
+      src={AlignerTransparent}
+      alt="Aligner"
+      class="w-full h-full object-contain floating-aligner drop-shadow-xl"
     />
+  </div>
+
+  <!-- Partículas -->
+  <div class="absolute inset-0 z-0 pointer-events-none" id="particles-container"></div>
+
+  <!-- Texto inferior -->
+  <div class="absolute bottom-10 text-center z-10 px-4 w-full flex flex-col items-center">
+    <p class="text-lg md:text-2xl font-semibold tracking-tight">La nueva era en ortodoncia digital</p>
+    <p class="text-sm md:text-base text-neutral-300 mt-1">Retenedores personalizados de alta precisión con estilo.</p>
+
+    <!-- SVG de mouse animado -->
+    <div class="mt-6 w-10 h-10 relative">
+      <svg
+        class="w-full h-full text-white"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5 15C5 16.8565 5.73748 18.6371 7.05023 19.9498C8.36299 21.2626 10.1435 21.9999 12 21.9999C13.8565 21.9999 15.637 21.2626 16.9497 19.9498C18.2625 18.6371 19 16.8565 19 15V9C19 7.14348 18.2625 5.36305 16.9497 4.05029C15.637 2.73754 13.8565 2 12 2C10.1435 2 8.36299 2.73754 7.05023 4.05029C5.73748 5.36305 5 7.14348 5 9V15Z"
+          stroke="white"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          id="mouse-line"
+          d="M12 6V10"
+          stroke="white"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
   </div>
 </section>
 
 <script>
-    import gsap from 'gsap';
-    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+ import gsap from 'gsap'
 
-    gsap.registerPlugin(ScrollTrigger);
+// Flotación del alineador
+gsap.to('.floating-aligner', {
+  y: -20,
+  rotation: 2,
+  duration: 3,
+  repeat: -1,
+  yoyo: true,
+  ease: "sine.inOut",
+})
 
-    const heroVideo = document.querySelector('.hero-video-container');
+const container = document.getElementById('particles-container') as HTMLElement
+const colors = ['#ffffff', '#e5e7eb', '#d1d5db', '#9ca3af']
 
-    gsap.fromTo(heroVideo, { scale: 0.9 }, {
-        scale: 1,
-        scrollTrigger: {
-            trigger: heroVideo,
-            start: 'top center',
-            end: 'bottom center',
-            scrub: true,
-        }
-    });
+// Posiciones predefinidas para 8 partículas
+const positions = [
+  // { top: '10%', left: '65%' },
+  // { top: '20%', left: '70%' },
+  { top: '30%', left: '20%' },
+  // { top: '50%', left: '20%' },
+  { top: '40%', left: '85%' },
+  { top: '55%', left: '50%' },
+  { top: '75%', left: '30%' },
+  { top: '80%', left: '80%' },
+]
+
+positions.forEach((pos, i) => {
+  const particle = document.createElement('div')
+  particle.classList.add('absolute', 'z-10', 'opacity-15')
+
+  const size = 20
+  particle.style.width = `${size}px`
+  particle.style.height = `${size}px`
+  particle.style.backgroundColor = colors[i % colors.length]
+  particle.style.top = pos.top
+  particle.style.left = pos.left
+  particle.style.clipPath =
+    'polygon(50% 0%, 58% 38%, 100% 50%, 58% 62%, 50% 100%, 42% 62%, 0% 50%, 42% 38%)'
+  particle.style.transformOrigin = 'center'
+  particle.style.transform = `rotate(${Math.random() * 360}deg)`
+
+  container.appendChild(particle)
+
+  // Movimiento sutil y controlado
+  gsap.to(particle, {
+    x: `random(-10, 10)`,
+    y: `random(-10, 10)`,
+    rotation: `random(-10, 10)`,
+    duration: 6,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut",
+    delay: Math.random() * 2,
+  })
+})
 
 
 </script>
