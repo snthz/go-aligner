@@ -1,0 +1,81 @@
+---
+import { Image } from "astro:assets";
+import AlignerTransparent from "../assets/aligner-transparent.png";
+---
+
+<section id="scroll-feature" class="relative bg-gradient-to-b from-neutral-950 to-neutral-900 text-white overflow-hidden min-h-[300vh]">
+  <!-- Sticky image with pins and connector lines -->
+  <div id="feature-pin" class="sticky top-0 h-screen flex items-center justify-center z-20">
+    <div class="relative w-[clamp(300px,80vw,700px)]">
+      <Image
+        src={AlignerTransparent}
+        alt="Aligner"
+        class="feature-image w-full will-change-transform"
+      />
+      <!-- Pin 1 -->
+      <div class="pin pin1-container absolute top-1/3 left-0 flex items-center space-x-2 z-30 opacity-0 scale-0">
+        <!-- Connector line -->
+        <div class="connector connector1 absolute h-[2px] bg-gray-400" style="width: 40px; left: 100%; top: 50%;"></div>
+        <span class="block w-4 h-4 bg-cyan-400 rounded-full"></span>
+        <span class="text-base font-semibold">Ajuste Personalizado</span>
+      </div>
+      <!-- Pin 2 -->
+      <div class="pin pin2-container absolute top-1/2 -right-[4em] flex items-center space-x-2 z-30 opacity-0 scale-0">
+        <span class="text-base font-semibold">Material Invisible</span>
+        <span class="block w-4 h-4 bg-cyan-400 rounded-full"></span>
+        <!-- Connector line -->
+        <div class="connector connector2 absolute h-[2px] bg-gray-400" style="width: 40px; right: 100%; top: 50%;"></div>
+      </div>
+      <!-- Pin 3 -->
+      <div class="pin pin3-container absolute bottom-[4em] left-1/2 transform -translate-x-1/2 flex items-center space-x-2 z-30 opacity-0 scale-0">
+        <div class="connector connector3 absolute w-[2px] bg-gray-400" style="height: 40px; left: 50%; top: -40px;"></div>
+        <span class="block w-4 h-4 bg-cyan-400 rounded-full"></span>
+        <span class="text-base font-semibold">Progreso Visible</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll steps (invisible markers) -->
+  <div class="relative z-10">
+    <div class="scroll-step h-screen"></div>
+    <div class="scroll-step h-screen"></div>
+    <div class="scroll-step h-screen"></div>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Pin the feature container
+  ScrollTrigger.create({
+    trigger: "#scroll-feature",
+    start: "top top",
+    end: "bottom bottom",
+    pin: "#feature-pin",
+    pinSpacing: false
+  });
+
+  // Pin animations: appear and lines animate together
+  [
+    { container: ".pin1-container", step: 1 },
+    { container: ".pin2-container", step: 2 },
+    { container: ".pin3-container", step: 3 }
+  ].forEach(({ container, step }) => {
+    gsap.fromTo(
+      container,
+      { opacity: 0, scale: 0 },
+      {
+        opacity: 1,
+        scale: 1,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: `.scroll-step:nth-of-type(${step})`,
+          start: "top center",
+          toggleActions: "play none none none"
+        }
+      }
+    );
+  });
+</script>

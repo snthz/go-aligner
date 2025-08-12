@@ -1,0 +1,105 @@
+---
+import { Image } from "astro:assets";
+import PatternSvg from "../assets/pattern.svg";
+import Machine1 from "../assets/machine1.jpg"; // Cambia por la imagen de la resina
+import Machine2 from "../assets/machine2.jpg"; // Cambia por la imagen de la cámara de curado
+import Machine3 from "../assets/machine3.jpg"; // Cambia por la imagen del generador de nitrógeno
+
+
+const techItems = [
+  {
+    img: Machine1,
+    title: "Resinas Tera Harz",
+    description:
+      "Material certificado de alta resistencia, diseñado para alineadores duraderos y seguros.",
+  },
+  {
+    img: Machine2,
+    title: "Cámara de Curado",
+    description:
+      "Garantiza precisión y resistencia óptima en cada alineador fabricado.",
+  },
+  {
+    img: Machine3,
+    title: "Generador de Nitrógeno",
+    description:
+      "Optimiza el proceso de curado, reduciendo impurezas y mejorando la calidad final.",
+  },
+];
+---
+
+<section id="tecnologia" class="relative bg-neutral-950 text-white overflow-hidden py-28">
+      <div class="absolute inset-0  pointer-events-none z-20">
+        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-t from-transparent via-black/30 to-neutral-950"></div>
+        <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent via-black/30 to-neutral-950"></div>
+    </div>
+  <div class="absolute inset-0 z-0">
+    <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-violet-500/10 blur-3xl rounded-full"></div>
+    <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-sky-500/10 blur-3xl rounded-full"></div>
+  </div>
+
+  <div class="relative z-10 max-w-screen-xl mx-auto px-6">
+    <h2 class="text-4xl md:text-6xl font-bold text-center mb-5">
+      Tecnología de <span class="playfair italic">última generación</span>
+    </h2>
+    <p class="text-neutral-300 text-lg mb-12 text-center max-w-3xl mx-auto">
+      Contamos con maquinaria y materiales de vanguardia para garantizar precisión, durabilidad y la mejor calidad en cada alineador.
+    </p>
+
+    <!-- Grid de tecnología -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      {techItems.map((item, i) => (
+        <div
+          class="tech-card group relative rounded-2xl overflow-hidden bg-white/5 backdrop-blur-md border border-white/10 shadow-md hover:shadow-violet-500/20 hover:scale-[1.02] transition-all duration-500"
+          id={`tech-${i}`}
+        >
+          <!-- Imagen -->
+          <div class="relative h-[240px] overflow-hidden">
+            <Image
+              src={item.img}
+              alt={item.title}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+          </div>
+
+          <!-- Texto -->
+          <div class="p-6 text-center">
+            <h3 class="text-xl font-semibold mb-2">{item.title}</h3>
+            <p class="text-neutral-300 text-sm leading-relaxed">{item.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from 'gsap'
+  import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  ScrollTrigger.batch(".tech-card", {
+    onEnter: batch => {
+      gsap.fromTo(
+        batch,
+        {
+          opacity: 0,
+          y: 40,
+          filter: 'blur(4px)',
+        },
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 1,
+          stagger: 0.15,
+          ease: 'power3.out',
+        }
+      )
+    },
+    start: 'top 90%',
+    once: true,
+  })
+</script>

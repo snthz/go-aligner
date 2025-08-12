@@ -3,117 +3,187 @@ import { Image } from "astro:assets";
 import AlignerTransparent from "../assets/aligner-transparent.png";
 ---
 
-<section class="relative min-h-dvh bg-neutral-950 overflow-hidden flex items-center justify-center py-28 md:py-32 text-white">
-  <!-- Texto de fondo -->
-  <h1 class="absolute z-0 text-white text-[16vw] md:text-[10vw] font-extrabold uppercase leading-none opacity-10 tracking-tight pointer-events-none select-none text-center w-full">
-    Go Aligner
-  </h1>
+<section class="relative min-h-dvh overflow-hidden bg-neutral-950 text-white flex items-center">
+  <!-- Fondo: gradiente radial + grid sutil -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 z-0 [background:radial-gradient(60%_60%_at_50%_40%,rgba(59,130,246,.18),transparent_60%),radial-gradient(60%_60%_at_50%_60%,rgba(236,72,153,.14),transparent_60%)]"
+  ></div>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 z-0 opacity-[0.06]"
+    style="background-image: linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px); background-size: 36px 36px;"
+  ></div>
 
-  <!-- Glow central -->
-  <div class="absolute w-[300px] h-[300px] md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0"></div>
+  <div
+    aria-hidden="true"
+    class="absolute z-[1] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42rem] h-[42rem] max-w-[80vw] max-h-[80vw] rounded-full blur-3xl bg-white/10"
+  ></div>
 
-  <!-- Imagen del alineador -->
-  <div class="relative z-10 w-[clamp(220px,60vw,620px)] h-[clamp(220px,60vw,620px)] flex items-center justify-center">
-    <Image
-      src={AlignerTransparent}
-      alt="Aligner"
-      class="w-full h-full object-contain floating-aligner drop-shadow-xl"
-    />
+  <div class="relative z-10 max-w-screen-xl mx-auto px-4 md:px-8 w-full grid grid-cols-1 md:grid-cols-2 items-center gap-10 py-24 md:py-32">
+    <div class="text-center md:text-left">
+      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-neutral-200 mb-4 backdrop-blur">
+        <svg width="16" height="16" viewBox="0 0 24 24" class="opacity-80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.64 5.64l2.12 2.12M16.24 16.24l2.12 2.12M5.64 18.36l2.12-2.12M16.24 7.76l2.12-2.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Ortodoncia digital de próxima generación
+      </span>
+
+      <h2 class="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight">
+        Alineadores invisibles, <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-cyan-300">precisos y cómodos</span>
+      </h2>
+
+      <p class="mt-4 text-neutral-300 md:text-lg">
+        Diseño, fabricación y seguimiento en un solo flujo. Resultados predecibles con menos citas y más control.
+      </p>
+
+      <div class="mt-8 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-center md:justify-start">
+        <a
+          href="#como-funciona"
+          class="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold backdrop-blur border border-white/10 bg-white/10 hover:bg-white/15 transition"
+        >
+          Conoce cómo funciona
+        </a>
+        <a
+          href="#agenda"
+          class="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold text-neutral-900 bg-white hover:bg-neutral-200 transition"
+        >
+          Agenda una consulta
+        </a>
+      </div>
+      <div class="mt-10 flex items-center gap-3 justify-center md:justify-start">
+        <div class="w-6 h-9 rounded-full border border-white/30 relative">
+          <span id="mouse-dot" class="absolute left-1/2 -translate-x-1/2 top-2 h-1.5 w-1.5 rounded-full bg-white/90"></span>
+        </div>
+        <span class="text-sm text-neutral-400">Desliza para ver más</span>
+      </div>
+    </div>
+
+    <div class="relative justify-self-center md:justify-self-end">
+      <div aria-hidden="true" class="absolute inset-0 -z-[1] flex items-center justify-center">
+        <div class="w-[clamp(300px,55vw,640px)] h-[clamp(300px,55vw,640px)] rounded-full border border-white/10 [mask-image:radial-gradient(closest-side,black,transparent)]"></div>
+      </div>
+
+      <div id="aligner-wrap" class="relative w-[clamp(260px,60vw,620px)] h-[clamp(260px,60vw,620px)] grid place-items-center">
+        <Image
+          src={AlignerTransparent}
+          alt="Alineador transparente"
+          class="w-full h-full object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.5)] will-change-transform"
+        />
+  
+        <span aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-full border border-white/10 rotate-12"></span>
+        <span aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-full border border-white/10 -rotate-6"></span>
+
+        <div class="absolute -left-3 md:-left-6 top-[18%]">
+          <div class="badge-float rounded-xl border border-white/10 bg-white/10 backdrop-blur px-3 py-2 text-sm">
+            3D Plan
+          </div>
+        </div>
+        <div class="absolute right-0 md:-right-4 top-[45%]">
+          <div class="badge-float rounded-xl border border-white/10 bg-white/10 backdrop-blur px-3 py-2 text-sm">
+            Shape Memory
+          </div>
+        </div>
+        <div class="absolute left-[15%] bottom-[8%]">
+          <div class="badge-float rounded-xl border border-white/10 bg-white/10 backdrop-blur px-3 py-2 text-sm">
+            Seguimiento Online
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Partículas -->
-  <div class="absolute inset-0 z-0 pointer-events-none" id="particles-container"></div>
-
-  <!-- Texto inferior -->
-  <div class="absolute bottom-10 text-center z-10 px-4 w-full flex flex-col items-center">
-    <p class="text-lg md:text-2xl font-semibold tracking-tight">La nueva era en ortodoncia digital</p>
-    <p class="text-sm md:text-base text-neutral-300 mt-1">Retenedores personalizados de alta precisión con estilo.</p>
-
-    <!-- SVG de mouse animado -->
-    <div class="mt-6 w-10 h-10 relative">
-      <svg
-        class="w-full h-full text-white"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M5 15C5 16.8565 5.73748 18.6371 7.05023 19.9498C8.36299 21.2626 10.1435 21.9999 12 21.9999C13.8565 21.9999 15.637 21.2626 16.9497 19.9498C18.2625 18.6371 19 16.8565 19 15V9C19 7.14348 18.2625 5.36305 16.9497 4.05029C15.637 2.73754 13.8565 2 12 2C10.1435 2 8.36299 2.73754 7.05023 4.05029C5.73748 5.36305 5 7.14348 5 9V15Z"
-          stroke="white"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          id="mouse-line"
-          d="M12 6V10"
-          stroke="white"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </div>
-  </div>
+  <div id="particles" class="pointer-events-none absolute inset-0 z-[2]"></div>
 </section>
 
+<style>
+  .badge-float { transform: translateY(0) translateZ(0); }
+</style>
+
 <script>
- import gsap from 'gsap'
+  import gsap from "gsap";
 
-// Flotación del alineador
-gsap.to('.floating-aligner', {
-  y: -20,
-  rotation: 2,
-  duration: 3,
-  repeat: -1,
-  yoyo: true,
-  ease: "sine.inOut",
-})
-
-const container = document.getElementById('particles-container') as HTMLElement
-const colors = ['#ffffff', '#e5e7eb', '#d1d5db', '#9ca3af']
-
-// Posiciones predefinidas para 8 partículas
-const positions = [
-  // { top: '10%', left: '65%' },
-  // { top: '20%', left: '70%' },
-  { top: '30%', left: '20%' },
-  // { top: '50%', left: '20%' },
-  { top: '40%', left: '85%' },
-  { top: '55%', left: '50%' },
-  { top: '75%', left: '30%' },
-  { top: '80%', left: '80%' },
-]
-
-positions.forEach((pos, i) => {
-  const particle = document.createElement('div')
-  particle.classList.add('absolute', 'z-10', 'opacity-15')
-
-  const size = 20
-  particle.style.width = `${size}px`
-  particle.style.height = `${size}px`
-  particle.style.backgroundColor = colors[i % colors.length]
-  particle.style.top = pos.top
-  particle.style.left = pos.left
-  particle.style.clipPath =
-    'polygon(50% 0%, 58% 38%, 100% 50%, 58% 62%, 50% 100%, 42% 62%, 0% 50%, 42% 38%)'
-  particle.style.transformOrigin = 'center'
-  particle.style.transform = `rotate(${Math.random() * 360}deg)`
-
-  container.appendChild(particle)
-
-  // Movimiento sutil y controlado
-  gsap.to(particle, {
-    x: `random(-10, 10)`,
-    y: `random(-10, 10)`,
-    rotation: `random(-10, 10)`,
-    duration: 6,
+  gsap.to("#aligner-wrap img", {
+    y: -18,
+    rotation: 2,
+    duration: 3.2,
     repeat: -1,
     yoyo: true,
     ease: "sine.inOut",
-    delay: Math.random() * 2,
-  })
-})
+  });
+
+  const wrap = document.getElementById("aligner-wrap") as HTMLElement;
+  const section = wrap?.closest("section");
+  if (wrap && section) {
+    section.addEventListener("mousemove", (e) => {
+      const rect = section.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      gsap.to(wrap, {
+        x: x * 20,
+        y: y * 12,
+        rotateX: y * 4,
+        rotateY: -x * 6,
+        transformPerspective: 800,
+        transformOrigin: "center",
+        duration: 0.5,
+        ease: "sine.out",
+      });
+    });
+    section.addEventListener("mouseleave", () => {
+      gsap.to(wrap, { x: 0, y: 0, rotateX: 0, rotateY: 0, duration: 0.6, ease: "sine.out" });
+    });
+  }
+
+  (gsap.utils.toArray(".badge-float") as HTMLElement[]).forEach((el, i) => {
+    gsap.to(el, {
+      y: i % 2 === 0 ? -10 : -6,
+      duration: 2.6 + i * 0.2,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: i * 0.3,
+    });
+  });
 
 
+  gsap.to("#mouse-dot", {
+    y: 14,
+    duration: 1.4,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut",
+  });
+  const particles = document.getElementById("particles") as HTMLElement;
+  const coords = [
+    { top: "12%", left: "18%" }, { top: "22%", left: "78%" },
+    { top: "38%", left: "8%" },  { top: "42%", left: "54%" },
+    { top: "60%", left: "88%" }, { top: "72%", left: "26%" },
+    { top: "80%", left: "64%" }, { top: "30%", left: "90%" },
+  ];
+  coords.forEach((c, i) => {
+    const d = document.createElement("div");
+    d.className = "absolute";
+    Object.assign(d.style, {
+      top: c.top, left: c.left,
+      width: "14px", height: "14px",
+      background: "linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.3))",
+      borderRadius: "9999px",
+      boxShadow: "0 0 14px rgba(255,255,255,.35)",
+      opacity: "0.75",
+      transform: `scale(${0.8 + Math.random() * 0.6})`,
+    });
+    particles.appendChild(d);
+    gsap.to(d, {
+      y: `random(-10,10)`,
+      x: `random(-10,10)`,
+      scale: `random(0.8,1.2)`,
+      duration: 4 + Math.random() * 2,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: i * 0.2,
+    });
+  });
 </script>

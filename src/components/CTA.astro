@@ -3,35 +3,48 @@ import { Image } from "astro:assets";
 import Image1 from "../assets/img-4.jpg";
 ---
 
-<section class="relative py-[10em] overflow-hidden text-white ">
-  <!-- Fondo: imagen + overlay -->
+<section class="relative py-[8em] overflow-hidden text-white">
+      <div class="absolute inset-0  pointer-events-none z-20">
+        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-t from-transparent via-black/30 to-neutral-950"></div>
+        <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent via-black/30 to-neutral-950"></div>
+    </div>
   <div class="absolute inset-0 z-0">
-    <Image src={Image1} alt="Fondo sonrisa" class="w-full h-full object-cover scale-110 blur-sm" />
-    <div class="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-white/10 blur-3xl z-0 animate-pulse opacity-20"></div>
+    <Image src={Image1} alt="Fondo sonrisa" class="w-full h-full object-cover scale-105" />
+    <div class="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-neutral-900/90"></div>
+
+    <!-- Luz sutil morada/azul -->
+    <div class="absolute -top-[10%] -left-[10%] w-[400px] h-[400px] rounded-full bg-violet-500/20 blur-[150px]"></div>
+    <div class="absolute bottom-[0%] right-[0%] w-[350px] h-[350px] rounded-full bg-cyan-500/20 blur-[150px]"></div>
   </div>
 
   <!-- Contenido -->
-  <div class="relative z-10 text-center max-w-2xl mx-auto px-6 flex flex-col items-center">
-    <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">¡Sonríe con confianza!</h1>
-    <p class="text-base md:text-lg text-neutral-200">
-      Transforma tu sonrisa con nuestros alineadores dentales invisibles. Agenda tu consulta hoy y da el primer paso hacia una sonrisa perfecta.
+  <div class="relative z-10 text-center max-w-2xl mx-auto px-6">
+    <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight tracking-tight">
+      ¡Sonríe con confianza!
+    </h1>
+    <p class="text-base md:text-lg text-neutral-300 max-w-xl mx-auto">
+      Transforma tu sonrisa con nuestros alineadores dentales invisibles.
+      Agenda tu consulta hoy y da el primer paso hacia una sonrisa perfecta.
     </p>
 
-    <!-- Botón con efecto glass + animación -->
-    <button
-      id="open-video"
-      class="mt-10 w-20 h-20 rounded-full border border-white/30 bg-white/10 backdrop-blur-md flex items-center justify-center transition-all hover:scale-110 hover:bg-white/20 relative group"
-    >
-      <svg class="w-6 h-6 text-white z-10" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M8 5v14l11-7z"></path>
-      </svg>
-      <span class="absolute inset-0 rounded-full border border-white opacity-10 animate-ping z-0"></span>
-    </button>
+    <!-- Botón de acción -->
+    <div class="mt-10 flex items-center justify-center gap-4">
+      <button
+        id="open-video"
+        class="relative px-8 py-4 rounded-full bg-gradient-to-r from-violet-500 to-cyan-500 text-white font-medium shadow-lg hover:shadow-violet-500/30 hover:scale-[1.03] transition-all duration-300"
+      >
+        Ver video
+      </button>
+      <!-- <button
+        class="px-8 py-4 rounded-full border border-white/20 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
+      >
+        Agenda tu cita
+      </button> -->
+    </div>
   </div>
 
   <!-- Modal de video -->
-  <div id="video-modal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden items-center justify-center p-4 transition-all">
+  <div id="video-modal" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4">
     <div class="relative w-full max-w-3xl aspect-video">
       <iframe
         class="w-full h-full rounded-lg"
@@ -45,23 +58,8 @@ import Image1 from "../assets/img-4.jpg";
     </button>
   </div>
 
-  <style>
-    .animate-ping {
-      animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
-    }
-    @keyframes ping {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      75%, 100% {
-        transform: scale(1.8);
-        opacity: 0;
-      }
-    }
-  </style>
 
-  <script type="module">
+  <script is:inline>
     const openBtn = document.getElementById("open-video");
     const modal = document.getElementById("video-modal");
     const closeBtn = document.getElementById("close-video");

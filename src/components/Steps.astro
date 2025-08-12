@@ -1,0 +1,147 @@
+---
+const steps = [
+  { n: 1, title: "ENVÍO DE ARCHIVOS", detail: "Prescripción, escaneo STL, radiografías y fotografías", note: "goalignerhn@gmail.com", icon: "doc" },
+  { n: 2, title: "SETUP DIGITAL", detail: "Plan de tratamiento, cotización", icon: "chart" },
+  { n: 3, title: "MODIFICACIONES", detail: "Observaciones y detalles · 3 días hábiles", icon: "search" },
+  { n: 4, title: "AUTORIZACIÓN", detail: "Realización de pago", icon: "money" },
+  { n: 5, title: "ALINEADORES LISTOS", detail: "Entrega en 7 días hábiles", icon: "aligner" },
+];
+---
+
+<section class="relative py-16 md:py-24 text-white overflow-hidden">
+<!-- gradient border top -->
+    <div class="absolute inset-0  pointer-events-none">
+        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-t from-transparent via-black/30 to-neutral-950"></div>
+        <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent via-black/30 to-neutral-950"></div>
+    </div>
+  <!-- Fondo “poster” como en el logo -->
+  <div class="absolute inset-0 -z-10">
+    <!-- base -->
+    <div class="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_-10%,#0f0b15,transparent_60%),linear-gradient(180deg,#08090b,#0a0a0f_35%,#0b0a10_70%,#0a0a0f)]"></div>
+
+    <!-- líneas diagonales finas -->
+    <div
+      class="absolute inset-0 opacity-[0.08]"
+      style="
+        background-image: repeating-linear-gradient(110deg, rgba(168,85,247,0.70) 0 1px, transparent 1px 9px);
+        mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+      "
+    ></div>
+
+    <!-- bandas diagonales suaves -->
+    <div
+      class="absolute inset-0 opacity-[0.18]"
+      style="
+        background-image:
+          linear-gradient(115deg, transparent 30%, rgba(124,58,237,.16) 46%, transparent 66%),
+          linear-gradient(295deg, transparent 35%, rgba(59,130,246,.12) 56%, transparent 72%);
+      "
+    ></div>
+
+    <!-- glows sutiles -->
+    <div class="absolute -top-24 -left-24 w-[26rem] h-[26rem] bg-[#7c3aed]/20 blur-3xl rounded-full"></div>
+    <div class="absolute bottom-[-6rem] right-[-6rem] w-[24rem] h-[24rem] bg-[#2563eb]/20 blur-3xl rounded-full"></div>
+  </div>
+
+  <!-- Encabezado -->
+  <div class="max-w-screen-xl mx-auto px-4 md:px-6">
+    <div class="mb-8 md:mb-12">
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-sm text-neutral-200 backdrop-blur border border-white/10">
+        Procedimiento
+      </span>
+      <h2 class="mt-3 text-3xl md:text-5xl font-bold tracking-tight">Paso a paso</h2>
+      <div class="mt-3 h-[2px] w-48 bg-gradient-to-r from-[#a78bfa]/70 via-white/60 to-transparent"></div>
+    </div>
+  </div>
+
+  <!-- Lista -->
+  <div class="max-w-screen-xl mx-auto px-4 md:px-6 relative">
+    <!-- Espina curva -->
+    <svg class="absolute left-2 md:left-6 top-0 h-full w-[60px] opacity-70 pointer-events-none"
+         viewBox="0 0 60 600" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <filter id="glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <path d="M50 0 C 28 80, 28 160, 50 240 S 28 400, 50 480 S 28 560, 50 640"
+            stroke="rgba(255,255,255,.65)" stroke-width="3" fill="none" filter="url(#glow)" stroke-linecap="round"/>
+    </svg>
+
+    <ol class="relative grid gap-6 md:gap-7">
+      {steps.map((s) => (
+        <li class="relative w-full">
+          <!-- Nodo -->
+          <div class="absolute -left-0 md:left-[1em] top-1/2 -translate-y-1/2">
+            <div class="node w-9 h-9 md:w-10 md:h-10 rounded-full bg-white text-neutral-900 grid place-items-center font-bold shadow-[0_0_0_6px_rgba(0,0,0,.35)]">
+              {s.n}
+            </div>
+          </div>
+
+          <!-- Tarjeta -->
+          <div class="step-card relative ml-10 md:ml-16 rounded-[2rem] pl-12 md:pl-24 pr-6 py-6 md:py-5">
+            <div class="absolute inset-0 rounded-[2rem] bg-gradient-to-r from-violet-500 to-blue-500"></div>
+            <div class="absolute inset-0 rounded-[2rem]" style="box-shadow: 0 12px 36px rgba(59,130,246,.35)"></div>
+
+            <div class="relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 w-full">
+              <div class="icon shrink-0 rounded-2xl bg-white/10 p-3">
+                {s.icon === "doc" && (
+                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/>
+                  </svg>
+                )}
+                {s.icon === "chart" && (
+                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M3 20h18"/><rect x="6" y="10" width="3" height="7" rx="1"/><rect x="11" y="7" width="3" height="10" rx="1"/><rect x="16" y="12" width="3" height="5" rx="1"/>
+                  </svg>
+                )}
+                {s.icon === "search" && (
+                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="11" cy="11" r="6"/><path d="m20 20-3.5-3.5"/>
+                  </svg>
+                )}
+                {s.icon === "money" && (
+                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="9"/><path d="M8 12h5a2 2 0 0 0 0-4h-2"/><path d="M12 16v-8"/>
+                  </svg>
+                )}
+                {s.icon === "aligner" && (
+                  <svg viewBox="0 0 64 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12c6-9 16-9 22 0s16 9 22 0 14-9 14 0"/><circle cx="15" cy="12" r="1.2"/><circle cx="27" cy="12" r="1.2"/><circle cx="39" cy="12" r="1.2"/><circle cx="51" cy="12" r="1.2"/>
+                  </svg>
+                )}
+              </div>
+              <div class="md:flex-1">
+                <p class="uppercase tracking-wide text-sm md:text-base font-extrabold">{s.title}</p>
+                <p class="text-sm md:text-[15px] opacity-95">{s.detail}</p>
+                {s.note && <p class="text-xs md:text-sm mt-1 opacity-90">{s.note}</p>}
+              </div>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <!-- Script (igual que ya tienes) -->
+  <script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    if (typeof window !== "undefined") {
+      gsap.registerPlugin(ScrollTrigger);
+
+      document.querySelectorAll(".step-card").forEach((el, i) => {
+        gsap.set(el, { y: 18, opacity: 0 });
+        gsap.to(el, {
+          scrollTrigger: { trigger: el, start: "top 86%" },
+          y: 0, opacity: 1, duration: 0.55, ease: "power2.out", delay: i * 0.02
+        });
+      });
+
+      document.querySelectorAll(".node").forEach((n, i) => {
+        gsap.to(n, {
+          boxShadow: "0 0 16px rgba(139,92,246,.9), 0 0 28px rgba(59,130,246,.6)",
+          repeat: -1, yoyo: true, duration: 1.6, delay: i * 0.2, ease: "sine.inOut"
+        });
+      });
+    }
+  </script>
+</section>

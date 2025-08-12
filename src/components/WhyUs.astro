@@ -1,143 +1,115 @@
 ---
 const texts = [
-  {
-    titleGray: 'Precisión en cada',
-    titleWhite: 'diseño',
-    icon: "fa fa-bullseye",
-  },
-  {
-    titleGray: 'Técnicos con',
-    titleWhite: 'experiencia',
-    icon: "fa fa-briefcase",
-  },
-  {
-    titleGray: 'Elaborado con materiales',
-    titleWhite: 'de alta calidad',
-    icon: "fa fa-star",
-  },
+  { titleGray: "Precisión en cada", titleWhite: "diseño", icon: "fa fa-bullseye" },
+  { titleGray: "Técnicos con", titleWhite: "experiencia", icon: "fa fa-briefcase" },
+  { titleGray: "Elaborado con materiales", titleWhite: "de alta calidad", icon: "fa fa-star" },
 ];
 ---
 
-<section id="por-que-elegirnos" class="relative py-28 bg-white overflow-hidden">
-  <!-- Partículas decorativas -->
+<section id="por-que-elegirnos" class="relative py-24 bg-neutral-950 overflow-hidden text-white">
+      <div class="absolute inset-0  pointer-events-none z-10">
+        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-t from-transparent via-black/30 to-neutral-950"></div>
+        <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent via-black/30 to-neutral-950"></div>
+    </div>
+  <!-- Fondo gradiente animado -->
+  <div class="absolute inset-0 z-0 bg-gradient-to-br from-violet-900 via-neutral-950 to-cyan-900 animate-gradient-move"></div>
+
+  <!-- Partículas -->
   <div class="absolute inset-0 pointer-events-none z-0" id="why-particles"></div>
 
   <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
-    <h2 class="text-4xl md:text-6xl font-bold text-neutral-700 mb-10">¿Por qué <span class="playfair italic">elegirnos</span>?</h2>
-    <p class="text-neutral-700 text-lg mb-16 max-w-3xl mx-auto">
-      En <span class="font-semibold">Go Aligners</span> nos especializamos en ofrecer soluciones de ortodoncia digital personalizadas, combinando tecnología avanzada con un equipo de expertos para garantizar resultados óptimos.
+    <h2 class="text-3xl md:text-5xl font-bold mb-4">
+      ¿Por qué <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-sky-300 to-cyan-300">elegirnos</span>?
+    </h2>
+    <p class="text-neutral-300 text-lg mb-16 max-w-3xl mx-auto">
+      En <span class="font-semibold text-white">Go Aligners</span> combinamos tecnología avanzada con experiencia clínica para ofrecer resultados predecibles y de calidad.
     </p>
 
-    <div class="grid md:grid-cols-3 gap-10">
+    <div class="grid md:grid-cols-3 gap-8">
       {texts.map((item, i) => (
         <div
-          class="why-item group relative bg-neutral-950 rounded-3xl px-8 pt-20 pb-12 flex flex-col items-center text-center overflow-hidden shadow-xl transition-transform hover:scale-[1.03] hover:shadow-2xl"
+          class="why-item relative rounded-3xl p-8 flex flex-col items-center text-center backdrop-blur-md border border-white/10 bg-white/5 transition-transform duration-500 hover:scale-[1.03] group overflow-hidden"
           id={`why-item-${i}`}
         >
-          <!-- Fondo decorativo animado -->
-          <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0 opacity-20 pointer-events-none z-0"></div>
+          <!-- Glow radial -->
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-radial from-violet-500/20 via-transparent to-transparent"></div>
 
-          <!-- Contenedor del ícono -->
-          <div class="icon-wrapper relative z-10 w-20 h-20 flex items-center justify-center bg-white/10 border border-white/20 rounded-full backdrop-blur-md transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
-            <i class={`text-3xl text-white ${item.icon}`}></i>
+          <!-- Icono -->
+          <div class="relative z-10 w-20 h-20 flex items-center justify-center rounded-full bg-white/10 border border-white/20 shadow-lg group-hover:shadow-violet-500/40 transition-all duration-300">
+            <i class={`text-3xl ${item.icon} text-violet-300 group-hover:text-violet-400 transition-colors`}></i>
           </div>
 
-          <h3 class="text-xl md:text-2xl font-medium mt-10 z-10">
-            <span class="text-neutral-400 block">{item.titleGray}</span>
-            <span class="text-white font-semibold block">{item.titleWhite}</span>
+          <!-- Texto -->
+          <h3 class="text-lg md:text-xl font-medium mt-8 z-10">
+            <span class="block text-neutral-400">{item.titleGray}</span>
+            <span class="block font-semibold text-white">{item.titleWhite}</span>
           </h3>
-
-          <!-- Brillo al hover -->
-          <div class="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-white/30 pointer-events-none z-0"></div>
         </div>
       ))}
     </div>
   </div>
 </section>
 
-<script>
-  import gsap from 'gsap'
-  import { ScrollTrigger } from 'gsap/ScrollTrigger'
+<style>
+  @keyframes gradient-move {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+  }
+  .animate-gradient-move {
+    background-size: 200% 200%;
+    animation: gradient-move 12s ease infinite;
+  }
+  .bg-radial {
+    background: radial-gradient(circle at center, var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to));
+  }
+</style>
 
-  gsap.registerPlugin(ScrollTrigger)
+<script is:inline>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
 
-  // Animación fluida
-  document.querySelectorAll('.why-item').forEach((el, i) => {
-    gsap.fromTo(
-      el,
+  // Entrada diagonal
+  gsap.utils.toArray(".why-item").forEach((el, i) => {
+    gsap.fromTo(el,
+      { opacity: 0, x: -40, y: 40, scale: 0.95, filter: "blur(6px)" },
       {
-        opacity: 0,
-        y: 40,
-        scale: 0.97,
-        filter: 'blur(6px)',
-      },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        filter: 'blur(0px)',
-        duration: 1,
-        delay: i * 0.1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 85%',
-        },
+        opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)",
+        duration: 1, delay: i * 0.1, ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 85%" }
       }
-    )
+    );
+  });
 
-    const icon = el.querySelector('.icon-wrapper')
-    gsap.fromTo(
-      icon,
-      { y: -20, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 85%',
-        },
-      }
-    )
-  })
+  // Partículas flotantes
+  const container = document.getElementById("why-particles");
+  const positions = Array.from({ length: 12 }, () => ({
+    top: `${Math.random() * 90}%`,
+    left: `${Math.random() * 90}%`,
+  }));
 
-  // Partículas de estrellas negras de 4 puntas
-const particleContainer = document.getElementById('why-particles') as HTMLElement
+  positions.forEach(pos => {
+    const p = document.createElement("div");
+    p.classList.add("absolute", "opacity-20");
+    p.style.width = "20px";
+    p.style.height = "20px";
+    p.style.background = "linear-gradient(135deg, rgba(139,92,246,.6), rgba(59,130,246,.6))";
+    p.style.clipPath = "polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%)";
+    p.style.top = pos.top;
+    p.style.left = pos.left;
+    p.style.transform = `rotate(${Math.random() * 360}deg)`;
+    container.appendChild(p);
 
-// Posiciones predefinidas para evitar superposición
-const positions = [
-  { top: '10%', left: '15%' },
-  { top: '20%', left: '65%' },
-  { top: '30%', left: '35%' },
-  { top: '40%', left: '80%' },
-  { top: '55%', left: '20%' },
-  { top: '60%', left: '60%' },
-  { top: '70%', left: '40%' },
-  { top: '75%', left: '85%' },
-  { top: '85%', left: '25%' },
-  { top: '90%', left: '70%' },
-  { top: '15%', left: '85%' },
-  { top: '50%', left: '50%' },
-]
-
-positions.forEach(pos => {
-  const particle = document.createElement('div')
-  particle.classList.add('absolute', 'opacity-10', 'z-0')
-
-  const size = 20
-  particle.style.width = `${size}px`
-  particle.style.height = `${size}px`
-  particle.style.backgroundColor = '#000'
-  particle.style.clipPath =
-    'polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%)'
-  particle.style.top = pos.top
-  particle.style.left = pos.left
-  particle.style.transform = `rotate(${Math.random() * 360}deg)`
-  particle.style.transformOrigin = 'center'
-
-  particleContainer.appendChild(particle)
-})
-
+    gsap.to(p, {
+      y: `random(-6,6)`,
+      x: `random(-6,6)`,
+      rotation: `random(-15,15)`,
+      duration: 5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: Math.random() * 2,
+    });
+  });
 </script>
