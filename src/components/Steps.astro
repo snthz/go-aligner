@@ -1,147 +1,226 @@
 ---
 const steps = [
-  { n: 1, title: "ENVÍO DE ARCHIVOS", detail: "Prescripción, escaneo STL, radiografías y fotografías", note: "goalignerhn@gmail.com", icon: "doc" },
-  { n: 2, title: "SETUP DIGITAL", detail: "Plan de tratamiento, cotización", icon: "chart" },
-  { n: 3, title: "MODIFICACIONES", detail: "Observaciones y detalles · 3 días hábiles", icon: "search" },
-  { n: 4, title: "AUTORIZACIÓN", detail: "Realización de pago", icon: "money" },
-  { n: 5, title: "ALINEADORES LISTOS", detail: "Entrega en 7 días hábiles", icon: "aligner" },
+  { n: 1, title: "ENVÍO DE ARCHIVOS", detail: "Prescripción, escaneo STL, radiografías y fotografías", note: "goalignerhn@gmail.com", icon: "doc", accent: "from-violet-400 to-indigo-400" },
+  { n: 2, title: "SETUP DIGITAL", detail: "Plan de tratamiento, cotización", icon: "chart", accent: "from-sky-400 to-blue-500" },
+  { n: 3, title: "MODIFICACIONES", detail: "Observaciones y detalles · 3 días hábiles", icon: "search", accent: "from-fuchsia-400 to-violet-500" },
+  { n: 4, title: "AUTORIZACIÓN", detail: "Realización de pago", icon: "money", accent: "from-emerald-400 to-teal-500" },
+  { n: 5, title: "ALINEADORES LISTOS", detail: "Entrega en 7 días hábiles", icon: "aligner", accent: "from-amber-400 to-orange-500" },
 ];
 ---
 
-<section class="relative py-16 md:py-24 text-white overflow-hidden">
-<!-- gradient border top -->
-    <div class="absolute inset-0  pointer-events-none">
-        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-t from-transparent via-black/30 to-neutral-950"></div>
-        <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent via-black/30 to-neutral-950"></div>
-    </div>
-  <!-- Fondo “poster” como en el logo -->
-  <div class="absolute inset-0 -z-10">
-    <!-- base -->
+<section id="proceso" class="relative overflow-hidden py-16 md:py-20 text-white bg-neutral-950">
+  <!-- fondo -->
+  <div class="absolute inset-0 -z-10 pointer-events-none">
     <div class="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_-10%,#0f0b15,transparent_60%),linear-gradient(180deg,#08090b,#0a0a0f_35%,#0b0a10_70%,#0a0a0f)]"></div>
-
-    <!-- líneas diagonales finas -->
-    <div
-      class="absolute inset-0 opacity-[0.08]"
-      style="
-        background-image: repeating-linear-gradient(110deg, rgba(168,85,247,0.70) 0 1px, transparent 1px 9px);
-        mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-      "
-    ></div>
-
-    <!-- bandas diagonales suaves -->
-    <div
-      class="absolute inset-0 opacity-[0.18]"
-      style="
-        background-image:
-          linear-gradient(115deg, transparent 30%, rgba(124,58,237,.16) 46%, transparent 66%),
-          linear-gradient(295deg, transparent 35%, rgba(59,130,246,.12) 56%, transparent 72%);
-      "
-    ></div>
-
-    <!-- glows sutiles -->
+    <div class="absolute inset-0 opacity-[0.06]" style="background-image:repeating-linear-gradient(110deg,rgba(168,85,247,.7) 0 1px,transparent 1px 12px)"></div>
     <div class="absolute -top-24 -left-24 w-[26rem] h-[26rem] bg-[#7c3aed]/20 blur-3xl rounded-full"></div>
     <div class="absolute bottom-[-6rem] right-[-6rem] w-[24rem] h-[24rem] bg-[#2563eb]/20 blur-3xl rounded-full"></div>
   </div>
 
-  <!-- Encabezado -->
-  <div class="max-w-screen-xl mx-auto px-4 md:px-6">
-    <div class="mb-8 md:mb-12">
+  <div class="relative max-w-6xl mx-auto px-6">
+    <!-- header -->
+    <div class="text-center mb-8">
       <span class="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-sm text-neutral-200 backdrop-blur border border-white/10">
         Procedimiento
       </span>
       <h2 class="mt-3 text-3xl md:text-5xl font-bold tracking-tight">Paso a paso</h2>
-      <div class="mt-3 h-[2px] w-48 bg-gradient-to-r from-[#a78bfa]/70 via-white/60 to-transparent"></div>
+    </div>
+
+<!-- NAV: chips numerados -->
+<div class="chips-wrap mt-2 -mx-4 px-4 overflow-x-auto no-scrollbar">
+  <div class="flex items-center gap-2.5 md:gap-3 w-max mx-auto md:mx-0 md:w-auto justify-center md:justify-center">
+    {steps.map((s, i) => (
+      <button
+        class="step-chip group relative inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 px-3.5 py-2 text-sm transition aria-selected:bg-white/15 aria-selected:border-white/20"
+        data-step={i}
+        aria-controls={`panel-${i}`}
+        aria-selected={i === 0 ? "true" : "false"}
+      >
+        <span class="grid place-items-center size-6 rounded-full font-bold text-neutral-900 bg-white shadow">
+          {s.n}
+        </span>
+        <span class="text-white/90">{s.title}</span>
+      </button>
+    ))}
+  </div>
+</div>
+
+<!-- barra de progreso (un pelín más visible) -->
+<div class="mt-4 mx-auto max-w-3xl h-1.5 rounded-full bg-white/10 overflow-hidden">
+  <div class="progress h-full w-0 bg-gradient-to-r from-violet-400 to-blue-500"></div>
+</div>
+
+
+    <!-- PANEL contenedor (altura auto animada) -->
+    <div class="panel-wrap relative mt-8 md:mt-10 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden">
+
+  <!-- “visual” abstracto superior -->
+  <div id="visualBox" class="relative h-28 sm:h-32 md:h-36">
+    <div id="visual-bg" class="absolute inset-0 bg-gradient-to-br from-violet-400 to-indigo-400 opacity-80"></div>
+
+    <!-- textura + máscara cross-browser -->
+    <div
+      class="absolute inset-0 mix-blend-overlay opacity-70"
+      style="
+        --mask: radial-gradient(120% 100% at 50% 0%, black, transparent 70%);
+        background:
+          radial-gradient(60% 70% at 20% 30%, rgba(255,255,255,.25), transparent 60%),
+          radial-gradient(70% 60% at 80% 70%, rgba(255,255,255,.15), transparent 60%),
+          repeating-linear-gradient(135deg, rgba(255,255,255,.12) 0 2px, transparent 2px 10px);
+        -webkit-mask-image: var(--mask);
+        mask-image: var(--mask);
+      ">
+    </div>
+
+    <!-- icono centrado -->
+    <div class="relative z-10 h-full grid place-items-center">
+      <div class="size-12 sm:size-14 grid place-items-center rounded-2xl bg-white/15 border border-white/20 backdrop-blur">
+        <div id="visual-icon" class="text-2xl"></div>
+      </div>
     </div>
   </div>
 
-  <!-- Lista -->
-  <div class="max-w-screen-xl mx-auto px-4 md:px-6 relative">
-    <!-- Espina curva -->
-    <svg class="absolute left-2 md:left-6 top-0 h-full w-[60px] opacity-70 pointer-events-none"
-         viewBox="0 0 60 600" preserveAspectRatio="none" aria-hidden="true">
-      <defs>
-        <filter id="glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-      <path d="M50 0 C 28 80, 28 160, 50 240 S 28 400, 50 480 S 28 560, 50 640"
-            stroke="rgba(255,255,255,.65)" stroke-width="3" fill="none" filter="url(#glow)" stroke-linecap="round"/>
-    </svg>
-
-    <ol class="relative grid gap-6 md:gap-7">
-      {steps.map((s) => (
-        <li class="relative w-full">
-          <!-- Nodo -->
-          <div class="absolute -left-0 md:left-[1em] top-1/2 -translate-y-1/2">
-            <div class="node w-9 h-9 md:w-10 md:h-10 rounded-full bg-white text-neutral-900 grid place-items-center font-bold shadow-[0_0_0_6px_rgba(0,0,0,.35)]">
-              {s.n}
-            </div>
-          </div>
-
-          <!-- Tarjeta -->
-          <div class="step-card relative ml-10 md:ml-16 rounded-[2rem] pl-12 md:pl-24 pr-6 py-6 md:py-5">
-            <div class="absolute inset-0 rounded-[2rem] bg-gradient-to-r from-violet-500 to-blue-500"></div>
-            <div class="absolute inset-0 rounded-[2rem]" style="box-shadow: 0 12px 36px rgba(59,130,246,.35)"></div>
-
-            <div class="relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 w-full">
-              <div class="icon shrink-0 rounded-2xl bg-white/10 p-3">
-                {s.icon === "doc" && (
-                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/>
-                  </svg>
-                )}
-                {s.icon === "chart" && (
-                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M3 20h18"/><rect x="6" y="10" width="3" height="7" rx="1"/><rect x="11" y="7" width="3" height="10" rx="1"/><rect x="16" y="12" width="3" height="5" rx="1"/>
-                  </svg>
-                )}
-                {s.icon === "search" && (
-                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="11" cy="11" r="6"/><path d="m20 20-3.5-3.5"/>
-                  </svg>
-                )}
-                {s.icon === "money" && (
-                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="12" cy="12" r="9"/><path d="M8 12h5a2 2 0 0 0 0-4h-2"/><path d="M12 16v-8"/>
-                  </svg>
-                )}
-                {s.icon === "aligner" && (
-                  <svg viewBox="0 0 64 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12c6-9 16-9 22 0s16 9 22 0 14-9 14 0"/><circle cx="15" cy="12" r="1.2"/><circle cx="27" cy="12" r="1.2"/><circle cx="39" cy="12" r="1.2"/><circle cx="51" cy="12" r="1.2"/>
-                  </svg>
+      <!-- panels (todos renderizados, se ocultan) -->
+      <div class="relative">
+        {steps.map((s, i) => (
+          <section
+            id={`panel-${i}`}
+            class={`panel px-6 md:px-8 py-6 md:py-7 ${i === 0 ? "relative" : "absolute inset-0 opacity-0 pointer-events-none"}`}
+            data-accent={s.accent}
+            data-icon={s.icon}
+          >
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class={`size-10 grid place-items-center rounded-xl bg-gradient-to-br ${s.accent} text-neutral-900 font-bold shadow-[0_0_14px_rgba(139,92,246,.45),0_0_22px_rgba(59,130,246,.35)]`}>
+                  {s.n}
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-lg md:text-xl font-semibold">{s.title}</h3>
+                <p class="text-neutral-300 mt-1 leading-relaxed">{s.detail}</p>
+                {s.note && (
+                  <p class="text-sm mt-2 opacity-90">
+                    <span class="inline-flex items-center gap-2">
+                      <i class="fa-regular fa-envelope"></i>
+                      <button class="copy-mail underline underline-offset-4 decoration-white/40 hover:decoration-white" data-mail={s.note} title="Copiar correo">
+                        {s.note}
+                      </button>
+                    </span>
+                  </p>
                 )}
               </div>
-              <div class="md:flex-1">
-                <p class="uppercase tracking-wide text-sm md:text-base font-extrabold">{s.title}</p>
-                <p class="text-sm md:text-[15px] opacity-95">{s.detail}</p>
-                {s.note && <p class="text-xs md:text-sm mt-1 opacity-90">{s.note}</p>}
-              </div>
             </div>
-          </div>
-        </li>
-      ))}
-    </ol>
+          </section>
+        ))}
+      </div>
+    </div>
+
+    <!-- hint -->
+    <p class="mt-4 text-center text-sm text-white/60">Usa las flechas del teclado ← → o haz clic en cada paso.</p>
   </div>
-
-  <!-- Script (igual que ya tienes) -->
-  <script>
-    import gsap from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
-    if (typeof window !== "undefined") {
-      gsap.registerPlugin(ScrollTrigger);
-
-      document.querySelectorAll(".step-card").forEach((el, i) => {
-        gsap.set(el, { y: 18, opacity: 0 });
-        gsap.to(el, {
-          scrollTrigger: { trigger: el, start: "top 86%" },
-          y: 0, opacity: 1, duration: 0.55, ease: "power2.out", delay: i * 0.02
-        });
-      });
-
-      document.querySelectorAll(".node").forEach((n, i) => {
-        gsap.to(n, {
-          boxShadow: "0 0 16px rgba(139,92,246,.9), 0 0 28px rgba(59,130,246,.6)",
-          repeat: -1, yoyo: true, duration: 1.6, delay: i * 0.2, ease: "sine.inOut"
-        });
-      });
-    }
-  </script>
 </section>
+
+<!-- Font Awesome Free en tu layout global -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
+<script>
+  import gsap from "gsap";
+
+  if (typeof window !== "undefined") {
+    const chips   = Array.from(document.querySelectorAll(".step-chip")) as HTMLButtonElement[];
+    const panels  = Array.from(document.querySelectorAll(".panel")) as HTMLElement[];
+    const progress = document.querySelector(".progress") as HTMLElement;
+    const visualBg = document.getElementById("visual-bg") as HTMLElement;
+    const visualBox = document.getElementById("visualBox") as HTMLElement;
+    const visualIcon = document.getElementById("visual-icon") as HTMLElement;
+    const wrap = document.querySelector(".panel-wrap") as HTMLElement;
+
+    const iconTpl = {
+      doc: `<svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>`,
+      chart:`<svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 20h18"/><rect x="6" y="10" width="3" height="7" rx="1"/><rect x="11" y="7" width="3" height="10" rx="1"/><rect x="16" y="12" width="3" height="5" rx="1"/></svg>`,
+      search:`<svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="m20 20-3.5-3.5"/></svg>`,
+      money:`<svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12h5a2 2 0 0 0 0-4h-2"/><path d="M12 16v-8"/></svg>`,
+      aligner:`<svg viewBox="0 0 64 24" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12c6-9 16-9 22 0s16 9 22 0 14-9 14 0"/><circle cx="15" cy="12" r="1.2"/><circle cx="27" cy="12" r="1.2"/><circle cx="39" cy="12" r="1.2"/><circle cx="51" cy="12" r="1.2"/></svg>`
+    };
+
+    let index = 0;
+
+    // altura = visual + panel activo
+    const setHeight = (pane:any) => {
+      const hVisual = visualBox?.offsetHeight || 0;
+      const hPanel  = pane?.offsetHeight || 0;
+      const h = hVisual + hPanel;
+      gsap.set(wrap, { height: h }); // set inmediato evita parpadeo
+      gsap.to(wrap, { height: h, duration: 0.35, ease: "power2.out" });
+    };
+
+    const setActiveChip = (i:number) => {
+      chips.forEach((c, k) => c.setAttribute("aria-selected", k === i ? "true" : "false"));
+    };
+
+    const updateProgress = (i:number) => {
+      const pct = i / (panels.length - 1);
+      gsap.to(progress, { width: `${pct * 100}%`, duration: 0.35, ease: "power2.out" });
+    };
+
+    const swapVisual = (pane:any) => {
+      const accent = pane.dataset.accent;
+      const icon = pane.dataset.icon as keyof typeof iconTpl;
+      visualBg.className = `absolute inset-0 bg-gradient-to-br ${accent} opacity-80`;
+      visualIcon.innerHTML = iconTpl[icon] || iconTpl.doc;
+      gsap.fromTo(visualIcon, { y: 6, opacity: 0 }, { y: 0, opacity: 1, duration: .3, ease: "power2.out" });
+    };
+
+    const showPanel = (to:any) => {
+      if (to === index || to < 0 || to >= panels.length) return;
+      const fromPane = panels[index];
+      const toPane   = panels[to];
+      index = to;
+
+      gsap.timeline()
+        .set(toPane, { position: "relative", pointerEvents: "auto" })
+        .to(fromPane, { opacity: 0, y: 8, duration: .2, ease: "power1.out", onComplete: () => {
+          fromPane.style.position = "absolute";
+          fromPane.style.pointerEvents = "none";
+        }})
+        .fromTo(toPane, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .3, ease: "power2.out" }, "<0.05");
+
+      setHeight(toPane);
+      setActiveChip(index);
+      updateProgress(index);
+      swapVisual(toPane);
+      history.replaceState(null, "", `#step-${index+1}`);
+    };
+
+    // init
+    visualIcon.innerHTML = iconTpl[panels[0]?.dataset?.icon as keyof typeof iconTpl] || iconTpl.doc;
+    setTimeout(() => setHeight(panels[0]), 0);
+
+    chips.forEach((c) => c.addEventListener("click", () => showPanel(+(c.dataset.step || 0))));
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") showPanel(index + 1);
+      if (e.key === "ArrowLeft")  showPanel(index - 1);
+    });
+
+    // deep-link
+    const hash = location.hash.match(/step-(\d+)/);
+    if (hash) {
+      const i = Math.min(Math.max(parseInt(hash[1], 10) - 1, 0), panels.length - 1);
+      if (i) { showPanel(i); }
+    }
+
+    // util: ocultar scrollbar de chips en navegadores comunes
+    document.querySelectorAll('.no-scrollbar').forEach(el => {
+      (el as HTMLElement).style.scrollbarWidth = 'none'; // Firefox
+      (el as HTMLElement).style.setProperty('-ms-overflow-style', 'none'); // IE/Edge
+      el.addEventListener('wheel', (e)=> {
+        // scroll suave horizontal con wheel
+        const wheelEvent = e as WheelEvent;
+        if (Math.abs(wheelEvent.deltaY) > Math.abs(wheelEvent.deltaX)) {
+          (el as HTMLElement).scrollLeft += wheelEvent.deltaY * 0.5;
+        }
+      }, { passive: true });
+    });
+  }
+</script>
+

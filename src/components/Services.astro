@@ -1,56 +1,30 @@
 ---
 const services = [
-  { title: "Diseño digital de tratamientos", description: "Modelos 3D con simulación del movimiento dental y planificación personalizada según el ortodoncista." },
-  { title: "Fabricación de alineadores personalizados", description: "Producción secuencial con tecnología shape memory, basada en el plan digital aprobado." },
-  { title: "Escaneo intraoral o recepción de modelos", description: "Escaneo digital de modelos físicos en caso de que la clínica no cuente con escáner propio." },
-  { title: "Portal digital para ortodoncistas", description: "Subida de casos, revisión de planes, seguimiento y comunicación directa con técnicos." },
-  { title: "Asesoría clínica personalizada", description: "Soporte técnico durante el tratamiento y revisión conjunta de casos complejos." },
-  { title: "Fabricación de guías quirúrgicas", description: "Diseño y producción de guías para colocación precisa de mini tornillos o intervenciones." },
-  { title: "Retenedores postratamiento", description: "Retenedores a medida para conservar los resultados del tratamiento de ortodoncia." },
-  { title: "Capacitación y educación continua", description: "Cursos, webinars y certificaciones para actualizarse en técnicas y protocolos clínicos." },
+  { title: "Diseño digital de tratamientos", icon: "fa-wand-magic-sparkles", accent: "from-violet-400 to-indigo-400", description: "Modelos 3D con simulación del movimiento dental y planificación personalizada según el ortodoncista." },
+  { title: "Fabricación de alineadores personalizados", icon: "fa-tooth", accent: "from-sky-400 to-blue-500", description: "Producción secuencial con tecnología shape memory, basada en el plan digital aprobado." },
+  { title: "Escaneo intraoral o recepción de modelos", icon: "fa-camera-rotate", accent: "from-fuchsia-400 to-violet-500", description: "Escaneo digital de modelos físicos en caso de que la clínica no cuente con escáner propio." },
+  { title: "Portal digital para ortodoncistas", icon: "fa-layer-group", accent: "from-cyan-400 to-blue-500", description: "Subida de casos, revisión de planes, seguimiento y comunicación directa con técnicos." },
+  { title: "Asesoría clínica personalizada", icon: "fa-user-doctor", accent: "from-emerald-400 to-teal-500", description: "Soporte técnico durante el tratamiento y revisión conjunta de casos complejos." },
+  { title: "Fabricación de guías quirúrgicas", icon: "fa-compass-drafting", accent: "from-rose-400 to-pink-500", description: "Diseño y producción de guías para colocación precisa de mini tornillos o intervenciones." },
+  { title: "Retenedores postratamiento", icon: "fa-shield-heart", accent: "from-amber-400 to-orange-500", description: "Retenedores a medida para conservar los resultados del tratamiento de ortodoncia." },
+  { title: "Capacitación y educación continua", icon: "fa-graduation-cap", accent: "from-lime-400 to-green-500", description: "Cursos, webinars y certificaciones para actualizarse en técnicas y protocolos clínicos." },
 ];
 ---
 
 <section id="servicios" class="relative text-white overflow-hidden py-20 md:py-28 bg-neutral-950">
-      <div class="absolute inset-0  pointer-events-none z-20">
-        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-t from-transparent via-black/30 to-neutral-950"></div>
-        <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent via-black/30 to-neutral-950"></div>
-    </div>
-  <!-- Fondo tipo “logo”: negro + diagonales + luces -->
-  <div class="absolute inset-0 z-10">
-    <!-- base negra con ligerísimo degradado -->
-    <div class="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_-10%,#0f0b15,transparent_60%),linear-gradient(180deg,#08090b, #0a0a0f_30%,#0b0a10_70%,#0a0a0f)]"></div>
-
-    <!-- líneas diagonales finas (como el poster) -->
-    <div
-      class="absolute inset-0 opacity-[0.08]"
-      style="
-        background-image:
-          repeating-linear-gradient(110deg, rgba(168,85,247,0.65) 0 1px, transparent 1px 9px);
-        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-      "
-    ></div>
-
-    <!-- bandas diagonales suaves (sombras moradas) -->
-    <div
-      class="absolute inset-0 opacity-[0.18] "
-      style="
-        background-image:
-          linear-gradient(115deg, transparent 30%, rgba(119,33,208,.15) 45%, transparent 65%),
-          linear-gradient(295deg, transparent 35%, rgba(59,130,246,.10) 55%, transparent 70%);
-      "
-    ></div>
-
-    <!-- glows sutiles en esquinas (muy bajos) -->
-    <div class="absolute -top-24 -left-24 w-[28rem] h-[28rem] bg-[#7c3aed]/20 blur-3xl rounded-full"></div>
-    <div class="absolute bottom-[-6rem] right-[-6rem] w-[26rem] h-[26rem] bg-[#2563eb]/20 blur-3xl rounded-full"></div>
+  <!-- overlays -->
+  <div class="absolute inset-0 pointer-events-none z-10">
+    <div class="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_-10%,#0f0b15,transparent_60%),linear-gradient(180deg,#08090b,#0b0a10_65%,#0a0a0f)]"></div>
+    <div class="absolute inset-0 opacity-[0.06]" style="background-image:repeating-linear-gradient(110deg,rgba(168,85,247,.7) 0 1px,transparent 1px 12px)"></div>
+    <div class="absolute -top-24 -left-24 w-[28rem] h-[28rem] bg-[#7c3aed]/25 blur-3xl rounded-full"></div>
+    <div class="absolute bottom-[-6rem] right-[-6rem] w-[26rem] h-[26rem] bg-[#2563eb]/25 blur-3xl rounded-full"></div>
   </div>
 
-  <div class="relative z-10 max-w-6xl mx-auto px-6">
-    <!-- Header -->
-    <div class="text-center mb-10 md:mb-14">
+  <div class="relative z-20 max-w-6xl mx-auto px-6">
+    <!-- header -->
+    <div class="text-center mb-10 md:mb-12">
       <span class="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-sm text-neutral-200 backdrop-blur border border-white/10">
-        Servicios
+        <i class="fa fa-sparkle"></i> Servicios
       </span>
       <h2 class="mt-3 text-3xl md:text-5xl font-bold tracking-tight">
         Nuestros <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#cfcfd4] via-[#e5e7eb] to-[#cfcfd4]">servicios</span>
@@ -58,79 +32,199 @@ const services = [
       <p class="text-neutral-300 text-base md:text-lg mt-3 max-w-3xl mx-auto">
         Soluciones de ortodoncia digital con precisión, soporte y resultados predecibles.
       </p>
-      <!-- subrayado con tono plata + violeta muy sutil -->
       <div class="mx-auto mt-4 h-[2px] w-44 bg-gradient-to-r from-[#a78bfa]/60 via-white/60 to-transparent"></div>
     </div>
 
-    <!-- Grid -->
-    <div class="grid md:grid-cols-2 gap-6 md:gap-8">
-      {services.map((item, i) => (
-        <article class="service-card relative group">
-          <!-- marco gradiente sutil (evita halo blanco) -->
-          <div class="rounded-3xl p-[1px] bg-[linear-gradient(90deg,rgba(139,92,246,.9),rgba(59,130,246,.9))] shadow-[0_16px_44px_rgba(59,130,246,.18)]">
-            <div class="relative rounded-3xl bg-white/5 backdrop-blur-md p-6 md:p-7">
-              <!-- highlight suave al hover -->
-              <span class="pointer-events-none absolute -top-14 -left-10 w-48 h-48 bg-white/10 blur-3xl rounded-full opacity-0 group-hover:opacity-25 transition-opacity duration-700"></span>
+    <!-- SLIDER -->
+    <div class="relative">
+      <!-- botones -->
+      <button aria-label="Anterior" class="nav-prev absolute -left-6 sm:-left-4 top-1/2 -translate-y-1/2 z-30 size-10 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 border border-white/15 backdrop-blur">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button aria-label="Siguiente" class="nav-next absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-30 size-10 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 border border-white/15 backdrop-blur">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
 
-              <!-- badge número -->
-              <div class="absolute -left-4 -top-4">
-                <div class="w-10 h-10 rounded-full grid place-items-center font-bold text-neutral-900 bg-white shadow-[0_0_14px_rgba(139,92,246,.55),0_0_22px_rgba(59,130,246,.45)]">
-                  {String(i + 1)}
+      <!-- viewport -->
+      <div class="slider-viewport overflow-hidden">
+        <!-- track -->
+        <div class="slider-track flex gap-6 md:gap-8 will-change-transform">
+          {services.map((item, i) => (
+            <article class="slide media-card group relative rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md shadow-[0_16px_44px_rgba(59,130,246,.14)] 
+                           min-w-[88%] sm:min-w-[70%] lg:min-w-[48%]">
+              <!-- visual -->
+              <div class="media relative h-40 sm:h-44 md:h-48 overflow-hidden">
+                <div class="absolute inset-0">
+                  <div class={`absolute inset-0 bg-gradient-to-br ${item.accent} opacity-80`}></div>
+                  <div class="absolute inset-0 mix-blend-overlay opacity-70" style="
+                      background:
+                        radial-gradient(60% 70% at 20% 30%, rgba(255,255,255,.25), transparent 60%),
+                        radial-gradient(70% 60% at 80% 70%, rgba(255,255,255,.15), transparent 60%),
+                        repeating-linear-gradient(135deg, rgba(255,255,255,.12) 0 2px, transparent 2px 10px);
+                    "></div>
+                  <div class="absolute inset-0 bg-black/30 [mask-image:radial-gradient(120%_100%_at_50%_0%,black,transparent_70%)]"></div>
+                </div>
+                <div class="relative z-10 h-full grid place-items-center">
+                  <div class="size-14 sm:size-16 grid place-items-center rounded-2xl bg-white/15 border border-white/20 backdrop-blur">
+                    <i class={`fa-solid ${item.icon} text-2xl`}></i>
+                  </div>
+                </div>
+                <span class="pointer-events-none absolute -top-16 -left-10 w-56 h-56 rounded-full bg-white/20 blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-700"></span>
+              </div>
+              <div class="p-6 md:p-7">
+                <div class="flex items-start gap-4">
+                  <div class="shrink-0">
+                    <div class={`size-10 grid place-items-center rounded-xl bg-gradient-to-br ${item.accent} text-neutral-900 font-bold shadow-[0_0_14px_rgba(139,92,246,.45),0_0_22px_rgba(59,130,246,.35)]`}>
+                      {String(i + 1)}
+                    </div>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="text-lg md:text-xl font-semibold">{item.title}</h3>
+                    <p class="text-neutral-300 mt-1 leading-relaxed">{item.description}</p>
+                  </div>
                 </div>
               </div>
+            </article>
+          ))}
+        </div>
+      </div>
 
-              <!-- contenido -->
-              <header class="flex items-start gap-3 md:gap-4">
-                <div class="shrink-0 rounded-xl bg-white/10 p-3">
-                  <!-- icono alineador -->
-                  <svg viewBox="0 0 64 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12c6-9 16-9 22 0s16 9 22 0 14-9 14 0" />
-                    <circle cx="15" cy="12" r="1.2"/><circle cx="27" cy="12" r="1.2"/><circle cx="39" cy="12" r="1.2"/><circle cx="51" cy="12" r="1.2"/>
-                  </svg>
-                </div>
-                <div class="flex-1">
-                  <h3 class="text-lg md:text-xl font-semibold text-white">{item.title}</h3>
-                  <p class="text-neutral-300 mt-1 leading-relaxed">{item.description}</p>
-                </div>
-              </header>
-
-              <!-- línea interior muy discreta -->
-              <div class="mt-4 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent"></div>
-            </div>
-          </div>
-        </article>
-      ))}
+      <!-- dots -->
+      <div class="dots mt-6 flex items-center justify-center gap-2 "></div>
     </div>
   </div>
-
 </section>
 
-<script>
+
+<script >
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
 
   if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 
-    ScrollTrigger.batch(".service-card", {
-      onEnter: (batch) => {
-        gsap.fromTo(
-          batch,
-          { y: 36, opacity: 0, filter: "blur(6px)" },
-          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8, stagger: 0.12, ease: "power3.out" }
-        );
-      },
+    const track = document.querySelector(".slider-track") as HTMLElement;
+    const slides = Array.from(document.querySelectorAll(".slide")) as HTMLElement[];
+    const prevBtn = document.querySelector(".nav-prev") as HTMLElement;
+    const nextBtn = document.querySelector(".nav-next") as HTMLElement;
+    const dotsWrap = document.querySelector(".dots") as HTMLElement;
+    const viewport = document.querySelector(".slider-viewport") as HTMLElement;
+
+    // Crea dots
+    slides.forEach((_, i) => {
+      const b = document.createElement("button");
+      b.className = "dot size-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-[width,background] w-2.5 last:hidden";
+      b.setAttribute("aria-label", `Ir a slide ${i+1}`);
+      dotsWrap.appendChild(b);
+    });
+    const dots = Array.from(document.querySelectorAll(".dot")) as HTMLElement[];
+
+    // Estado
+    const state = { index: 0, x: 0 };
+
+    // helpers
+    const getSnapX = (idx: number) => {
+      // Calcula offset exacto del slide dentro del track para alinear su borde izquierdo con el viewport
+      const target = slides[idx];
+      const left = target.offsetLeft; // relativo al track
+      return -left; // translateX del track
+    };
+
+    const clampIndex = (i: number) => Math.max(0, Math.min(i, slides.length - getPerView()));
+    const getPerView = () => (window.innerWidth >= 1024 ? 2 : 1);
+
+    const setActiveDot = (i: number) => {
+      dots.forEach((d, k) => {
+
+        d.style.width = k === i ? "22px" : "10px";
+        d.style.background = k === i ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.3)";
+        d.classList.toggle("rounded-full", k !== i);
+        d.classList.toggle("rounded", k === i);
+      });
+    };
+
+    const goTo = (i: number) => {
+      state.index = clampIndex(i);
+      const x = getSnapX(state.index);
+      state.x = x;
+      gsap.to(track, { x, duration: 0.7, ease: "power3.inOut" });
+      setActiveDot(state.index);
+    };
+
+    // drag con pointer events (ligero)
+    let dragging = false, startX = 0, startTx = 0, lastDx = 0;
+    const onPointerDown = (e: any) => {
+      dragging = true;
+      startX = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
+      startTx = state.x;
+      lastDx = 0;
+      track.style.cursor = "grabbing";
+    };
+    const onPointerMove = (e: any) => {
+      if (!dragging) return;
+      const x = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
+      const dx = x - startX;
+      lastDx = dx;
+      const maxLeft = 0;
+      const maxRight = -(track.scrollWidth - viewport.clientWidth);
+      const next = gsap.utils.clamp(maxRight - 80, maxLeft + 80, startTx + dx);
+      gsap.set(track, { x: next });
+      state.x = next;
+    };
+    const onPointerUp = () => {
+      if (!dragging) return;
+      dragging = false;
+      track.style.cursor = "";
+      // decidir siguiente índice por dirección/velocidad y slide más cercano
+      const center = -state.x + viewport.clientWidth * 0.1; // añade leve sesgo al avance
+      let closestIdx = 0;
+      let minDist = Infinity;
+      slides.forEach((s, i) => {
+        const dist = Math.abs(s.offsetLeft - center);
+        if (dist < minDist) { minDist = dist; closestIdx = i; }
+      });
+      // impulso sencillo
+      if (Math.abs(lastDx) > 24) {
+        closestIdx += lastDx < 0 ? 1 : -1;
+      }
+      goTo(closestIdx);
+    };
+
+    // listeners drag (mouse + touch)
+    track.addEventListener("mousedown", onPointerDown);
+    window.addEventListener("mousemove", onPointerMove);
+    window.addEventListener("mouseup", onPointerUp);
+    track.addEventListener("touchstart", (e)=>{ onPointerDown(e.touches[0]); }, { passive: true });
+    window.addEventListener("touchmove", (e)=>{ onPointerMove(e.touches[0]); }, { passive: true });
+    window.addEventListener("touchend", onPointerUp);
+
+    // botones
+    prevBtn.addEventListener("click", () => goTo(state.index - 1));
+    nextBtn.addEventListener("click", () => goTo(state.index + 1));
+
+    // dots
+    dots.forEach((d, i) => d.addEventListener("click", () => goTo(i)));
+
+    // entrada por lotes (levemente)
+    ScrollTrigger.batch(".media-card", {
+      start: "top 90%",
       once: true,
-      start: "top 88%",
+      onEnter: (els) => gsap.fromTo(els, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: "power3.out" })
     });
 
-    document.querySelectorAll(".service-card").forEach((card) => {
-      card.addEventListener("mouseenter", () => {
-        gsap.to(card, { y: -6, duration: 0.3, ease: "power2.out" });
-      });
-      card.addEventListener("mouseleave", () => {
-        gsap.to(card, { y: 0, duration: 0.35, ease: "power2.out" });
+    // parallax suave de cada visual
+    document.querySelectorAll(".media-card .media").forEach((m) => {
+      gsap.fromTo(m, { yPercent: -6 }, {
+        yPercent: 0, ease: "none",
+        scrollTrigger: { trigger: m, start: "top bottom", end: "bottom top", scrub: 0.5 }
       });
     });
+
+    // recalcular en resize para mantener snap correcto
+    const onResize = () => goTo(state.index);
+    window.addEventListener("resize", onResize);
+
+    // init
+    goTo(0);
   }
 </script>
