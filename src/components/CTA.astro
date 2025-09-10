@@ -13,7 +13,6 @@ import Video1 from "../assets/video-1.mp4";
     <Image src={Image1} alt="Fondo sonrisa" class="w-full h-full object-cover scale-105" />
     <div class="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-neutral-900/90"></div>
 
-    <!-- Luz sutil morada/azul -->
     <div class="absolute -top-[10%] -left-[10%] w-[400px] h-[400px] rounded-full bg-violet-500/20 blur-[150px]"></div>
     <div class="absolute bottom-[0%] right-[0%] w-[350px] h-[350px] rounded-full bg-cyan-500/20 blur-[150px]"></div>
   </div>
@@ -27,6 +26,7 @@ import Video1 from "../assets/video-1.mp4";
       Transforma tu sonrisa con nuestros alineadores dentales invisibles.
       Agenda tu consulta hoy y da el primer paso hacia una sonrisa perfecta.
     </p>
+
     <video
       class="mt-10 w-full max-w-3xl rounded-lg shadow-lg border border-white/20"
       src={Video1}
@@ -34,18 +34,9 @@ import Video1 from "../assets/video-1.mp4";
       loop
       muted
       controls
+      playsinline
    
     ></video>
-
-    <!-- Botón de acción -->
-    <!-- <div class="mt-10 flex items-center justify-center gap-4">
-      <button
-        id="open-video"
-        class="relative px-8 py-4 rounded-full bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-500 text-white font-medium shadow-lg hover:shadow-violet-500/30 hover:scale-[1.03] transition-all duration-300"
-      >
-        Ver video
-      </button>
-    </div> -->
   </div>
 
   <!-- Modal de video -->
