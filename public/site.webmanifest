@@ -1,0 +1,15 @@
+{
+  "name": "GO ALIGNER",
+  "short_name": "GO ALIGNER",
+  "description": "GO ALIGNER ofrecemos diseño, fabricación y seguimiento con flujo digital. Resultados predecibles con menos citas y más control.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0EA5E9",
+  "lang": "es-HN",
+  "dir": "ltr",
+  "orientation": "portrait",
+  "categories": ["health", "dentist", "beauty", "medical", "pwa"],
+  "id": "/"
+}

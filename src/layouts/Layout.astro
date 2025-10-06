@@ -3,16 +3,92 @@ import Footer from "../components/Footer.astro";
 import Navigation from "../components/Navigation.astro";
 import Social from "../components/Social.astro";
 import "../styles/global.css";
+
+const SITE_NAME = "GO ALIGNER";
+const DEFAULT_TITLE = "GO ALIGNER | Ortodoncia Invisible en Honduras";
+const DEFAULT_DESC =
+  "GO ALIGNER ofrecemos diseño, fabricación y seguimiento con flujo digital. Resultados predecibles con menos citas y más control.";
+
+
+const baseOrigin = Astro.site?.origin ?? "https://www.goalignerhn.com";
+const currentPath = Astro.url.pathname;
+const CANONICAL = `${baseOrigin}${currentPath === "/" ? "" : currentPath}`;
+
+const OG_IMAGE = `${baseOrigin}/og/og-image.png`; 
+const FAVICON = "/favicon.png"; 
+
+// Redes oficiales
+const SOCIALS = [
+  "https://www.instagram.com/goaligner.hn/",
+  "https://www.facebook.com/share/16p88dh3Qr/?mibextid=wwXIfr",
+  "https://www.tiktok.com/@goaligner?_t=ZM-8ysJk1ze9A5&_r=1",
+];
+
+const BUSINESS = {
+  legalName: "GO ALIGNER",
+  telephone: "+504 8856-1070",
+  email: "goalignerhn@gmail.com",
+  address: {
+    streetAddress: "San Pedro Sula, Cortés",
+    addressLocality: "San Pedro Sula",
+    addressRegion: "Cortés",
+    postalCode: "2100",
+    addressCountry: "HN",
+  },
+   openingHours: ["Mo-Fr 09:00-18:00", "Sa 09:00-13:00"],
+};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es-HN" prefix="og: http://ogp.me/ns#">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/logo.png" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href={FAVICON} />
+
+    <!-- Básicos -->
+    <title>{DEFAULT_TITLE}</title>
+    <meta name="description" content={DEFAULT_DESC} />
+    <link rel="canonical" href={CANONICAL} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0EA5E9" />
     <meta name="generator" content={Astro.generator} />
-    <title>Go Aligner</title>
+
+    <!-- Verificación Google -->
+    <meta name="google-site-verification" content="H1RZomOSMOwIDRzRbesvxyvaJoX0V4HcSH0bCej7M1s" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={DEFAULT_TITLE} />
+    <meta property="og:description" content={DEFAULT_DESC} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={CANONICAL} />
+    <meta property="og:image" content={OG_IMAGE} />
+    <meta property="og:locale" content="es_HN" />
+>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={DEFAULT_TITLE} />
+    <meta name="twitter:description" content={DEFAULT_DESC} />
+    <meta name="twitter:image" content={OG_IMAGE} />
+
+
+    <link rel="alternate" hreflang="es-HN" href={CANONICAL} />
+    <link rel="alternate" hreflang="x-default" href={CANONICAL} />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap"
+      rel="stylesheet"
+    />
+
+  
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Iconos (opcional) -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
@@ -21,29 +97,69 @@ import "../styles/global.css";
       referrerpolicy="no-referrer"
     />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap"
-      rel="stylesheet"
-    />
+    <!-- JSON-LD Organization -->
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": SITE_NAME,
+        "url": baseOrigin,
+        "logo": `${baseOrigin}/logo.png`,
+        "sameAs": SOCIALS
+      })}
+    </script>
+
+    <!-- JSON-LD WebSite + SearchAction -->
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": SITE_NAME,
+        "url": baseOrigin,
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": `${baseOrigin}/buscar?q={search_term_string}`,
+          "query-input": "required name=search_term_string"
+        }
+      })}
+    </script>
+
+    <!-- JSON-LD Dentist (LocalBusiness) -->
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Dentist",
+        "name": SITE_NAME,
+        "image": OG_IMAGE,
+        "url": baseOrigin,
+        "telephone": BUSINESS.telephone,
+        "email": BUSINESS.email,
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": BUSINESS.address.streetAddress,
+          "addressLocality": BUSINESS.address.addressLocality,
+          "addressRegion": BUSINESS.address.addressRegion,
+          "postalCode": BUSINESS.address.postalCode,
+          "addressCountry": BUSINESS.address.addressCountry
+        },
+        "areaServed": { "@type": "Country", "name": "Honduras" },
+        "openingHours": BUSINESS.openingHours,
+        "priceRange": "$$",
+        "sameAs": SOCIALS
+      })}
+    </script>
   </head>
-  <body class="">
+
+  <body class=" bg-neutral-900">
     <Navigation />
     <slot />
     <Footer />
+    <Social />
+
+    <!-- Carga de Lenis (cliente) -->
+    <script >
+      import "../lib/lenis";
+    </script>
   </body>
 </html>
 
-<style>
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-</style>
-
-<script>
-  import "../lib/lenis";
-</script>
