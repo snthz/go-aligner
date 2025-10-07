@@ -112,7 +112,7 @@ const services = [
     // Crea dots
     slides.forEach((_, i) => {
       const b = document.createElement("button");
-      b.className = "dot size-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-[width,background] w-2.5 md:last:hidden";
+      b.className = "dot size-2.5 px-4 py-2 rounded-full bg-white/30 hover:bg-white/60 transition-[width,background] w-2.5 md:last:hidden";
       b.setAttribute("aria-label", `Ir a slide ${i+1}`);
       dotsWrap.appendChild(b);
     });

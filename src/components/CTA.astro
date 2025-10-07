@@ -35,24 +35,11 @@ import Video1 from "../assets/video-1.mp4";
       muted
       controls
       playsinline
-   
-    ></video>
+    >
+    <track kind="captions" />
+  </video>
   </div>
 
-  <!-- Modal de video -->
-  <div id="video-modal" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4">
-    <div class="relative w-full max-w-3xl aspect-video">
-      <iframe
-        class="w-full h-full rounded-lg"
-        src="https://www.youtube.com/embed/Ls5XeHnOZek"
-        title="Video"
-        frameborder="0"
-        allowfullscreen></iframe>
-    </div>
-    <button id="close-video" class="absolute top-8 right-8 text-white text-3xl font-bold hover:scale-110 transition-transform">
-      ✕
-    </button>
-  </div>
 
 
   <script >

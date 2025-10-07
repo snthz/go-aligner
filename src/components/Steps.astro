@@ -28,21 +28,30 @@ const steps = [
 
 <!-- NAV: chips numerados -->
 <div class="chips-wrap mt-2 -mx-4 px-2 md:px-4 overflow-x-auto no-scrollbar">
-  <div class="flex items-center gap-2 md:gap-3 w-max mx-auto md:mx-0 md:w-auto justify-center md:justify-center">
-    {steps.map((s, i) => (
-      <button
-        class="step-chip group relative inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 px-3.5 py-2 text-sm transition aria-selected:bg-white/15 aria-selected:border-white/20"
-        data-step={i}
-        aria-controls={`panel-${i}`}
-        aria-selected={i === 0 ? "true" : "false"}
-      >
-        <span class="grid place-items-center size-6 rounded-full font-bold text-neutral-900 bg-white shadow">
-          {s.n}
-        </span>
-        <span class="text-white/90">{s.title}</span>
-      </button>
-    ))}
-  </div>
+<div
+  role="tablist"
+  aria-label="Proceso GO ALIGNER"
+  class="flex items-center gap-2 md:gap-3 w-max mx-auto md:mx-0 md:w-auto justify-center"
+>
+  {steps.map((s, i) => (
+    <button
+      id={`tab-${i}`}
+      role="tab"
+      aria-selected={i === 0 ? "true" : "false"}
+      aria-controls={`panel-${i}`}
+      tabindex={i === 0 ? "0" : "-1"}
+      class="step-chip group relative inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10
+             px-4 py-3 text-sm transition aria-selected:bg-white/15 aria-selected:border-white/20
+             min-w-12 min-h-12"  
+      data-step={i}
+    >
+      <span class="grid place-items-center size-6 rounded-full font-bold text-neutral-900 bg-white shadow">
+        {s.n}
+      </span>
+      <span class="text-white/90">{s.title}</span>
+    </button>
+  ))}
+</div>
 </div>
 
 <!-- barra de progreso (un pelín más visible) -->
