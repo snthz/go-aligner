@@ -77,7 +77,7 @@ const images = [
   }
 </style>
 
-<script is:inline>
+<script >
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
@@ -95,7 +95,7 @@ const images = [
   });
 
   // Partículas flotantes
-  const container = document.getElementById("gallery-particles");
+  const container = document.getElementById("gallery-particles") as HTMLElement;
   Array.from({ length: 12 }).forEach(() => {
     const p = document.createElement("div");
     p.classList.add("absolute", "opacity-20");
@@ -106,7 +106,7 @@ const images = [
     p.style.top = `${Math.random() * 90}%`;
     p.style.left = `${Math.random() * 90}%`;
     p.style.transform = `rotate(${Math.random() * 360}deg)`;
-    container.appendChild(p);
+    container?.appendChild(p);
 
     gsap.to(p, {
       y: `random(-6,6)`,

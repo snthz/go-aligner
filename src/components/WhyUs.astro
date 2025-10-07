@@ -65,13 +65,13 @@ const texts = [
   }
 </style>
 
-<script is:inline>
+<script>
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
 
   // Entrada diagonal
-  gsap.utils.toArray(".why-item").forEach((el, i) => {
+  gsap.utils.toArray<HTMLElement>(".why-item").forEach((el, i) => {
     gsap.fromTo(el,
       { opacity: 0, x: -40, y: 40, scale: 0.95, filter: "blur(6px)" },
       {
@@ -99,7 +99,7 @@ const texts = [
     p.style.top = pos.top;
     p.style.left = pos.left;
     p.style.transform = `rotate(${Math.random() * 360}deg)`;
-    container.appendChild(p);
+    container?.appendChild(p);
 
     gsap.to(p, {
       y: `random(-6,6)`,

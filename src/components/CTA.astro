@@ -55,12 +55,12 @@ import Video1 from "../assets/video-1.mp4";
   </div>
 
 
-  <script is:inline>
-    const openBtn = document.getElementById("open-video");
-    const modal = document.getElementById("video-modal");
-    const closeBtn = document.getElementById("close-video");
+  <script >
+    const openBtn = document.getElementById("open-video") as HTMLElement;
+    const modal = document.getElementById("video-modal")  as HTMLElement;
+    const closeBtn = document.getElementById("close-video") as HTMLElement;
 
-    openBtn.addEventListener("click", () => {
+    openBtn?.addEventListener("click", () => {
       modal.classList.remove("hidden");
       modal.classList.add("flex");
     });
@@ -68,7 +68,7 @@ import Video1 from "../assets/video-1.mp4";
     closeBtn.addEventListener("click", () => {
       modal.classList.remove("flex");
       modal.classList.add("hidden");
-      const iframe = modal.querySelector("iframe");
+      const iframe = modal.querySelector("iframe") as HTMLIFrameElement;
       iframe.src = iframe.src; // reset video
     });
   </script>
