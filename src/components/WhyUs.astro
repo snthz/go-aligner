@@ -8,8 +8,8 @@ const texts = [
 
 <section id="por-que-elegirnos" class="relative py-24 bg-neutral-950 overflow-hidden text-white">
       <div class="absolute inset-0  pointer-events-none z-10">
-        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-t from-transparent via-black/30 to-neutral-950"></div>
-        <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent via-black/30 to-neutral-950"></div>
+        <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-neutral-950 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-neutral-950 to-transparent"></div>
     </div>
   <!-- Fondo gradiente animado -->
   <div class="absolute inset-0 z-0 bg-gradient-to-br from-violet-900 via-neutral-950 to-cyan-900 animate-gradient-move"></div>
@@ -18,7 +18,7 @@ const texts = [
   <div class="absolute inset-0 pointer-events-none z-0" id="why-particles"></div>
 
   <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
-    <h2 class="text-3xl md:text-5xl font-bold mb-4">
+    <h2 class="text-3xl md:text-5xl font-semibold mb-4">
       ¿Por qué <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-500">elegirnos</span>?
     </h2>
     <p class="text-neutral-300 text-lg mb-16 max-w-3xl mx-auto">
@@ -70,20 +70,25 @@ const texts = [
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
 
-  // Entrada diagonal
-  gsap.utils.toArray<HTMLElement>(".why-item").forEach((el, i) => {
-    gsap.fromTo(el,
-      { opacity: 0, x: -40, y: 40, scale: 0.95, filter: "blur(6px)" },
-      {
-        opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)",
-        duration: 1, delay: i * 0.1, ease: "power3.out",
-        scrollTrigger: { trigger: el, start: "top 85%" }
-      }
-    );
-  });
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReduced) {
+    // Entrada suave
+    gsap.utils.toArray<HTMLElement>(".why-item").forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1, y: 0,
+          duration: 0.5, delay: i * 0.08, ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 88%" }
+        }
+      );
+    });
+  }
 
   // Partículas flotantes
-  const container = document.getElementById("why-particles");
+  if (!prefersReduced) {
+    const container = document.getElementById("why-particles");
   const positions = Array.from({ length: 12 }, () => ({
     top: `${Math.random() * 90}%`,
     left: `${Math.random() * 90}%`,
@@ -112,4 +117,5 @@ const texts = [
       delay: Math.random() * 2,
     });
   });
+  } // close prefersReduced check
 </script>
