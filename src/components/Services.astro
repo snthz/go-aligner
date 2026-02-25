@@ -12,6 +12,11 @@ const services = [
 ---
 
 <section id="servicios" class="relative text-white overflow-hidden py-20 md:py-28 bg-neutral-950">
+  <!-- edge blurs -->
+  <div class="absolute inset-0 pointer-events-none z-30">
+    <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-neutral-950 to-transparent"></div>
+    <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-neutral-950 to-transparent"></div>
+  </div>
   <!-- overlays -->
   <div class="absolute inset-0 pointer-events-none z-10">
     <div class="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_-10%,#0f0b15,transparent_60%),linear-gradient(180deg,#08090b,#0b0a10_65%,#0a0a0f)]"></div>
@@ -26,7 +31,7 @@ const services = [
       <span class="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-sm text-neutral-200 backdrop-blur border border-white/10">
          Servicios
       </span>
-      <h2 class="mt-3 text-3xl md:text-5xl font-bold tracking-tight">
+      <h2 class="mt-3 text-3xl md:text-5xl font-semibold tracking-tight">
         Nuestros <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-500">servicios</span>
       </h2>
       <p class="text-neutral-300 text-base md:text-lg mt-3 max-w-3xl mx-auto">
@@ -46,7 +51,7 @@ const services = [
       </button>
 
       <!-- viewport -->
-      <div class="slider-viewport overflow-hidden">
+      <div class="slider-viewport overflow-hidden" style="-webkit-mask-image: linear-gradient(to right, black 90%, transparent); mask-image: linear-gradient(to right, black 90%, transparent);">
         <!-- track -->
         <div class="slider-track flex gap-6 md:gap-8 will-change-transform">
           {services.map((item, i) => (
@@ -101,6 +106,7 @@ const services = [
 
   if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const track = document.querySelector(".slider-track") as HTMLElement;
     const slides = Array.from(document.querySelectorAll(".slide")) as HTMLElement[];
@@ -204,20 +210,22 @@ const services = [
     // dots
     dots.forEach((d, i) => d.addEventListener("click", () => goTo(i)));
 
-    // entrada por lotes (levemente)
-    ScrollTrigger.batch(".media-card", {
-      start: "top 90%",
-      once: true,
-      onEnter: (els) => gsap.fromTo(els, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: "power3.out" })
-    });
-
-    // parallax suave de cada visual
-    document.querySelectorAll(".media-card .media").forEach((m) => {
-      gsap.fromTo(m, { yPercent: -6 }, {
-        yPercent: 0, ease: "none",
-        scrollTrigger: { trigger: m, start: "top bottom", end: "bottom top", scrub: 0.5 }
+    // entrada por lotes
+    if (!prefersReduced) {
+      ScrollTrigger.batch(".media-card", {
+        start: "top 90%",
+        once: true,
+        onEnter: (els) => gsap.fromTo(els, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, stagger: 0.05, ease: "power2.out" })
       });
-    });
+
+      // parallax suave de cada visual
+      document.querySelectorAll(".media-card .media").forEach((m) => {
+        gsap.fromTo(m, { yPercent: -6 }, {
+          yPercent: 0, ease: "none",
+          scrollTrigger: { trigger: m, start: "top bottom", end: "bottom top", scrub: 0.5 }
+        });
+      });
+    }
 
     // recalcular en resize para mantener snap correcto
     const onResize = () => goTo(state.index);

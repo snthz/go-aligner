@@ -1,8 +1,8 @@
 <section class="quote-section relative min-h-screen flex items-center justify-center overflow-hidden bg-neutral-950 px-4 py-20 md:py-32">
   <!-- Gradiente y curvas -->
        <div class="absolute inset-0  pointer-events-none z-20">
-        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-t from-transparent via-black/30 to-neutral-950"></div>
-        <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent via-black/30 to-neutral-950"></div>
+        <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-neutral-950 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-neutral-950 to-transparent"></div>
     </div>
   <div class="absolute inset-0 z-10">
     <div class="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950"></div>
@@ -26,7 +26,7 @@
   <!-- Contenido -->
   <div class="relative z-10 max-w-screen-lg mx-auto flex flex-col items-center text-center px-2 md:px-4 w-full">
     <!-- Texto -->
-    <h2 class="quote-line text-4xl md:text-6xl font-bold leading-tight tracking-tight text-white opacity-0">
+    <h2 class="quote-line text-4xl md:text-6xl font-semibold leading-tight tracking-tight text-white opacity-0">
       Transforma tu práctica ortodóntica con nuestros <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-500">alineadores</span> con memoria de forma.
     </h2>
 
@@ -54,30 +54,40 @@
 <script>
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
-
   gsap.registerPlugin(ScrollTrigger);
 
-  // Texto entra desde abajo como una sonrisa
-  gsap.to(".quote-line", {
-    scrollTrigger: { trigger: ".quote-section", start: "top 75%" },
-    opacity: 1,
-    y: 60,
-    duration: 1,
-    ease: "power3.out",
-  });
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Icono entra después
-  gsap.to(".quote-icon", {
-    scrollTrigger: { trigger: ".quote-section", start: "top 60%" },
-    opacity: 1,
-    scale: 1,
-    duration: 1,
-    ease: "elastic.out(1, 0.6)",
-    delay: 0.1
-  });
+  if (!prefersReduced) {
+    // Texto entra suavemente
+    gsap.fromTo(".quote-line",
+      { opacity: 0, y: 20 },
+      {
+        scrollTrigger: { trigger: ".quote-section", start: "top 75%" },
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+      }
+    );
 
-  // Partículas circulares como burbujas
-  const particleContainer = document.getElementById("quote-particles");
+    // Icono entra después
+    gsap.fromTo(".quote-icon",
+      { opacity: 0 },
+      {
+        scrollTrigger: { trigger: ".quote-section", start: "top 65%" },
+        opacity: 1,
+        duration: 0.5,
+        ease: "power2.out",
+      }
+    );
+  } else {
+    gsap.set([".quote-line", ".quote-icon"], { opacity: 1 });
+  }
+
+  // Partículas
+  if (!prefersReduced) {
+    const particleContainer = document.getElementById("quote-particles");
   const positions = [
     { top: "12%", left: "18%" },
     { top: "22%", left: "68%" },
@@ -111,4 +121,5 @@
       delay: Math.random() * 2,
     });
   });
+  } // close prefersReduced
 </script>

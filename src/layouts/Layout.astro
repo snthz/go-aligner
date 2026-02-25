@@ -5,9 +5,9 @@ import Social from "../components/Social.astro";
 import "../styles/global.css";
 
 const SITE_NAME = "GO ALIGNER";
-const DEFAULT_TITLE = "GO ALIGNER | Ortodoncia Invisible en Honduras";
+const DEFAULT_TITLE = "GO ALIGNER | Alineadores Invisibles y Ortodoncia Digital en Honduras";
 const DEFAULT_DESC =
-  "GO ALIGNER ofrecemos diseño, fabricación y seguimiento con flujo digital. Resultados predecibles con menos citas y más control.";
+  "Diseñamos y fabricamos alineadores dentales invisibles con flujo 100% digital. Plan 3D, seguimiento online y material shape memory. San Pedro Sula, Honduras.";
 
 
 const baseOrigin = Astro.site?.origin ?? "https://www.goalignerhn.com";
@@ -21,7 +21,7 @@ const FAVICON = "/favicon.png";
 const SOCIALS = [
   "https://www.instagram.com/goaligner.hn/",
   "https://www.facebook.com/share/16p88dh3Qr/?mibextid=wwXIfr",
-  "https://www.tiktok.com/@goaligner?_t=ZM-8ysJk1ze9A5&_r=1",
+  "https://www.tiktok.com/@goaligner",
 ];
 
 const BUSINESS = {
@@ -35,7 +35,7 @@ const BUSINESS = {
     postalCode: "2100",
     addressCountry: "HN",
   },
-   openingHours: ["Mo-Fr 09:00-18:00", "Sa 09:00-13:00"],
+  openingHours: ["Mo-Fr 09:00-18:00", "Sa 09:00-13:00"],
 };
 ---
 
@@ -43,7 +43,7 @@ const BUSINESS = {
 <html lang="es-HN" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" href={FAVICON} />
@@ -53,7 +53,7 @@ const BUSINESS = {
     <meta name="description" content={DEFAULT_DESC} />
     <link rel="canonical" href={CANONICAL} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="theme-color" content="#0EA5E9" />
+    <meta name="theme-color" content="#7c3aed" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Verificación Google -->
@@ -66,36 +66,44 @@ const BUSINESS = {
     <meta property="og:type" content="website" />
     <meta property="og:url" content={CANONICAL} />
     <meta property="og:image" content={OG_IMAGE} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GO ALIGNER - Alineadores invisibles en Honduras" />
     <meta property="og:locale" content="es_HN" />
->
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={DEFAULT_TITLE} />
     <meta name="twitter:description" content={DEFAULT_DESC} />
     <meta name="twitter:image" content={OG_IMAGE} />
+    <meta name="twitter:image:alt" content="GO ALIGNER - Alineadores invisibles en Honduras" />
 
 
+    <!-- Hreflang -->
     <link rel="alternate" hreflang="es-HN" href={CANONICAL} />
     <link rel="alternate" hreflang="x-default" href={CANONICAL} />
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap"
-      rel="stylesheet"
-    />
-
-  
+    <!-- Sitemap & Manifest -->
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Iconos (opcional) -->
+    <!-- Font Awesome — async (non-render-blocking) -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
       integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        crossorigin="anonymous"
+      />
+    </noscript>
 
     <!-- JSON-LD Organization -->
     <script type="application/ld+json">
@@ -109,18 +117,13 @@ const BUSINESS = {
       })}
     </script>
 
-    <!-- JSON-LD WebSite + SearchAction -->
+    <!-- JSON-LD WebSite -->
     <script type="application/ld+json">
       {JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": SITE_NAME,
-        "url": baseOrigin,
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": `${baseOrigin}/buscar?q={search_term_string}`,
-          "query-input": "required name=search_term_string"
-        }
+        "url": baseOrigin
       })}
     </script>
 
@@ -148,11 +151,30 @@ const BUSINESS = {
         "sameAs": SOCIALS
       })}
     </script>
+
+    <!-- JSON-LD Service -->
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Fabricación de Alineadores Dentales Invisibles",
+        "provider": {
+          "@type": "Dentist",
+          "name": SITE_NAME,
+          "url": baseOrigin
+        },
+        "areaServed": { "@type": "Country", "name": "Honduras" },
+        "description": DEFAULT_DESC
+      })}
+    </script>
   </head>
 
-  <body class=" bg-neutral-900">
+  <body class="bg-neutral-900">
+    <a href="#main-content" class="skip-to-content">Saltar al contenido principal</a>
     <Navigation />
-    <slot />
+    <main id="main-content">
+      <slot />
+    </main>
     <Footer />
     <Social />
 
