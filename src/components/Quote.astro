@@ -1,55 +1,27 @@
-<section class="quote-section relative min-h-screen flex items-center justify-center overflow-hidden bg-neutral-950 px-4 py-20 md:py-32">
-  <!-- Gradiente y curvas -->
-       <div class="absolute inset-0  pointer-events-none z-20">
-        <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-neutral-950 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-neutral-950 to-transparent"></div>
-    </div>
-  <div class="absolute inset-0 z-10">
-    <div class="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950"></div>
-    <!-- curva sonrisa -->
-    <svg class="absolute inset-x-0 top-1/3 w-full opacity-20" height="300" viewBox="0 0 1440 300" fill="none">
-      <path d="M0,200 C400,350 1040,50 1440,200" stroke="url(#grad)" stroke-width="2" fill="none"/>
-      <defs>
-        <linearGradient id="grad" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#8b5cf6"/><stop offset="1" stop-color="#3b82f6"/>
-        </linearGradient>
-      </defs>
-    </svg>
-    <!-- blobs -->
-    <div class="absolute -top-40 -left-40 w-[28rem] h-[28rem] bg-violet-500/15 blur-3xl rounded-full animate-blob"></div>
-    <div class="absolute bottom-0 -right-40 w-[32rem] h-[32rem] bg-sky-400/15 blur-3xl rounded-full animate-blob animation-delay-2000"></div>
-  </div>
+---
+---
 
-  <!-- Partículas -->
-  <div class="absolute inset-0 pointer-events-none z-0" id="quote-particles"></div>
+<section class="quote-section relative flex items-center justify-center overflow-hidden bg-[#f7f8fa] px-6 py-28 text-neutral-900 md:py-40">
+  <div class="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center">
+    <span class="quote-el eyebrow text-violet-600">Memoria de forma</span>
 
-  <!-- Contenido -->
-  <div class="relative z-10 max-w-screen-lg mx-auto flex flex-col items-center text-center px-2 md:px-4 w-full">
-    <!-- Texto -->
-    <h2 class="quote-line text-4xl md:text-6xl font-semibold leading-tight tracking-tight text-white opacity-0">
-      Transforma tu práctica ortodóntica con nuestros <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-500">alineadores</span> con memoria de forma.
+    <h2 class="quote-el mt-8 text-balance text-3xl font-medium leading-[1.12] tracking-tight md:text-[3.25rem]">
+      Transforma tu práctica ortodóntica con alineadores que
+      <span class="text-violet-600">recuerdan su forma</span> y mantienen el control en cada etapa.
     </h2>
 
-    <!-- Icono alineador -->
-    <div class="quote-icon mt-12 flex flex-col items-center gap-3 opacity-0 scale-90">
-      <svg class="w-28 h-10 text-transparent stroke-current text-sky-300 drop-shadow-lg">
-        <path d="M3 8c6-9 16-9 22 0s16 9 22 0 14-9 14 0" stroke-width="2" fill="none" />
-        <circle cx="15" cy="8" r="1.2"/><circle cx="27" cy="8" r="1.2"/><circle cx="39" cy="8" r="1.2"/><circle cx="51" cy="8" r="1.2"/>
+    <!-- smile mark -->
+    <div class="quote-el mt-14 grid size-14 place-items-center rounded-full bg-violet-100 text-violet-600" aria-hidden="true">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9.25" stroke-width="1.5" opacity="0.35" />
+        <path d="M8.2 14c.9 1.3 2.2 2 3.8 2s2.9-.7 3.8-2" stroke-width="1.8" />
+        <path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.4" />
       </svg>
-      <span class="text-neutral-200 text-lg font-medium">Memoria activa, control constante.</span>
     </div>
+
+    <p class="quote-el mt-6 text-base font-medium text-neutral-500">Memoria activa, control constante.</p>
   </div>
 </section>
-
-<style>
-  .animate-blob { animation: blob 18s ease-in-out infinite; }
-  .animation-delay-2000 { animation-delay: 2s; }
-  @keyframes blob {
-    0%, 100% { transform: translate(0,0) scale(1); }
-    33% { transform: translate(30px,-40px) scale(1.05); }
-    66% { transform: translate(-20px,20px) scale(0.98); }
-  }
-</style>
 
 <script>
   import gsap from "gsap";
@@ -59,67 +31,12 @@
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (!prefersReduced) {
-    // Texto entra suavemente
-    gsap.fromTo(".quote-line",
+    gsap.fromTo(".quote-el",
       { opacity: 0, y: 20 },
       {
-        scrollTrigger: { trigger: ".quote-section", start: "top 75%" },
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power2.out",
+        opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power2.out",
+        scrollTrigger: { trigger: ".quote-section", start: "top 72%" },
       }
     );
-
-    // Icono entra después
-    gsap.fromTo(".quote-icon",
-      { opacity: 0 },
-      {
-        scrollTrigger: { trigger: ".quote-section", start: "top 65%" },
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.out",
-      }
-    );
-  } else {
-    gsap.set([".quote-line", ".quote-icon"], { opacity: 1 });
   }
-
-  // Partículas
-  if (!prefersReduced) {
-    const particleContainer = document.getElementById("quote-particles");
-  const positions = [
-    { top: "12%", left: "18%" },
-    { top: "22%", left: "68%" },
-    { top: "80%", left: "20%" },
-    { top: "90%", left: "65%" },
-    { top: "50%", left: "50%" },
-    { top: "70%", left: "80%" },
-  ];
-
-  positions.forEach((pos) => {
-    const particle = document.createElement("div");
-    particle.classList.add("absolute", "z-0");
-    const size = 6 + Math.random() * 10;
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
-    particle.style.background =
-      "radial-gradient(circle, rgba(139,92,246,0.6), rgba(59,130,246,0.4))";
-    particle.style.borderRadius = "50%";
-    particle.style.top = pos.top;
-    particle.style.left = pos.left;
-    particle.style.opacity = "0.4";
-    particleContainer?.appendChild(particle);
-
-    gsap.to(particle, {
-      y: `random(-14,14)`,
-      x: `random(-14,14)`,
-      duration: 5 + Math.random() * 2,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: Math.random() * 2,
-    });
-  });
-  } // close prefersReduced
 </script>

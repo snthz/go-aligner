@@ -9,8 +9,53 @@
     font-display: swap;
 }
 
+:root {
+    /* Brand accent (kept from original palette) */
+    --violet: #7c3aed;
+    --indigo: #6366f1;
+    --cyan: #06b6d4;
+
+    /* Clinical-soft surfaces */
+    --ink: #0a0a0b;          /* deep near-black for dark sections */
+    --paper: #f7f8fa;        /* soft off-white for light sections */
+    --paper-2: #eef0f4;      /* secondary light tone */
+}
+
 * {
     font-family: "Clash Grotesk", system-ui, sans-serif;
+}
+
+html {
+    background: var(--ink);
+    scroll-behavior: smooth;
+}
+
+/* Offset anchored sections so the fixed nav pill doesn't cover them */
+section[id] {
+    scroll-margin-top: 6rem;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* ── Reusable eyebrow / section label ── */
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+.eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
 }
 
 /* ── Skip to content ── */
@@ -21,10 +66,10 @@
     transform: translateX(-50%);
     z-index: 9999;
     padding: 0.75rem 1.5rem;
-    background: #7c3aed;
+    background: var(--violet);
     color: #fff;
-    border-radius: 0 0 0.5rem 0.5rem;
-    font-weight: 600;
+    border-radius: 0 0 0.75rem 0.75rem;
+    font-weight: 500;
     font-size: 0.875rem;
     transition: top 0.2s ease;
 }
@@ -34,13 +79,9 @@
 
 /* ── Focus visible ── */
 :focus-visible {
-    outline: 2px solid #7c3aed;
-    outline-offset: 2px;
-}
-
-/* ── Smooth scroll (respects reduced motion) ── */
-html {
-    scroll-behavior: smooth;
+    outline: 2px solid var(--violet);
+    outline-offset: 3px;
+    border-radius: 2px;
 }
 
 /* ── Reduced motion support ── */
@@ -55,6 +96,10 @@ html {
 
 /* ── Selection ── */
 ::selection {
-    background: rgba(124, 58, 237, 0.3);
-    color: #fff;
+    background: rgba(124, 58, 237, 0.22);
+    color: inherit;
 }
+
+/* ── Hide scrollbars where needed ── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
