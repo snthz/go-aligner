@@ -4,10 +4,19 @@ import Navigation from "../components/Navigation.astro";
 import Social from "../components/Social.astro";
 import "../styles/global.css";
 
+interface Props {
+  title?: string;
+  description?: string;
+}
+
 const SITE_NAME = "GO ALIGNER";
 const DEFAULT_TITLE = "GO ALIGNER | Alineadores Invisibles y Ortodoncia Digital en Honduras";
 const DEFAULT_DESC =
-  "Diseñamos y fabricamos alineadores dentales invisibles con flujo 100% digital. Plan 3D, seguimiento online y material shape memory. San Pedro Sula, Honduras.";
+  "Alineadores invisibles hechos a tu medida en Honduras: escaneo digital, plan en 3D y seguimiento en línea. San Pedro Sula, Cortés.";
+
+const { title, description } = Astro.props;
+const PAGE_TITLE = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE;
+const PAGE_DESC = description ?? DEFAULT_DESC;
 
 
 const baseOrigin = Astro.site?.origin ?? "https://www.goalignerhn.com";
@@ -35,7 +44,7 @@ const BUSINESS = {
     postalCode: "2100",
     addressCountry: "HN",
   },
-  openingHours: ["Mo-Fr 09:00-18:00", "Sa 09:00-13:00"],
+  openingHours: ["Mo-Fr 08:00-17:00"],
 };
 ---
 
@@ -49,8 +58,8 @@ const BUSINESS = {
     <link rel="icon" type="image/png" href={FAVICON} />
 
     <!-- Básicos -->
-    <title>{DEFAULT_TITLE}</title>
-    <meta name="description" content={DEFAULT_DESC} />
+    <title>{PAGE_TITLE}</title>
+    <meta name="description" content={PAGE_DESC} />
     <link rel="canonical" href={CANONICAL} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#7c3aed" />
@@ -61,8 +70,8 @@ const BUSINESS = {
 
     <!-- Open Graph -->
     <meta property="og:site_name" content={SITE_NAME} />
-    <meta property="og:title" content={DEFAULT_TITLE} />
-    <meta property="og:description" content={DEFAULT_DESC} />
+    <meta property="og:title" content={PAGE_TITLE} />
+    <meta property="og:description" content={PAGE_DESC} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={CANONICAL} />
     <meta property="og:image" content={OG_IMAGE} />
@@ -73,8 +82,8 @@ const BUSINESS = {
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={DEFAULT_TITLE} />
-    <meta name="twitter:description" content={DEFAULT_DESC} />
+    <meta name="twitter:title" content={PAGE_TITLE} />
+    <meta name="twitter:description" content={PAGE_DESC} />
     <meta name="twitter:image" content={OG_IMAGE} />
     <meta name="twitter:image:alt" content="GO ALIGNER - Alineadores invisibles en Honduras" />
 
@@ -167,6 +176,8 @@ const BUSINESS = {
         "description": DEFAULT_DESC
       })}
     </script>
+
+    <slot name="head" />
   </head>
 
   <body class="bg-[#0a0a0b]">

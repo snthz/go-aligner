@@ -1,31 +1,36 @@
 ---
-const services = [
-  { title: "Diseño digital de tratamientos", icon: "fa-wand-magic-sparkles", description: "Modelos 3D con simulación del movimiento dental y planificación personalizada según el ortodoncista." },
-  { title: "Fabricación de alineadores", icon: "fa-tooth", description: "Producción secuencial con tecnología shape memory, basada en el plan digital aprobado." },
-  { title: "Escaneo intraoral o de modelos", icon: "fa-camera-rotate", description: "Escaneo digital de modelos físicos cuando la clínica no cuenta con escáner propio." },
-  { title: "Portal digital para ortodoncistas", icon: "fa-layer-group", description: "Subida de casos, revisión de planes, seguimiento y comunicación directa con técnicos." },
-  { title: "Asesoría clínica personalizada", icon: "fa-user-doctor", description: "Soporte técnico durante el tratamiento y revisión conjunta de casos complejos." },
-  { title: "Guías quirúrgicas", icon: "fa-compass-drafting", description: "Diseño y producción de guías para colocación precisa de mini tornillos o intervenciones." },
-  { title: "Retenedores postratamiento", icon: "fa-shield-heart", description: "Retenedores a medida para conservar los resultados del tratamiento de ortodoncia." },
-  { title: "Capacitación continua", icon: "fa-graduation-cap", description: "Cursos, webinars y certificaciones para actualizarse en técnicas y protocolos clínicos." },
-];
+interface Service {
+  title: string;
+  icon: string;
+  description: string;
+}
+
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  services: Service[];
+}
+
+const { id, eyebrow, title, description, services } = Astro.props;
+
+// Tailwind necesita clases literales
+const cols = services.length % 4 === 0 ? "lg:grid-cols-4" : "lg:grid-cols-3";
 ---
 
-<section id="servicios" class="relative overflow-hidden bg-[#0a0a0b] py-24 text-white md:py-32">
+<section id={id} class:list={["relative overflow-hidden bg-[#0a0a0b] text-white", title ? "py-24 md:py-32" : "pb-24 pt-16 md:pb-32 md:pt-20"]}>
   <div class="relative z-10 mx-auto max-w-6xl px-6">
-    <!-- header -->
-    <div class="max-w-2xl">
-      <span class="eyebrow text-violet-300">Servicios</span>
-      <h2 class="mt-5 text-balance text-4xl font-medium tracking-tight md:text-5xl">
-        Ortodoncia digital, de principio a fin.
-      </h2>
-      <p class="mt-5 text-lg leading-relaxed text-neutral-400">
-        Soluciones de ortodoncia digital con precisión, soporte y resultados predecibles para tu clínica.
-      </p>
-    </div>
+    {title && (
+      <div class="mb-14 max-w-2xl">
+        {eyebrow && <span class="eyebrow text-violet-300">{eyebrow}</span>}
+        <h2 class="mt-5 text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
+        {description && <p class="mt-5 text-lg leading-relaxed text-neutral-400">{description}</p>}
+      </div>
+    )}
 
     <!-- grid -->
-    <div class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] sm:grid-cols-2 lg:grid-cols-4">
+    <div class:list={["grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] sm:grid-cols-2", cols]}>
       {services.map((item, i) => (
         <article class="service-card group relative flex flex-col bg-[#0a0a0b] p-7 transition-colors duration-300 hover:bg-white/[0.025]">
           <div class="flex items-center justify-between">

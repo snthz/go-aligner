@@ -1,0 +1,58 @@
+---
+import CTA from "../components/CTA.astro";
+import FAQ, { type FaqItem } from "../components/FAQ.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Layout from "../layouts/Layout.astro";
+
+// Pendiente de confirmar con la clínica antes de agregar:
+// "¿Qué pasa si pierdo o rompo un alineador?" (si se repone con costo o está incluido, y en cuánto tiempo)
+const faqs: FaqItem[] = [
+  {
+    question: "¿Cuánto dura el tratamiento?",
+    answer: "Depende de cada caso. La mayoría de nuestros pacientes termina entre 6 y 12 meses.",
+  },
+  {
+    question: "¿Duele usar los alineadores?",
+    answer: "Puedes sentir presión los primeros 1–2 días de cada alineador nuevo — es normal y baja rápido. No es el mismo dolor que con brackets.",
+  },
+  {
+    question: "¿Cuánto cuesta?",
+    answer: "El precio depende de la complejidad del caso. Agenda una evaluación gratuita y te damos una cotización personalizada el mismo día.",
+  },
+  {
+    question: "¿Cuál es la diferencia con Invisalign?",
+    answer: "Ambos son alineadores transparentes con tecnología similar. La diferencia es que GO ALIGNER se fabrica y da seguimiento aquí en Honduras: revisiones más rápidas, atención directa con el equipo que hizo tu plan, y un precio más accesible que importar el tratamiento.",
+  },
+  {
+    question: "¿Cómo se coloca el GO ALIGNER?",
+    answer: "Lo sumerges unos segundos en agua tibia — se vuelve flexible y fácil de colocar. Al enfriarse en tu boca, recupera su forma rígida y queda perfectamente ajustado.",
+  },
+];
+---
+
+<Layout
+  title="Preguntas frecuentes"
+  description="Duración, dolor, precio, diferencia con Invisalign y cómo se colocan: respuestas a las dudas más comunes sobre los alineadores GO ALIGNER."
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((f) => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+    })),
+  })} />
+
+  <PageHeader
+    eyebrow="Preguntas frecuentes"
+    title="Resolvemos tus dudas antes de empezar."
+    description="Lo que nuestros pacientes suelen preguntar antes de agendar su evaluación."
+  />
+  <FAQ items={faqs} />
+  <CTA
+    eyebrow="¿Te quedó alguna duda?"
+    title="Escríbenos, te respondemos."
+    description="Cuéntanos tu caso por WhatsApp y agenda tu evaluación."
+  />
+</Layout>

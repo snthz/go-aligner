@@ -1,0 +1,17 @@
+import Image1 from "../assets/img-1.jpg";
+import Image2 from "../assets/img-2.jpg";
+import Image3 from "../assets/img-3.jpg";
+import Image4 from "../assets/img-4.jpg";
+import Image5 from "../assets/img-5.jpg";
+import Image6 from "../assets/img-6.jpg";
+
+// `duration` es opcional: agrégalo cuando la clínica confirme la duración de cada caso,
+// p. ej. { ..., duration: "8 meses de tratamiento" }
+export const gallery = [
+  { src: Image1, alt: "Resultado de alineadores invisibles GO ALIGNER – caso clínico sonrisa frontal" },
+  { src: Image2, alt: "Alineador dental transparente colocado en modelo de arco superior" },
+  { src: Image3, alt: "Tratamiento de ortodoncia invisible – vista lateral del progreso" },
+  { src: Image4, alt: "Resultado final de ortodoncia digital con alineadores GO ALIGNER" },
+  { src: Image5, alt: "Proceso de diseño digital 3D de alineadores personalizados" },
+  { src: Image6, alt: "Set de alineadores secuenciales listos para entrega" },
+];

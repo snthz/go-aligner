@@ -1,0 +1,37 @@
+---
+import CTA from "../components/CTA.astro";
+import PageHeader from "../components/PageHeader.astro";
+import WhyUs from "../components/WhyUs.astro";
+import Layout from "../layouts/Layout.astro";
+
+const features = [
+  {
+    title: "Precisión en cada diseño",
+    body: "Cada caso se planifica en 3D y se revisa contigo antes de fabricar, para que el resultado final no dependa de la suerte.",
+    icon: "fa-bullseye",
+  },
+  {
+    title: "Técnicos con experiencia",
+    body: "El mismo equipo sigue tu caso de principio a fin: no vas a explicar tu situación desde cero en cada visita.",
+    icon: "fa-briefcase",
+  },
+  {
+    title: "Resina certificada, no genérica",
+    body: "Se ablanda con agua tibia para ajustarse a tu boca y recupera su forma rígida al enfriarse: resistente sin dejar de ser cómoda.",
+    icon: "fa-star",
+  },
+];
+---
+
+<Layout
+  title="Por qué elegirnos"
+  description="Planificación en 3D revisada contigo, un mismo equipo de principio a fin y resina certificada. Por qué elegir GO ALIGNER."
+>
+  <PageHeader
+    eyebrow="Por qué GO ALIGNER"
+    title="Tecnología de punta, con criterio clínico."
+    description="Combinamos un flujo digital de última generación con experiencia real en ortodoncia para ofrecer resultados predecibles y de calidad."
+  />
+  <WhyUs features={features} />
+  <CTA />
+</Layout>

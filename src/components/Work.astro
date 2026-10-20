@@ -1,35 +1,37 @@
 ---
 import { Image } from "astro:assets";
-import Image1 from "../assets/img-1.jpg";
-import Image2 from "../assets/img-2.jpg";
-import Image3 from "../assets/img-3.jpg";
-import Image4 from "../assets/img-4.jpg";
-import Image5 from "../assets/img-5.jpg";
-import Image6 from "../assets/img-6.jpg";
+import type { ImageMetadata } from "astro";
 
-const images = [
-  { src: Image1, alt: "Resultado de alineadores invisibles GO ALIGNER – caso clínico sonrisa frontal" },
-  { src: Image2, alt: "Alineador dental transparente colocado en modelo de arco superior" },
-  { src: Image3, alt: "Tratamiento de ortodoncia invisible – vista lateral del progreso" },
-  { src: Image4, alt: "Resultado final de ortodoncia digital con alineadores GO ALIGNER" },
-  { src: Image5, alt: "Proceso de diseño digital 3D de alineadores personalizados" },
-  { src: Image6, alt: "Set de alineadores secuenciales listos para entrega" },
-];
+interface GalleryImage {
+  src: ImageMetadata;
+  alt: string;
+  /** Duración del tratamiento del caso, p. ej. "8 meses de tratamiento" */
+  duration?: string;
+}
+
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  images: GalleryImage[];
+  links?: { href: string; text: string }[];
+}
+
+const { id, eyebrow, title, description, images, links = [] } = Astro.props;
 ---
 
-<section id="nuestro-trabajo" class="relative overflow-hidden bg-[#f7f8fa] py-24 text-neutral-900 md:py-32">
+<section id={id} class:list={["relative overflow-hidden bg-[#f7f8fa] text-neutral-900", title ? "py-24 md:py-32" : "pb-24 pt-16 md:pb-32 md:pt-20"]}>
   <div class="relative z-10 mx-auto max-w-6xl px-6">
-    <div class="max-w-2xl">
-      <span class="eyebrow text-violet-600">Nuestro trabajo</span>
-      <h2 class="mt-5 text-balance text-4xl font-medium tracking-tight md:text-5xl">
-        Resultados que hablan por sí solos.
-      </h2>
-      <p class="mt-5 text-lg leading-relaxed text-neutral-500">
-        Cada caso es un ejemplo de nuestra precisión y compromiso. Toca cualquier imagen para verla en detalle.
-      </p>
-    </div>
+    {title && (
+      <div class="mb-14 max-w-2xl">
+        {eyebrow && <span class="eyebrow text-violet-600">{eyebrow}</span>}
+        <h2 class="mt-5 text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
+        {description && <p class="mt-5 text-lg leading-relaxed text-neutral-500">{description}</p>}
+      </div>
+    )}
 
-    <div class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {images.map((image, i) => (
         <button
           class="image-wrapper group relative aspect-[4/5] overflow-hidden rounded-3xl bg-neutral-200 shadow-[0_1px_2px_rgba(0,0,0,.06)] transition-shadow duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,.12)] cursor-zoom-in"
@@ -42,9 +44,25 @@ const images = [
             class="gallery-img h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <span class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+          {image.duration && (
+            <span class="absolute bottom-4 left-4 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-neutral-900 backdrop-blur">
+              {image.duration}
+            </span>
+          )}
         </button>
       ))}
     </div>
+
+    {links.length > 0 && (
+      <div class="mt-12 flex flex-wrap gap-x-8 gap-y-4">
+        {links.map((link) => (
+          <a href={link.href} class="group inline-flex items-center gap-2 text-sm font-medium text-violet-600 transition-colors hover:text-neutral-900">
+            {link.text}
+            <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
+          </a>
+        ))}
+      </div>
+    )}
   </div>
 
   <!-- Lightbox -->

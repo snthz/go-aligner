@@ -1,0 +1,49 @@
+---
+import ClinicsNote from "../components/ClinicsNote.astro";
+import CTA from "../components/CTA.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Steps from "../components/Steps.astro";
+import Layout from "../layouts/Layout.astro";
+
+const steps = [
+  {
+    title: "Evaluación y escaneo",
+    detail: "Escaneamos tu boca con un escáner digital: sin moldes de pasta ni molestias.",
+    icon: "fa-camera-rotate",
+  },
+  {
+    title: "Tu plan en 3D",
+    detail: "Visualizas el movimiento de tus dientes en un video, paso por paso, antes de iniciar la fabricación.",
+    icon: "fa-cube",
+  },
+  {
+    title: "Ajustes",
+    detail: "Revisamos el plan contigo y aplicamos los cambios necesarios. Tiempo estimado: 3 días hábiles.",
+    icon: "fa-sliders",
+  },
+  {
+    title: "Confirmación",
+    detail: "Apruebas el plan final y agendamos la fecha de entrega de tu primer alineador.",
+    icon: "fa-circle-check",
+  },
+  {
+    title: "Entrega",
+    detail: "Recibes tus alineadores listos para usar en 7 días hábiles.",
+    icon: "fa-box-open",
+  },
+];
+---
+
+<Layout
+  title="Cómo funciona"
+  description="Del escaneo digital a tus alineadores listos en 7 días hábiles: así es el tratamiento con GO ALIGNER, paso a paso."
+>
+  <PageHeader
+    eyebrow="Cómo funciona"
+    title="El paso a paso de tu tratamiento."
+    description="Cinco pasos, del primer escaneo a tus alineadores listos para usar."
+  />
+  <Steps steps={steps} link={{ href: "/servicios", text: "Ver qué incluye el servicio" }} />
+  <ClinicsNote text="¿Eres ortodoncista? El flujo para clínicas está en su propia página." />
+  <CTA />
+</Layout>

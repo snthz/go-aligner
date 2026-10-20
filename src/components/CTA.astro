@@ -2,6 +2,20 @@
 import { Image } from "astro:assets";
 import Background from "../assets/img-4.jpg";
 import Video1 from "../assets/video-1.mp4";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  button?: string;
+}
+
+const {
+  eyebrow = "Empieza hoy",
+  title = "Sonríe con confianza.",
+  description = "Transforma tu sonrisa con alineadores invisibles. Agenda tu evaluación y da el primer paso hoy mismo.",
+  button = "Agendar evaluación",
+} = Astro.props;
 ---
 
 <section class="relative overflow-hidden bg-[#0a0a0b] py-24 text-white md:py-32">
@@ -15,12 +29,12 @@ import Video1 from "../assets/video-1.mp4";
   <div class="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2 md:gap-16">
     <!-- Copy -->
     <div class="text-center md:text-left">
-      <span class="eyebrow text-violet-300 md:justify-start">Empieza hoy</span>
+      <span class="eyebrow text-violet-300 md:justify-start">{eyebrow}</span>
       <h2 class="mt-6 text-balance text-4xl font-medium leading-[1.08] tracking-tight md:text-6xl">
-        Sonríe con confianza.
+        {title}
       </h2>
       <p class="mx-auto mt-5 max-w-md text-lg leading-relaxed text-neutral-400 md:mx-0">
-        Transforma tu sonrisa con alineadores invisibles. Agenda tu evaluación y da el primer paso hoy mismo.
+        {description}
       </p>
       <div class="mt-9 flex justify-center md:justify-start">
         <a
@@ -29,7 +43,7 @@ import Video1 from "../assets/video-1.mp4";
           rel="noopener"
           class="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-medium text-neutral-900 transition-colors duration-200 hover:bg-neutral-200"
         >
-          Agendar evaluación
+          {button}
           <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
         </a>
       </div>

@@ -1,0 +1,67 @@
+---
+const benefits = [
+  {
+    title: "Se ajustan solos a tu boca",
+    body: "Al sumergirlos en agua tibia, toman la forma exacta de tus dientes en segundos.",
+    icon: "fa-droplet",
+  },
+  {
+    title: "Fáciles de colocar y retirar",
+    body: "Sin aros ni ligas que ajustar en cada visita.",
+    icon: "fa-hand-sparkles",
+  },
+  {
+    title: "Prácticamente invisibles",
+    body: "Son transparentes de verdad, no un plástico opaco que se nota a distancia.",
+    icon: "fa-eye-slash",
+  },
+  {
+    title: "Compatibles con tu rutina diaria",
+    body: "Te los quitas para comer y cepillarte sin restricciones.",
+    icon: "fa-utensils",
+  },
+];
+---
+
+<section id="beneficios" class="benefits-section relative overflow-hidden bg-[#f7f8fa] py-24 text-neutral-900 md:py-32">
+  <div class="relative z-10 mx-auto max-w-6xl px-6">
+    <div class="max-w-2xl">
+      <span class="eyebrow text-violet-600">Beneficios</span>
+      <h2 class="mt-5 text-balance text-4xl font-medium tracking-tight md:text-5xl">
+        ¿Por qué alineadores y no brackets?
+      </h2>
+    </div>
+
+    <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {benefits.map((item) => (
+        <div class="benefit-item flex flex-col rounded-3xl border border-neutral-200 bg-white p-7 shadow-[0_1px_2px_rgba(0,0,0,.04)]">
+          <div class="grid size-11 place-items-center rounded-2xl bg-violet-50 text-violet-600">
+            <i class={`fa-solid ${item.icon} text-lg`}></i>
+          </div>
+          <h3 class="mt-6 text-lg font-medium leading-snug tracking-tight">{item.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-neutral-500">{item.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReduced) {
+    ScrollTrigger.batch(".benefit-item", {
+      start: "top 90%",
+      once: true,
+      onEnter: (els) =>
+        gsap.fromTo(els,
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: "power2.out" }
+        ),
+    });
+  }
+</script>

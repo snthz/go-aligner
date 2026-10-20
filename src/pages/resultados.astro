@@ -1,0 +1,27 @@
+---
+import CTA from "../components/CTA.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Testimonials, { type Testimonial } from "../components/Testimonials.astro";
+import Work from "../components/Work.astro";
+import { gallery } from "../data/gallery";
+import Layout from "../layouts/Layout.astro";
+
+// Solo testimonios reales de pacientes (con su permiso). Formato:
+// { quote: "Frase corta y específica sobre su experiencia", name: "Nombre", age: 28, duration: "8 meses de tratamiento" }
+// Mientras la lista esté vacía, la sección no se muestra.
+const testimonials: Testimonial[] = [];
+---
+
+<Layout
+  title="Resultados"
+  description="Casos reales de pacientes tratados con alineadores invisibles GO ALIGNER en Honduras."
+>
+  <PageHeader
+    eyebrow="Resultados"
+    title="Sonrisas reales, cambios reales."
+    description="Cada caso es un ejemplo de nuestra precisión y compromiso. Toca cualquier imagen para verla en detalle."
+  />
+  <Work images={gallery} links={[{ href: "/preguntas-frecuentes", text: "¿Tienes dudas?" }]} />
+  <Testimonials testimonials={testimonials} />
+  <CTA />
+</Layout>

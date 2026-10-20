@@ -1,22 +1,67 @@
 ---
+import Benefits from "../components/Benefits.astro";
 import CTA from "../components/CTA.astro";
 import Hero from "../components/Hero.astro";
-import Quote from "../components/Quote.astro";
-import Services from "../components/Services.astro";
 import Steps from "../components/Steps.astro";
-import Tech from "../components/Tech.astro";
 import WhyUs from "../components/WhyUs.astro";
 import Work from "../components/Work.astro";
+import { gallery } from "../data/gallery";
 import Layout from "../layouts/Layout.astro";
+
+// Resumen: 3 de los 5 pasos — el resto vive en /como-funciona
+const steps = [
+  { title: "Escaneo digital", detail: "Escaneamos tu boca sin moldes ni pastas." },
+  { title: "Tu plan en 3D", detail: "Ves cómo se moverán tus dientes antes de empezar." },
+  { title: "Recibe tus alineadores", detail: "Listos en 7 días hábiles." },
+];
+
+const features = [
+  {
+    title: "Precisión en cada diseño",
+    body: "Vemos en video cómo se moverá cada diente antes de fabricar, así sabes qué esperar desde el día uno.",
+    icon: "fa-bullseye",
+  },
+  {
+    title: "Un mismo equipo",
+    body: "El mismo equipo da seguimiento a tu caso de principio a fin, sin reasignaciones ni cambios de contacto en cada revisión.",
+    icon: "fa-briefcase",
+  },
+  {
+    title: "Resina certificada",
+    body: "Resina certificada que, con agua tibia, toma la forma exacta de tu boca sin perder transparencia ni resistencia.",
+    icon: "fa-star",
+  },
+];
 ---
 
 <Layout>
   <Hero />
-  <Quote/>
-  <Services/>
-  <WhyUs />
-  <Steps />
-  <Work />
-  <Tech />
-  <CTA/>
+  <Benefits />
+  <Steps
+    id="como-funciona"
+    eyebrow="Cómo funciona"
+    title="Paso a paso, sin complicaciones."
+    description="Del escaneo a tus alineadores, en tres pasos."
+    steps={steps}
+    link={{ href: "/como-funciona", text: "Ver el proceso completo" }}
+  />
+  <WhyUs
+    id="por-que-elegirnos"
+    eyebrow="Por qué GO ALIGNER"
+    title="Tecnología de punta, con criterio clínico."
+    features={features}
+    link={{ href: "/por-que-elegirnos", text: "Conoce más" }}
+  />
+  <Work
+    id="resultados"
+    eyebrow="Resultados"
+    title="Sonrisas reales, cambios reales."
+    description="Cada caso es un ejemplo de nuestra precisión y compromiso. Toca cualquier imagen para verla en detalle."
+    images={gallery.slice(0, 3)}
+    links={[
+      { href: "/resultados", text: "Ver todos los resultados" },
+      { href: "/preguntas-frecuentes", text: "¿Tienes dudas?" },
+    ]}
+  />
+  <CTA />
 </Layout>

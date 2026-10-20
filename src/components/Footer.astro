@@ -4,10 +4,13 @@ import Logo from "../assets/logo.png";
 const currentYear = new Date().getFullYear();
 
 const navLinks = [
-  { href: "#servicios", text: "Servicios" },
-  { href: "#nuestro-trabajo", text: "Nuestro trabajo" },
-  { href: "#por-que-elegirnos", text: "Por qué elegirnos" },
-  { href: "#proceso", text: "Proceso" },
+  { href: "/como-funciona", text: "Cómo funciona" },
+  { href: "/servicios", text: "Servicios" },
+  { href: "/resultados", text: "Resultados" },
+  { href: "/por-que-elegirnos", text: "Por qué elegirnos" },
+  { href: "/preguntas-frecuentes", text: "Preguntas frecuentes" },
+  { href: "/para-clinicas", text: "Para clínicas" },
+  { href: "/contacto", text: "Contacto" },
 ];
 ---
 
@@ -52,9 +55,11 @@ const navLinks = [
       <div>
         <h3 class="text-sm font-medium text-white">Contacto</h3>
         <ul class="mt-4 space-y-3 text-sm">
+          <li><a href="https://wa.link/42atxt" target="_blank" rel="noopener" class="transition-colors duration-200 hover:text-white">WhatsApp: +504 8856-1070</a></li>
           <li><a href="mailto:goalignerhn@gmail.com" class="transition-colors duration-200 hover:text-white">goalignerhn@gmail.com</a></li>
-          <li><a href="tel:+50488561070" class="transition-colors duration-200 hover:text-white">+504 8856-1070</a></li>
+          <li class="text-neutral-500">Lunes a viernes, 8am–5pm</li>
           <li class="text-neutral-500">San Pedro Sula, Cortés</li>
+          <li><a href="/contacto" class="text-violet-300 transition-colors duration-200 hover:text-white">Ver mapa y contacto →</a></li>
         </ul>
       </div>
     </div>

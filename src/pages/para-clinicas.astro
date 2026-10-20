@@ -1,0 +1,79 @@
+---
+import CTA from "../components/CTA.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Quote from "../components/Quote.astro";
+import Services from "../components/Services.astro";
+import Steps from "../components/Steps.astro";
+import Tech from "../components/Tech.astro";
+import Layout from "../layouts/Layout.astro";
+
+// Audiencia: ortodoncistas y clínicas — aquí sí va el lenguaje técnico
+const services = [
+  {
+    title: "Portal digital",
+    icon: "fa-layer-group",
+    description: "Sube el caso, aprueba el plan y revisa el avance del paciente sin llamadas ni correos de ida y vuelta.",
+  },
+  {
+    title: "Asesoría clínica",
+    icon: "fa-user-doctor",
+    description: "Un técnico revisa contigo los casos complejos antes de fabricar, no después.",
+  },
+  {
+    title: "Guías quirúrgicas",
+    icon: "fa-compass-drafting",
+    description: "Guías diseñadas a partir del mismo escaneo del caso, para colocar mini tornillos con la posición exacta que planificaste.",
+  },
+  {
+    title: "Capacitación",
+    icon: "fa-graduation-cap",
+    description: "Cursos y certificaciones para tu equipo, dictados por quienes fabrican tus alineadores.",
+  },
+  {
+    title: "Diseño digital de tratamientos",
+    icon: "fa-wand-magic-sparkles",
+    description: "Modelos 3D con simulación del movimiento dental y planificación personalizada según el ortodoncista.",
+  },
+  {
+    title: "Escaneo intraoral o de modelos",
+    icon: "fa-camera-rotate",
+    description: "Escaneo digital de modelos físicos cuando la clínica no cuenta con escáner propio.",
+  },
+];
+
+// Flujo "de doctor a doctor"
+const steps = [
+  { title: "Envío de archivos", detail: "Prescripción, escaneo STL, radiografías y fotografías.", note: "goalignerhn@gmail.com" },
+  { title: "Setup digital", detail: "Plan de tratamiento y cotización del caso." },
+  { title: "Modificaciones", detail: "Observaciones y ajustes · 3 días hábiles." },
+  { title: "Autorización", detail: "Aprobación del plan y realización del pago." },
+  { title: "Alineadores listos", detail: "Fabricación y entrega en 7 días hábiles." },
+];
+---
+
+<Layout
+  title="Para clínicas"
+  description="Fabricación de alineadores con flujo 100% digital para ortodoncistas y clínicas en Honduras: portal digital, asesoría clínica, guías quirúrgicas y capacitación."
+>
+  <PageHeader
+    eyebrow="Para ortodoncistas y clínicas"
+    title="Fabricamos tus alineadores con flujo 100% digital."
+    description="Soluciones de ortodoncia digital con precisión, soporte y resultados predecibles para tu clínica."
+  />
+  <Services services={services} />
+  <Quote />
+  <Steps
+    id="flujo-clinicas"
+    eyebrow="Flujo de trabajo"
+    title="Paso a paso, sin fricción."
+    description="Un flujo claro desde el envío del caso hasta la entrega de los alineadores."
+    steps={steps}
+  />
+  <Tech />
+  <CTA
+    eyebrow="Trabajemos juntos"
+    title="Envíanos tu primer caso."
+    description="Escríbenos y te explicamos cómo empezar a trabajar con GO ALIGNER desde tu clínica."
+    button="Escribir por WhatsApp"
+  />
+</Layout>

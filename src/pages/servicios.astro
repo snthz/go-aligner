@@ -1,0 +1,45 @@
+---
+import ClinicsNote from "../components/ClinicsNote.astro";
+import CTA from "../components/CTA.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Services from "../components/Services.astro";
+import Layout from "../layouts/Layout.astro";
+
+// Solo servicios de cara al paciente. Los de clínicas viven en /para-clinicas
+const services = [
+  {
+    title: "Plan de tratamiento personalizado",
+    icon: "fa-wand-magic-sparkles",
+    description: "Diseñamos y simulamos el movimiento de tus dientes en 3D, y ajustamos el plan contigo hasta que estés de acuerdo — antes de aprobar cualquier fabricación.",
+  },
+  {
+    title: "Fabricación con material certificado",
+    icon: "fa-tooth",
+    description: "Tus alineadores se producen en secuencia, con una resina que se ajusta a tu boca con agua tibia sin perder resistencia ni transparencia.",
+  },
+  {
+    title: "Seguimiento durante todo el tratamiento",
+    icon: "fa-calendar-check",
+    description: "No es solo entregarte los alineadores: revisamos tu progreso en cada etapa y hacemos ajustes al plan si tu boca responde distinto a lo esperado.",
+  },
+  {
+    title: "Retenedores incluidos al finalizar",
+    icon: "fa-shield-heart",
+    description: "Al terminar el tratamiento, el servicio incluye un retenedor a tu medida para que el resultado se mantenga en el tiempo.",
+  },
+];
+---
+
+<Layout
+  title="Servicios"
+  description="Plan en 3D, alineadores a tu medida, seguimiento durante todo el tratamiento y retenedores incluidos. Todo lo que necesitas para tu tratamiento."
+>
+  <PageHeader
+    eyebrow="Servicios"
+    title="Todo lo que necesitas para tu tratamiento."
+    description="Del plan en 3D al retenedor final, te acompañamos en cada etapa."
+  />
+  <Services services={services} />
+  <ClinicsNote text="¿Buscas servicios para tu clínica? Portal digital, asesoría, guías quirúrgicas y capacitación." />
+  <CTA />
+</Layout>
