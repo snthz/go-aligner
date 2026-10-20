@@ -1,64 +1,120 @@
 ---
-import { Image } from "astro:assets";
-import Background from "../assets/img-4.jpg";
 import Video1 from "../assets/video-1.mp4";
 import CtaButton from "./CtaButton.astro";
+import SectionHeading from "./SectionHeading.astro";
 
 interface Props {
-  title?: string;
+  title?: string | [string, string];
   description?: string;
   button?: string;
+  /** Datos breves junto al botón; [] para ocultarlos */
+  points?: string[];
 }
 
 const {
-  title = "Sonríe con confianza.",
+  title = ["Sonríe", "con confianza."],
   description = "Transforma tu sonrisa con alineadores invisibles. Agenda tu evaluación y da el primer paso hoy mismo.",
   button = "Agendar evaluación",
+  points = ["Escaneo digital, sin moldes", "Tu plan en 3D antes de empezar", "Listos en 7 días hábiles"],
 } = Astro.props;
 ---
 
-<section class="relative overflow-hidden bg-[#0a0a0b] py-24 text-white md:py-32">
-  <!-- soft photographic backdrop -->
-  <div class="absolute inset-0 z-0">
-    <Image src={Background} alt="" class="h-full w-full scale-105 object-cover opacity-25" loading="lazy" />
-    <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0b] via-[#0a0a0b]/85 to-[#0a0a0b]"></div>
-    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent"></div>
-  </div>
+<section class="relative bg-[#0a0a0b] px-4 py-20 text-white md:px-6 md:py-28">
+  <!-- Panel violeta: se abre desde un poco más chico al llegar con el scroll -->
+  <div class="cta-panel relative isolate mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] shadow-[0_40px_120px_-40px_rgba(124,58,237,.55)]">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(90%_70%_at_100%_0%,#a78bfa_0%,transparent_55%),radial-gradient(70%_60%_at_0%_100%,#4c1d95_0%,transparent_60%),linear-gradient(150deg,#7c3aed_0%,#5b21b6_100%)]"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-linear-to-r from-transparent via-white/50 to-transparent"></div>
 
-  <div class="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2 md:gap-16">
-    <!-- Copy -->
-    <div class="text-center md:text-left">
-      <h2 class="text-balance text-4xl font-medium leading-[1.08] tracking-tight md:text-6xl">
-        {title}
-      </h2>
-      <p class="mx-auto mt-5 max-w-md text-lg leading-relaxed text-neutral-400 md:mx-0">
-        {description}
-      </p>
-      <div class="mt-9 flex justify-center md:justify-start">
-        <CtaButton size="lg">{button}</CtaButton>
+    <div class="grid items-center gap-14 px-7 py-14 sm:px-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-10 md:px-14 md:py-20 lg:px-20">
+      <!-- Copy -->
+      <div>
+        <SectionHeading title={title} description={description} tone="violet" />
+
+        {points.length > 0 && (
+          <ul class="mt-9 grid gap-3">
+            {points.map((point) => (
+              <li class="cta-point flex items-center gap-3 text-[0.9375rem] text-white/90">
+                <span aria-hidden="true" class="grid size-6 shrink-0 place-items-center rounded-full bg-white/15 ring-1 ring-white/25">
+                  <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                </span>
+                {point}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <div class="cta-action mt-10">
+          <CtaButton size="lg">{button}</CtaButton>
+        </div>
       </div>
-    </div>
 
-    <!-- Vertical video -->
-    <div class="justify-self-center md:justify-self-end">
-      <div class="aspect-[9/16] w-[clamp(220px,70vw,320px)] overflow-hidden rounded-[1.75rem] border border-white/10 shadow-2xl shadow-black/50">
-        <video
-          id="cta-video"
-          class="h-full w-full object-cover"
-          data-src={Video1}
-          loop
-          muted
-          playsinline
-          preload="none"
-        >
-          <track kind="captions" label="Español" srclang="es" />
-        </video>
+      <!-- Video vertical en un marco de vidrio, con los anillos de marca detrás -->
+      <div class="relative grid place-items-center">
+        <svg aria-hidden="true" viewBox="0 0 400 400" class="pointer-events-none absolute left-1/2 top-1/2 -z-10 size-[min(36rem,140%)] -translate-x-1/2 -translate-y-1/2 text-white" fill="none" stroke="currentColor">
+          <circle class="cta-ring" cx="200" cy="200" r="195" stroke-opacity=".08" />
+          <circle class="cta-ring" cx="200" cy="200" r="150" stroke-opacity=".12" />
+          <circle class="cta-ring" cx="200" cy="200" r="105" stroke-opacity=".16" />
+          <circle class="origin-center animate-[spin_50s_linear_infinite]" cx="200" cy="200" r="172" stroke-opacity=".3" stroke-dasharray="2 10" stroke-linecap="round" />
+        </svg>
+
+        <div class="cta-device rounded-[2.25rem] bg-white/10 p-2 shadow-[0_40px_80px_-24px_rgba(46,16,101,.8)] ring-1 ring-white/25 backdrop-blur-md">
+          <div class="aspect-9/16 w-[clamp(200px,58vw,300px)] overflow-hidden rounded-[1.75rem] bg-[#0a0a0b]">
+            <video
+              id="cta-video"
+              class="h-full w-full object-cover"
+              data-src={Video1}
+              loop
+              muted
+              playsinline
+              preload="none"
+            >
+              <track kind="captions" label="Español" srclang="es" />
+            </video>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReduced) {
+    gsap.utils.toArray<HTMLElement>(".cta-panel").forEach((panel) => {
+      // El panel se abre hasta ocupar todo su ancho
+      gsap.fromTo(panel,
+        { clipPath: "inset(6% 5% 6% 5% round 3rem)" },
+        {
+          clipPath: "inset(0% 0% 0% 0% round 2.5rem)",
+          ease: "none",
+          scrollTrigger: { trigger: panel, start: "top 95%", end: "top 40%", scrub: 0.6 },
+        }
+      );
+
+      // El marco del video flota a contra-scroll y se endereza
+      gsap.fromTo(panel.querySelector(".cta-device"),
+        { yPercent: 14, rotate: 5 },
+        {
+          yPercent: -6, rotate: -2,
+          ease: "none",
+          scrollTrigger: { trigger: panel, start: "top bottom", end: "bottom top", scrub: true },
+        }
+      );
+
+      gsap.timeline({ scrollTrigger: { trigger: panel, start: "top 70%", once: true } })
+        .from(panel.querySelectorAll(".cta-ring"), {
+          scale: 0.5, autoAlpha: 0, transformOrigin: "50% 50%", duration: 1.4, stagger: { each: 0.12, from: "end" }, ease: "expo.out",
+        }, 0)
+        .from(panel.querySelectorAll(".cta-point"), { autoAlpha: 0, x: -16, duration: 0.6, stagger: 0.08, ease: "power3.out" }, 0.45)
+        .from(panel.querySelectorAll(".cta-action"), { autoAlpha: 0, y: 16, duration: 0.6, ease: "power3.out" }, 0.7);
+    });
+  }
+
   /* Lazy-load the heavy video: only fetch + play when the CTA is in view */
   const video = document.getElementById("cta-video") as HTMLVideoElement | null;
   if (video) {

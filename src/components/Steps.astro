@@ -1,4 +1,7 @@
 ---
+import ArrowLink from "./ArrowLink.astro";
+import SectionHeading from "./SectionHeading.astro";
+
 interface Step {
   title: string;
   detail: string;
@@ -8,7 +11,7 @@ interface Step {
 
 interface Props {
   id?: string;
-  title?: string;
+  title?: string | [string, string];
   description?: string;
   steps: Step[];
   link?: { href: string; text: string };
@@ -18,52 +21,90 @@ const { id, title, description, steps, link } = Astro.props;
 
 // Tailwind necesita clases literales
 const cols: Record<number, string> = { 3: "md:grid-cols-3", 4: "md:grid-cols-4", 5: "md:grid-cols-5" };
+const pad = (n: number) => String(n).padStart(2, "0");
 ---
 
 <section id={id} class:list={["relative overflow-hidden bg-[#0a0a0b] text-white", title ? "py-24 md:py-32" : "pb-24 pt-16 md:pb-32 md:pt-20"]}>
-  <div class="relative z-10 mx-auto max-w-6xl px-6">
-    {title && (
-      <div class="mb-16 max-w-2xl">
-        <h2 class="text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
-        {description && <p class="mt-5 text-lg leading-relaxed text-neutral-400">{description}</p>}
-      </div>
-    )}
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0"
+    style="background: radial-gradient(55% 45% at 10% 0%, rgba(124,58,237,.16) 0%, transparent 70%);"
+  ></div>
 
-    <!-- timeline -->
-    <ol class:list={["relative grid gap-y-12 md:gap-x-6", cols[steps.length]]}>
-      <!-- connecting line (desktop) -->
-      <div aria-hidden="true" class="pointer-events-none absolute left-0 right-0 top-[1.375rem] hidden h-px bg-gradient-to-r from-violet-500/10 via-violet-500/40 to-violet-500/10 md:block"></div>
+  <div class="relative z-10 mx-auto max-w-6xl px-6">
+    {title && <SectionHeading class="mb-16 md:mb-20" title={title} description={description} tone="dark" />}
+
+    <!-- Timeline: la línea se llena con el scroll y enciende cada paso al alcanzarlo -->
+    <ol class:list={["steps relative grid gap-y-12 md:gap-x-8", cols[steps.length]]}>
+      <div
+        aria-hidden="true"
+        class="steps-track pointer-events-none absolute bottom-8 left-5.5 top-5.5 w-px bg-white/10 mask-[linear-gradient(to_bottom,#000_85%,transparent)] md:bottom-auto md:left-0 md:right-0 md:h-px md:w-auto md:mask-[linear-gradient(to_right,#000_85%,transparent)]"
+      >
+        <div class="steps-fill h-full w-full origin-top bg-linear-to-b from-violet-300 to-violet-600 md:origin-left md:bg-linear-to-r"></div>
+      </div>
 
       {steps.map((s, i) => (
-        <li class="step-item relative">
-          <div class="flex size-11 items-center justify-center rounded-full border border-violet-400/30 bg-[#0a0a0b] text-lg font-medium text-violet-300">
-            {s.icon ? <i class={`fa-solid ${s.icon} text-base`} aria-hidden="true"></i> : i + 1}
+        <li class="step-item relative grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-5 md:block">
+          <div class="step-node relative z-10 grid size-11 place-items-center rounded-full border border-white/15 bg-[#0a0a0b] text-sm font-medium tabular-nums text-white/50">
+            {s.icon ? <i class={`fa-solid ${s.icon} text-base`} aria-hidden="true"></i> : pad(i + 1)}
           </div>
-          {s.icon && <p class="mt-5 text-xs font-medium uppercase tracking-[0.18em] text-neutral-500">Paso {i + 1}</p>}
-          <h3 class:list={["text-lg font-medium leading-snug", s.icon ? "mt-2" : "mt-6"]}>{s.title}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-neutral-400">{s.detail}</p>
-          {s.note && (
-            <button
-              class="copy-mail mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-neutral-300 transition-colors hover:bg-white/[0.07]"
-              data-mail={s.note}
-              title="Copiar correo"
-            >
-              <i class="fa-regular fa-envelope text-violet-300"></i>
-              <span class="mail-label">{s.note}</span>
-            </button>
-          )}
+          <div class="pt-2.5 md:pt-0">
+            {s.icon && <p class="text-sm tabular-nums text-white/40 md:mt-6">{pad(i + 1)}</p>}
+            <h3 class:list={["step-title text-lg font-medium leading-snug text-white/70", s.icon ? "mt-1" : "md:mt-6"]}>{s.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-neutral-400">{s.detail}</p>
+            {s.note && (
+              <button
+                class="copy-mail mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/4 px-3.5 py-1.5 text-xs text-neutral-300 backdrop-blur transition-colors hover:border-violet-400/40 hover:bg-violet-500/10"
+                data-mail={s.note}
+                title="Copiar correo"
+              >
+                <i class="fa-regular fa-envelope text-violet-300"></i>
+                <span class="mail-label">{s.note}</span>
+              </button>
+            )}
+          </div>
         </li>
       ))}
     </ol>
 
-    {link && (
-      <a href={link.href} class="group mt-14 inline-flex items-center gap-2 text-sm font-medium text-violet-300 transition-colors hover:text-white">
-        {link.text}
-        <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
-      </a>
-    )}
+    {link && <ArrowLink href={link.href} tone="dark" class="mt-16">{link.text}</ArrowLink>}
   </div>
 </section>
+
+<style>
+  .step-node {
+    transition: color 0.5s, border-color 0.5s, background-color 0.5s, box-shadow 0.5s;
+  }
+  .step-title {
+    transition: color 0.5s;
+  }
+  .step-item.is-active .step-node {
+    color: #fff;
+    border-color: #a78bfa;
+    background-color: #7c3aed;
+    box-shadow: 0 0 0 6px rgb(124 58 237 / 0.14), 0 0 32px rgb(124 58 237 / 0.45);
+  }
+  .step-item.is-active .step-title {
+    color: #fff;
+  }
+  /* Onda que sale del nodo al encenderse */
+  .step-node::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    border: 1px solid #a78bfa;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .step-item.is-active .step-node::after {
+    animation: step-ping 0.9s cubic-bezier(0.2, 0.6, 0.3, 1);
+  }
+  @keyframes step-ping {
+    from { opacity: 0.8; transform: scale(1); }
+    to { opacity: 0; transform: scale(1.9); }
+  }
+</style>
 
 <script>
   import gsap from "gsap";
@@ -72,17 +113,59 @@ const cols: Record<number, string> = { 3: "md:grid-cols-3", 4: "md:grid-cols-4",
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (!prefersReduced) {
-    gsap.utils.toArray<HTMLElement>(".step-item").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 18 },
-        {
-          opacity: 1, y: 0, duration: 0.5, delay: i * 0.07, ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 90%" },
-        }
-      );
+  gsap.utils.toArray<HTMLElement>(".steps").forEach((list) => {
+    const track = list.querySelector(".steps-track") as HTMLElement;
+    const fill = list.querySelector(".steps-fill") as HTMLElement;
+    const items = gsap.utils.toArray<HTMLElement>(list.querySelectorAll(".step-item"));
+
+    // Sin animación: línea llena y todos los pasos encendidos
+    if (prefersReduced) {
+      items.forEach((el) => el.classList.add("is-active"));
+      return;
+    }
+
+    gsap.from(items, {
+      autoAlpha: 0, y: 24, duration: 0.7, stagger: 0.1, ease: "power3.out",
+      scrollTrigger: { trigger: list, start: "top 85%", once: true },
     });
-  }
+
+    // Avance de la línea en el que la punta llega al centro de cada nodo
+    let thresholds: number[] = [];
+    const mm = gsap.matchMedia();
+
+    mm.add({ desktop: "(min-width: 768px)", mobile: "(max-width: 767px)" }, (ctx) => {
+      const horizontal = !!ctx.conditions?.desktop;
+      const prop = horizontal ? "scaleX" : "scaleY";
+
+      const measure = () => {
+        const t = track.getBoundingClientRect();
+        const length = horizontal ? t.width : t.height;
+        thresholds = items.map((el) => {
+          const n = (el.querySelector(".step-node") as HTMLElement).getBoundingClientRect();
+          // Descuenta el desplazamiento de la entrada si aún no terminó
+          const offset = horizontal ? 0 : (gsap.getProperty(el, "y") as number);
+          const center = horizontal ? n.left + n.width / 2 - t.left : n.top + n.height / 2 - offset - t.top;
+          return length ? center / length : 0;
+        });
+      };
+
+      gsap.fromTo(fill, { [prop]: 0 }, {
+        [prop]: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: list,
+          start: "top 75%",
+          end: horizontal ? "bottom 45%" : "bottom 60%",
+          scrub: 0.6,
+          onRefresh: measure,
+          onUpdate: (self) => {
+            const p = gsap.getProperty(fill, prop) as number;
+            items.forEach((el, k) => el.classList.toggle("is-active", (p > 0 && p >= thresholds[k] - 0.002) || self.progress === 1));
+          },
+        },
+      });
+    });
+  });
 
   /* Copy email to clipboard */
   document.querySelectorAll<HTMLButtonElement>(".copy-mail").forEach((btn) => {

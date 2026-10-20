@@ -23,31 +23,33 @@ const scenes = [
 ];
 
 // `title`: la primera parte va en semibold y el remate en itálica.
+// `body`: lo marcado con **...** se resalta en blanco sobre el gris del párrafo.
 const chapters = [
   {
     label: "Escaneo digital",
     title: ["Empieza con un escaneo,", "no con un molde."],
-    body: "Escaneamos tu boca sin moldes ni pastas.",
+    body: "Escaneamos tu boca **sin moldes ni pastas**.",
   },
   {
     label: "Plan en 3D",
     title: ["Ves tu sonrisa", "antes de empezar."],
-    body: "Vemos en video cómo se moverá cada diente antes de fabricar, así sabes qué esperar desde el día uno.",
+    body: "Vemos en video **cómo se moverá cada diente** antes de fabricar, así sabes qué esperar desde el día uno.",
   },
   {
     label: "Fabricación",
     title: ["Precisión", "que se ve de cerca."],
-    body: "Resina certificada que, con agua tibia, toma la forma exacta de tu boca sin perder transparencia ni resistencia.",
+    body: "**Resina certificada** que, con agua tibia, toma la forma exacta de tu boca sin perder transparencia ni resistencia.",
   },
   {
     label: "Entrega",
     title: ["Listos en", "7 días hábiles."],
-    body: "Y el mismo equipo da seguimiento a tu caso de principio a fin.",
+    body: "Y **el mismo equipo** da seguimiento a tu caso de principio a fin.",
     cta: true,
   },
 ];
 
 const pad = (n: number) => String(n).padStart(2, "0");
+const emphasis = (text: string) => text.split("**").map((part, i) => ({ text: part, strong: i % 2 === 1 }));
 ---
 
 <!-- Activa el recorrido antes del primer paint; sin JS o con movimiento reducido queda un hero estático -->
@@ -93,8 +95,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
           <span class="block font-normal italic"><span class="sw-word inline-block">diseñada</span> <span class="sw-word inline-block">en</span> <span class="sw-word inline-block"><span class="text-violet-400">3D</span>.</span></span>
         </h1>
         <div class="sw-fade mt-8 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <p class="max-w-md text-lg leading-relaxed text-neutral-300">
-            Alineadores invisibles hechos a tu medida: escaneo digital, plan en 3D y seguimiento en línea.
+          <p class="max-w-[26rem] text-pretty text-lg leading-relaxed text-neutral-400 md:text-xl">
+            <span class="text-white">Alineadores invisibles hechos a tu medida:</span> escaneo digital, plan en 3D y seguimiento en línea.
           </p>
           <div class="flex flex-col items-start gap-x-7 gap-y-5 sm:flex-row sm:items-center">
             <CtaButton class="self-start sm:self-auto">Solicitar evaluación</CtaButton>
@@ -124,7 +126,9 @@ const pad = (n: number) => String(n).padStart(2, "0");
             ))}
           </h2>
           <div class="md:pb-3">
-            <p class="sw-body text-base leading-relaxed text-neutral-300 md:text-[1.0625rem]">{ch.body}</p>
+            <p class="sw-body text-pretty text-base leading-relaxed text-neutral-400 md:text-lg">
+              {emphasis(ch.body).map((part) => (part.strong ? <span class="text-white">{part.text}</span> : part.text))}
+            </p>
             {ch.cta && (
               <CtaButton class="sw-reveal-fade mt-7">Solicitar evaluación</CtaButton>
             )}
@@ -138,11 +142,11 @@ const pad = (n: number) => String(n).padStart(2, "0");
       <div class="mx-auto grid max-w-6xl grid-cols-4 gap-3 px-6 pb-8 md:gap-5 md:pb-10">
         {chapters.map((ch, i) => (
           <button type="button" data-sw-goto={`ch${i + 1}`} class="sw-step group text-left">
-            <span class="block h-px w-full overflow-hidden bg-white/20">
-              <span class="sw-fill block h-full w-full origin-left bg-white" style="transform:scaleX(0)"></span>
+            <span class="block h-0.5 w-full overflow-hidden rounded-full bg-white/15">
+              <span class="sw-fill block h-full w-full origin-left bg-violet-500" style="transform:scaleX(0)"></span>
             </span>
             <span class="sw-step-label mt-3 flex gap-2 text-sm text-white/45 transition-colors group-hover:text-white/80">
-              <span>{pad(i + 1)}</span>
+              <span class="sw-step-num">{pad(i + 1)}</span>
               <span class="hidden md:inline">{ch.label}</span>
             </span>
           </button>
@@ -180,6 +184,9 @@ const pad = (n: number) => String(n).padStart(2, "0");
   }
   .sw-step.is-active .sw-step-label {
     color: #fff;
+  }
+  .sw-step.is-active .sw-step-num {
+    color: var(--color-violet-400);
   }
   /* Separa el texto de las texturas de la foto sin que se note como sombra */
   .sw-title {

@@ -71,6 +71,25 @@ body {
     }
 }
 
+/* ── Spotlight: luz que sigue al cursor (ver scripts/spotlight.ts) ──
+   El elemento necesita `relative isolate`; `--spot` cambia el color. */
+[data-spotlight]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(22rem circle at var(--mx, 50%) var(--my, 50%), var(--spot, rgb(124 58 237 / 0.09)), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+@media (hover: hover) {
+    [data-spotlight]:hover::before {
+        opacity: 1;
+    }
+}
+
 /* ── Selection ── */
 ::selection {
     background: rgba(124, 58, 237, 0.22);

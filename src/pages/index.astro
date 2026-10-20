@@ -39,20 +39,20 @@ const features = [
   <Benefits />
   <Steps
     id="como-funciona"
-    title="Paso a paso, sin complicaciones."
+    title={["Paso a paso,", "sin complicaciones."]}
     description="Del escaneo a tus alineadores, en tres pasos."
     steps={steps}
     link={{ href: "/como-funciona", text: "Ver el proceso completo" }}
   />
   <WhyUs
     id="por-que-elegirnos"
-    title="Tecnología de punta, con criterio clínico."
+    title={["Tecnología de punta,", "con criterio clínico."]}
     features={features}
     link={{ href: "/por-que-elegirnos", text: "Conoce más" }}
   />
   <Work
     id="resultados"
-    title="Sonrisas reales, cambios reales."
+    title={["Sonrisas reales,", "cambios reales."]}
     description="Cada caso es un ejemplo de nuestra precisión y compromiso. Toca cualquier imagen para verla en detalle."
     images={gallery.slice(0, 3)}
     links={[

@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import ArrowLink from "./ArrowLink.astro";
+import SectionHeading from "./SectionHeading.astro";
 
 interface GalleryImage {
   src: ImageMetadata;
@@ -11,70 +13,84 @@ interface GalleryImage {
 
 interface Props {
   id?: string;
-  title?: string;
+  title?: string | [string, string];
   description?: string;
   images: GalleryImage[];
   links?: { href: string; text: string }[];
 }
 
 const { id, title, description, images, links = [] } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, "0");
 ---
 
 <section id={id} class:list={["relative overflow-hidden bg-[#f7f8fa] text-neutral-900", title ? "py-24 md:py-32" : "pb-24 pt-16 md:pb-32 md:pt-20"]}>
   <div class="relative z-10 mx-auto max-w-6xl px-6">
-    {title && (
-      <div class="mb-14 max-w-2xl">
-        <h2 class="text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
-        {description && <p class="mt-5 text-lg leading-relaxed text-neutral-500">{description}</p>}
-      </div>
-    )}
+    {title && <SectionHeading class="mb-14 md:mb-16" title={title} description={description} />}
 
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <!-- La columna central baja un poco para romper la retícula; el pb compensa el desplazamiento -->
+    <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:pb-16">
       {images.map((image, i) => (
-        <button
-          class="image-wrapper group relative aspect-[4/5] overflow-hidden rounded-3xl bg-neutral-200 shadow-[0_1px_2px_rgba(0,0,0,.06)] transition-shadow duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,.12)] cursor-zoom-in"
-          data-index={i}
-          aria-label="Ampliar imagen"
-        >
-          <Image
-            src={image.src}
-            alt={image.alt}
-            class="gallery-img h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-          <span class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
-          {image.duration && (
-            <span class="absolute bottom-4 left-4 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-neutral-900 backdrop-blur">
-              {image.duration}
+        <li class="lg:nth-[3n+2]:translate-y-16">
+          <button
+            class="image-wrapper group relative block aspect-4/5 w-full cursor-zoom-in overflow-hidden rounded-4xl bg-neutral-200"
+            data-index={i}
+            aria-label={`Ampliar imagen ${i + 1} de ${images.length}`}
+          >
+            <!-- Más alto que la tarjeta para que el parallax no deje bordes -->
+            <span class="work-media absolute inset-x-0 -inset-y-[8%] block">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                class="gallery-img h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.06]"
+              />
             </span>
-          )}
-        </button>
+            <span class="pointer-events-none absolute inset-0 bg-linear-to-t from-black/45 via-black/0 to-black/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+
+            <span class="absolute inset-x-5 bottom-5 flex items-end justify-between gap-3">
+              {image.duration ? (
+                <span class="rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-neutral-900 backdrop-blur">{image.duration}</span>
+              ) : (
+                <span class="text-sm tabular-nums text-white/90 opacity-0 transition-opacity duration-500 group-hover:opacity-100">{pad(i + 1)}</span>
+              )}
+              <span
+                aria-hidden="true"
+                class="grid size-11 translate-y-2 place-items-center rounded-full border border-white/25 bg-white/15 text-white opacity-0 backdrop-blur-md transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:border-violet-400 group-hover:bg-violet-600 group-hover:opacity-100 pointer-coarse:translate-y-0 pointer-coarse:opacity-100"
+              >
+                <svg class="h-4 w-4 transition-transform duration-500 group-hover:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              </span>
+            </span>
+          </button>
+        </li>
       ))}
-    </div>
+    </ul>
 
     {links.length > 0 && (
-      <div class="mt-12 flex flex-wrap gap-x-8 gap-y-4">
-        {links.map((link) => (
-          <a href={link.href} class="group inline-flex items-center gap-2 text-sm font-medium text-violet-600 transition-colors hover:text-neutral-900">
-            {link.text}
-            <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
-          </a>
-        ))}
+      <div class="mt-14 flex flex-wrap gap-x-10 gap-y-5">
+        {links.map((link) => <ArrowLink href={link.href}>{link.text}</ArrowLink>)}
       </div>
     )}
   </div>
 
   <!-- Lightbox -->
-  <div id="lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 backdrop-blur-sm cursor-zoom-out" role="dialog" aria-modal="true" aria-label="Vista ampliada de imagen">
-    <button id="lb-close" class="absolute right-5 top-5 z-10 grid size-10 place-items-center rounded-full border border-white/15 bg-white/10 text-white transition-colors hover:bg-white/20" aria-label="Cerrar">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
-    </button>
-    <button id="lb-prev" class="absolute left-4 top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white transition-colors hover:bg-white/20" aria-label="Anterior">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
-    </button>
-    <button id="lb-next" class="absolute right-4 top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white transition-colors hover:bg-white/20" aria-label="Siguiente">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6" /></svg>
-    </button>
-    <img id="lb-img" class="max-h-[85vh] max-w-[90vw] rounded-2xl object-contain shadow-2xl" src="" alt="" />
+  <div id="lightbox" class="fixed inset-0 z-100 hidden flex-col bg-[#0a0a0b]/95 text-white backdrop-blur-md" role="dialog" aria-modal="true" aria-label="Vista ampliada de imagen">
+    <div class="relative z-10 flex items-center justify-between px-5 py-5 md:px-8">
+      <p class="text-sm tabular-nums text-white/60"><span id="lb-index" class="text-white">01</span> / {pad(images.length)}</p>
+      <button id="lb-close" class="grid size-11 place-items-center rounded-full border border-white/15 bg-white/10 transition-colors hover:border-white/30 hover:bg-white/20" aria-label="Cerrar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+      </button>
+    </div>
+
+    <div id="lb-stage" class="relative flex min-h-0 flex-1 cursor-zoom-out items-center justify-center px-4 md:px-24">
+      <img id="lb-img" class="max-h-full max-w-full rounded-3xl object-contain shadow-2xl shadow-black/60" src="" alt="" />
+      <button id="lb-prev" class="absolute left-4 top-1/2 hidden size-12 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 transition-colors hover:border-violet-400 hover:bg-violet-600 md:left-8 md:grid" aria-label="Anterior">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+      </button>
+      <button id="lb-next" class="absolute right-4 top-1/2 hidden size-12 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 transition-colors hover:border-violet-400 hover:bg-violet-600 md:right-8 md:grid" aria-label="Siguiente">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6" /></svg>
+      </button>
+    </div>
+
+    <p id="lb-caption" class="mx-auto max-w-xl px-6 pb-8 pt-5 text-center text-sm leading-relaxed text-neutral-400"></p>
   </div>
 </section>
 
@@ -84,60 +100,105 @@ const { id, title, description, images, links = [] } = Astro.props;
   gsap.registerPlugin(ScrollTrigger);
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const wrappers = gsap.utils.toArray<HTMLElement>(".image-wrapper");
 
   if (!prefersReduced) {
-    ScrollTrigger.batch(".image-wrapper", {
-      onEnter: (batch) =>
-        gsap.fromTo(batch,
-          { opacity: 0, y: 22 },
-          { opacity: 1, y: 0, duration: 0.55, stagger: 0.07, ease: "power2.out" }
-        ),
-      start: "top 90%",
+    // Entrada tipo cortina: la tarjeta se descubre desde abajo mientras la foto se asienta
+    // Estado inicial desde ya: el batch entra cuando la tarjeta ya asoma en pantalla
+    gsap.set(wrappers, { clipPath: "inset(100% 0% 0% 0% round 2rem)" });
+    gsap.set(".work-media", { scale: 1.25 });
+
+    ScrollTrigger.batch(wrappers, {
+      start: "top 88%",
       once: true,
+      onEnter: (els) => {
+        gsap.to(els, { clipPath: "inset(0% 0% 0% 0% round 2rem)", duration: 1.2, stagger: 0.12, ease: "power4.out", clearProps: "clipPath" });
+        gsap.to(els.map((el) => el.querySelector(".work-media")), { scale: 1, duration: 1.6, stagger: 0.12, ease: "power3.out" });
+      },
+    });
+
+    // Parallax suave de la foto dentro de su tarjeta
+    wrappers.forEach((wrap) => {
+      gsap.fromTo(wrap.querySelector(".work-media"), { yPercent: -6 }, {
+        yPercent: 6,
+        ease: "none",
+        scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom top", scrub: true },
+      });
     });
   }
 
   /* ── Lightbox ── */
   const lightbox = document.getElementById("lightbox") as HTMLElement;
+  const stage = document.getElementById("lb-stage") as HTMLElement;
   const lbImg = document.getElementById("lb-img") as HTMLImageElement;
+  const lbIndex = document.getElementById("lb-index") as HTMLElement;
+  const lbCaption = document.getElementById("lb-caption") as HTMLElement;
   const lbClose = document.getElementById("lb-close") as HTMLElement;
   const lbPrev = document.getElementById("lb-prev") as HTMLElement;
   const lbNext = document.getElementById("lb-next") as HTMLElement;
   const galleryImgs = Array.from(document.querySelectorAll(".gallery-img")) as HTMLImageElement[];
   let currentIdx = 0;
+  let lastFocus: HTMLElement | null = null;
+  const isOpen = () => !lightbox.classList.contains("hidden");
+  const duration = (s: number) => (prefersReduced ? 0 : s);
 
   const showImg = () => {
-    lbImg.src = galleryImgs[currentIdx].src;
-    lbImg.alt = galleryImgs[currentIdx].alt;
+    const img = galleryImgs[currentIdx];
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt;
+    lbCaption.textContent = img.alt;
+    lbIndex.textContent = String(currentIdx + 1).padStart(2, "0");
   };
   const openLb = (idx: number) => {
     currentIdx = idx;
+    lastFocus = document.activeElement as HTMLElement | null;
     showImg();
     lightbox.classList.remove("hidden");
     lightbox.classList.add("flex");
     document.body.style.overflow = "hidden";
+    gsap.fromTo(lightbox, { autoAlpha: 0 }, { autoAlpha: 1, duration: duration(0.35), ease: "power2.out" });
+    gsap.fromTo(lbImg, { autoAlpha: 0, scale: 0.94, y: 20 }, { autoAlpha: 1, scale: 1, y: 0, duration: duration(0.6), ease: "expo.out" });
+    lbClose.focus();
   };
   const closeLb = () => {
-    lightbox.classList.add("hidden");
-    lightbox.classList.remove("flex");
-    document.body.style.overflow = "";
+    gsap.to(lbImg, { autoAlpha: 0, scale: 0.97, duration: duration(0.25), ease: "power2.in" });
+    gsap.to(lightbox, {
+      autoAlpha: 0, duration: duration(0.3), ease: "power2.in",
+      onComplete: () => {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+        document.body.style.overflow = "";
+        lastFocus?.focus();
+      },
+    });
   };
   const navigate = (dir: number) => {
     currentIdx = (currentIdx + dir + galleryImgs.length) % galleryImgs.length;
-    showImg();
+    gsap.timeline()
+      .to(lbImg, { autoAlpha: 0, x: -40 * dir, duration: duration(0.18), ease: "power2.in" })
+      .add(showImg)
+      .fromTo(lbImg, { x: 40 * dir }, { autoAlpha: 1, x: 0, duration: duration(0.45), ease: "expo.out" });
   };
 
-  document.querySelectorAll(".image-wrapper").forEach((wrap, i) => {
+  wrappers.forEach((wrap, i) => {
     wrap.addEventListener("click", () => openLb(i));
   });
   lbClose.addEventListener("click", closeLb);
-  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLb(); });
-  lbPrev.addEventListener("click", (e) => { e.stopPropagation(); navigate(-1); });
-  lbNext.addEventListener("click", (e) => { e.stopPropagation(); navigate(1); });
+  stage.addEventListener("click", (e) => { if (e.target === stage) closeLb(); });
+  lbPrev.addEventListener("click", () => navigate(-1));
+  lbNext.addEventListener("click", () => navigate(1));
   document.addEventListener("keydown", (e) => {
-    if (lightbox.classList.contains("hidden")) return;
+    if (!isOpen()) return;
     if (e.key === "Escape") closeLb();
     if (e.key === "ArrowLeft") navigate(-1);
     if (e.key === "ArrowRight") navigate(1);
+  });
+
+  // Deslizar para cambiar de imagen en pantallas táctiles
+  let startX = 0;
+  stage.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener("touchend", (e) => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
   });
 </script>

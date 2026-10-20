@@ -1,4 +1,7 @@
 ---
+import ArrowLink from "./ArrowLink.astro";
+import SectionHeading from "./SectionHeading.astro";
+
 interface Feature {
   title: string;
   body: string;
@@ -7,61 +10,97 @@ interface Feature {
 
 interface Props {
   id?: string;
-  title?: string;
+  title?: string | [string, string];
   description?: string;
   features: Feature[];
   link?: { href: string; text: string };
 }
 
 const { id, title, description, features, link } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, "0");
 ---
 
 <section id={id} class:list={["relative overflow-hidden bg-[#f7f8fa] text-neutral-900", title ? "py-24 md:py-32" : "pb-24 pt-16 md:pb-32 md:pt-20"]}>
   <div class="relative z-10 mx-auto max-w-6xl px-6">
-    {title && (
-      <div class="mb-14 max-w-2xl">
-        <h2 class="text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
-        {description && <p class="mt-5 text-lg leading-relaxed text-neutral-500">{description}</p>}
-      </div>
-    )}
+    {title && <SectionHeading class="mb-14 md:mb-16" title={title} description={description} />}
 
-    <div class="grid gap-6 md:grid-cols-3">
-      {features.map((item) => (
-        <div class="why-item flex flex-col rounded-3xl border border-neutral-200 bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,.04)] transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,.06)]">
-          <div class="grid size-12 place-items-center rounded-2xl bg-violet-50 text-violet-600">
-            <i class={`fa-solid ${item.icon} text-xl`}></i>
-          </div>
-          <h3 class="mt-7 text-xl font-medium tracking-tight">{item.title}</h3>
-          <p class="mt-3 leading-relaxed text-neutral-500">{item.body}</p>
-        </div>
-      ))}
+    <!-- Bento: la primera característica es la destacada, en violeta de marca -->
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+      {features.map((item, i) =>
+        i === 0 ? (
+          <article
+            data-spotlight
+            style="--spot: rgb(255 255 255 / .16)"
+            class="why-item why-featured group relative isolate flex min-h-88 flex-col overflow-hidden rounded-4xl bg-violet-600 p-8 text-white shadow-[0_30px_70px_-30px_rgba(124,58,237,.7)] md:col-span-2 md:p-10 lg:col-span-1 lg:row-span-2 lg:min-h-120"
+          >
+            <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(110%_80%_at_100%_0%,#a78bfa_0%,transparent_55%),linear-gradient(160deg,#7c3aed_0%,#5b21b6_100%)]"></div>
+            <svg aria-hidden="true" viewBox="0 0 400 400" class="pointer-events-none absolute -right-28 -top-28 -z-10 size-112 text-white" fill="none" stroke="currentColor">
+              <circle class="why-ring" cx="200" cy="200" r="190" stroke-opacity=".12" />
+              <circle class="why-ring" cx="200" cy="200" r="145" stroke-opacity=".16" />
+              <circle class="why-ring" cx="200" cy="200" r="100" stroke-opacity=".2" />
+              <circle class="why-ring" cx="200" cy="200" r="55" stroke-opacity=".28" />
+              <circle class="origin-center animate-[spin_40s_linear_infinite]" cx="200" cy="200" r="168" stroke-opacity=".35" stroke-dasharray="2 10" stroke-linecap="round" />
+            </svg>
+
+            <div class="flex items-start justify-between">
+              <div class="grid size-14 place-items-center rounded-2xl bg-white/15 text-white ring-1 ring-white/25 backdrop-blur-md transition-transform duration-500 ease-out group-hover:-rotate-6 group-hover:scale-105">
+                <i class={`fa-solid ${item.icon} text-xl`} aria-hidden="true"></i>
+              </div>
+              <span class="text-sm tabular-nums text-white/60">{pad(i + 1)}</span>
+            </div>
+            <h3 class="mt-auto pt-16 text-2xl font-medium tracking-tight md:text-3xl">{item.title}</h3>
+            <p class="mt-3 max-w-md leading-relaxed text-violet-100/85">{item.body}</p>
+          </article>
+        ) : (
+          <article
+            data-spotlight
+            class="why-item group relative isolate flex flex-col rounded-4xl border border-neutral-200 bg-white p-8 transition-[transform,box-shadow,border-color] duration-500 ease-out hover:-translate-y-1 hover:border-violet-200 hover:shadow-[0_24px_60px_-24px_rgba(124,58,237,.3)] md:p-10"
+          >
+            <div class="flex items-start justify-between">
+              <div class="grid size-12 place-items-center rounded-2xl bg-violet-50 text-violet-600 ring-1 ring-violet-100 transition-[background-color,color,transform] duration-500 ease-out group-hover:-rotate-6 group-hover:bg-violet-600 group-hover:text-white">
+                <i class={`fa-solid ${item.icon} text-lg`} aria-hidden="true"></i>
+              </div>
+              <span class="text-sm tabular-nums text-neutral-400 transition-colors duration-300 group-hover:text-violet-600">{pad(i + 1)}</span>
+            </div>
+            <h3 class="mt-10 text-xl font-medium tracking-tight">{item.title}</h3>
+            <p class="mt-2.5 leading-relaxed text-neutral-500">{item.body}</p>
+          </article>
+        )
+      )}
     </div>
 
-    {link && (
-      <a href={link.href} class="group mt-12 inline-flex items-center gap-2 text-sm font-medium text-violet-600 transition-colors hover:text-neutral-900">
-        {link.text}
-        <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
-      </a>
-    )}
+    {link && <ArrowLink href={link.href} class="mt-14">{link.text}</ArrowLink>}
   </div>
 </section>
 
 <script>
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import "../scripts/spotlight";
   gsap.registerPlugin(ScrollTrigger);
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (!prefersReduced) {
-    gsap.utils.toArray<HTMLElement>(".why-item").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1, y: 0, duration: 0.55, delay: i * 0.08, ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 88%" },
-        }
-      );
+    // Estado inicial desde ya: el batch entra cuando la tarjeta ya asoma en pantalla
+    gsap.set(".why-item", { autoAlpha: 0, y: 32 });
+
+    ScrollTrigger.batch(".why-item", {
+      start: "top 88%",
+      once: true,
+      onEnter: (els) =>
+        gsap.to(els, {
+          autoAlpha: 1, y: 0, duration: 0.85, stagger: 0.1, ease: "power3.out",
+          clearProps: "transform", // devuelve la elevación al hover de CSS
+        }),
+    });
+
+    // Los anillos de la tarjeta destacada se expanden desde el centro, como una onda
+    gsap.utils.toArray<HTMLElement>(".why-featured").forEach((card) => {
+      gsap.from(card.querySelectorAll(".why-ring"), {
+        scale: 0.4, autoAlpha: 0, transformOrigin: "50% 50%", duration: 1.4, stagger: { each: 0.12, from: "end" }, ease: "expo.out",
+        scrollTrigger: { trigger: card, start: "top 80%", once: true },
+      });
     });
   }
 </script>

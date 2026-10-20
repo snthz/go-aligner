@@ -1,0 +1,54 @@
+---
+/*
+  Titular de sección con el mismo lenguaje del hero: la primera parte en semibold y el
+  remate en itálica violeta. Las palabras suben y se enfocan una por una al llegar a la sección.
+*/
+interface Props {
+  /** Un string, o [primera parte, remate] para el remate en itálica */
+  title: string | [string, string];
+  description?: string;
+  /** `violet`: sobre un fondo violeta de marca */
+  tone?: "light" | "dark" | "violet";
+  class?: string;
+}
+
+const { title, description, tone = "light", class: className } = Astro.props;
+const parts = Array.isArray(title) ? title : [title];
+const accent = { light: "text-violet-600", dark: "text-violet-300", violet: "text-violet-200" }[tone];
+const muted = { light: "text-neutral-500", dark: "text-neutral-400", violet: "text-violet-100/80" }[tone];
+---
+
+<div class:list={["sh max-w-2xl", className]}>
+  <h2 class="text-balance text-[clamp(2.25rem,4.8vw,3.75rem)] leading-[1.02] tracking-[-0.04em]">
+    {parts.map((part, k) => (
+      <span class:list={["block", k === 0 ? "font-semibold" : ["font-normal italic", accent]]}>
+        {part.split(" ").map((word, j) => (
+          <Fragment>{j > 0 && " "}<span class="sh-word inline-block">{word}</span></Fragment>
+        ))}
+      </span>
+    ))}
+  </h2>
+  {description && (
+    <p class:list={["sh-desc mt-6 max-w-xl text-lg leading-relaxed", muted]}>
+      {description}
+    </p>
+  )}
+</div>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReduced) {
+    gsap.utils.toArray<HTMLElement>(".sh").forEach((el) => {
+      gsap.timeline({ scrollTrigger: { trigger: el, start: "top 85%", once: true } })
+        .from(el.querySelectorAll(".sh-word"), {
+          autoAlpha: 0, yPercent: 60, filter: "blur(8px)", duration: 0.9, stagger: 0.05, ease: "expo.out",
+        })
+        .from(el.querySelectorAll(".sh-desc"), { autoAlpha: 0, y: 16, duration: 0.7, ease: "power2.out" }, 0.3);
+    });
+  }
+</script>

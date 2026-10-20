@@ -1,4 +1,6 @@
 ---
+import SectionHeading from "./SectionHeading.astro";
+
 const benefits = [
   {
     title: "Se ajustan solos a tu boca",
@@ -21,46 +23,60 @@ const benefits = [
     icon: "fa-utensils",
   },
 ];
+
+const pad = (n: number) => String(n).padStart(2, "0");
 ---
 
-<section id="beneficios" class="benefits-section relative overflow-hidden bg-[#f7f8fa] py-24 text-neutral-900 md:py-32">
-  <div class="relative z-10 mx-auto max-w-6xl px-6">
-    <div class="max-w-2xl">
-      <h2 class="text-balance text-4xl font-medium tracking-tight md:text-5xl">
-        ¿Por qué alineadores y no brackets?
-      </h2>
+<section id="beneficios" class="relative overflow-hidden bg-[#f7f8fa] py-24 text-neutral-900 md:py-32">
+  <div class="relative z-10 mx-auto grid max-w-6xl gap-14 px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+    <div class="lg:sticky lg:top-32 lg:self-start">
+      <SectionHeading
+        title={["¿Por qué alineadores", "y no brackets?"]}
+        description="Ortodoncia que se adapta a tu vida, y no al revés."
+      />
     </div>
 
-    <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {benefits.map((item) => (
-        <div class="benefit-item flex flex-col rounded-3xl border border-neutral-200 bg-white p-7 shadow-[0_1px_2px_rgba(0,0,0,.04)]">
-          <div class="grid size-11 place-items-center rounded-2xl bg-violet-50 text-violet-600">
-            <i class={`fa-solid ${item.icon} text-lg`}></i>
+    <!-- Retícula con líneas de 1px: el fondo del contenedor asoma entre las celdas -->
+    <ul class="grid gap-px overflow-hidden rounded-4xl border border-neutral-200 bg-neutral-200 sm:grid-cols-2">
+      {benefits.map((item, i) => (
+        <li data-spotlight class="benefit-item group relative isolate flex flex-col bg-white p-7 md:p-9">
+          <div class="flex items-start justify-between">
+            <div class="benefit-icon grid size-12 place-items-center rounded-2xl bg-violet-50 text-violet-600 ring-1 ring-violet-100 transition-[background-color,color,transform,box-shadow] duration-500 ease-out group-hover:-rotate-6 group-hover:bg-violet-600 group-hover:text-white group-hover:shadow-[0_10px_30px_-8px_rgba(124,58,237,.6)] group-hover:ring-violet-600">
+              <i class={`fa-solid ${item.icon} text-lg`} aria-hidden="true"></i>
+            </div>
+            <span class="text-sm tabular-nums text-neutral-400 transition-colors duration-300 group-hover:text-violet-600">{pad(i + 1)}</span>
           </div>
-          <h3 class="mt-6 text-lg font-medium leading-snug tracking-tight">{item.title}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-neutral-500">{item.body}</p>
-        </div>
+          <h3 class="mt-12 text-xl font-medium leading-snug tracking-tight">{item.title}</h3>
+          <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-neutral-500">{item.body}</p>
+        </li>
       ))}
-    </div>
+    </ul>
   </div>
 </section>
 
 <script>
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import "../scripts/spotlight";
   gsap.registerPlugin(ScrollTrigger);
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (!prefersReduced) {
+    // Estado inicial desde ya: el batch entra cuando la tarjeta ya asoma en pantalla
+    gsap.set(".benefit-item", { autoAlpha: 0, y: 28 });
+    gsap.set(".benefit-icon", { scale: 0.6, rotate: -15 });
+
     ScrollTrigger.batch(".benefit-item", {
-      start: "top 90%",
+      start: "top 88%",
       once: true,
-      onEnter: (els) =>
-        gsap.fromTo(els,
-          { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: "power2.out" }
-        ),
+      onEnter: (els) => {
+        gsap.to(els, { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.09, ease: "power3.out" });
+        gsap.to(els.map((el) => el.querySelector(".benefit-icon")), {
+          scale: 1, rotate: 0, duration: 0.9, stagger: 0.09, delay: 0.15, ease: "back.out(2)",
+          clearProps: "transform", // devuelve el giro al hover de CSS
+        });
+      },
     });
   }
 </script>
