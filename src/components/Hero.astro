@@ -1,10 +1,10 @@
 ---
 import { Image } from "astro:assets";
-import Img1 from "../assets/img-1.jpg";
-import Img2 from "../assets/img-2.jpg";
-import Img3 from "../assets/img-3.jpg";
-import Img4 from "../assets/img-4.jpg";
-import Img6 from "../assets/img-6.jpg";
+import Img1 from "../assets/img-1.webp";
+import Img2 from "../assets/img-2.webp";
+import Img3 from "../assets/img-3.webp";
+import Img4 from "../assets/img-4.webp";
+import Img6 from "../assets/img-6.webp";
 import CtaButton from "./CtaButton.astro";
 
 /*
@@ -71,7 +71,7 @@ const emphasis = (text: string) => text.split("**").map((part, i) => ({ text: pa
             src={scene.src}
             alt=""
             widths={[960, 1600, 2400]}
-            sizes="100vw"
+            sizes={scene.contain ? "(min-width: 768px) 67vh, 100vw" : "100vw"}
             quality={72}
             class:list={["sw-img h-full w-full", scene.contain ? "object-contain" : "object-cover"]}
             data-contain={scene.contain ? "" : undefined}

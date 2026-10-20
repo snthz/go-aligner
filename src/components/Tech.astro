@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
-import Machine1 from "../assets/machine1.jpg";
-import Machine2 from "../assets/machine2.jpg";
-import Machine3 from "../assets/machine3.jpg";
+import Machine1 from "../assets/machine1.webp";
+import Machine2 from "../assets/machine2.webp";
+import Machine3 from "../assets/machine3.webp";
 
 const techItems = [
   {
@@ -44,6 +44,8 @@ const techItems = [
             <Image
               src={item.img}
               alt={item.alt}
+              widths={[360, 540, 720, 1024]}
+              sizes="(min-width: 768px) 352px, (min-width: 640px) 50vw, 100vw"
               class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />

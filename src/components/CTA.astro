@@ -1,5 +1,7 @@
 ---
-import Video1 from "../assets/video-1.mp4";
+import VideoWebm from "../assets/video-1.webm";
+import VideoMp4 from "../assets/video-1.mp4";
+import VideoPoster from "../assets/video-1-poster.webp";
 import CtaButton from "./CtaButton.astro";
 import SectionHeading from "./SectionHeading.astro";
 
@@ -62,12 +64,17 @@ const {
             <video
               id="cta-video"
               class="h-full w-full object-cover"
-              data-src={Video1}
+              poster={VideoPoster.src}
+              width="540"
+              height="960"
               loop
               muted
               playsinline
               preload="none"
             >
+              <!-- WebM (VP9) primero; MP4 (H.264) para navegadores sin VP9 -->
+              <source data-src={VideoWebm} type="video/webm" />
+              <source data-src={VideoMp4} type="video/mp4" />
               <track kind="captions" label="Español" srclang="es" />
             </video>
           </div>
@@ -122,8 +129,10 @@ const {
       (entries, obs) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const src = video.dataset.src;
-          if (src && !video.src) video.src = src;
+          video.querySelectorAll<HTMLSourceElement>("source[data-src]").forEach((source) => {
+            source.src = source.dataset.src!;
+          });
+          video.load();
           video.play().catch(() => {});
           obs.disconnect();
         });

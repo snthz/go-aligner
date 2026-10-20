@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import AlignerTransparent from "../assets/aligner-transparent.png";
+import AlignerTransparent from "../assets/aligner-transparent.webp";
 ---
 
 <section id="scroll-feature" class="relative bg-gradient-to-b from-neutral-950 to-neutral-900 text-white overflow-hidden min-h-[300vh]">
@@ -10,6 +10,8 @@ import AlignerTransparent from "../assets/aligner-transparent.png";
       <Image
         src={AlignerTransparent}
         alt="Aligner"
+        widths={[400, 750]}
+        sizes="(min-width: 875px) 700px, max(300px, 80vw)"
         class="feature-image w-full will-change-transform"
       />
       <!-- Pin 1 -->

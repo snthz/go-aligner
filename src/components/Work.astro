@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import ArrowLink from "./ArrowLink.astro";
 import SectionHeading from "./SectionHeading.astro";
@@ -21,6 +21,9 @@ interface Props {
 
 const { id, title, description, images, links = [] } = Astro.props;
 const pad = (n: number) => String(n).padStart(2, "0");
+
+// La tarjeta carga una versión chica; el lightbox pide esta, más grande, solo al abrirse
+const fullImages = await Promise.all(images.map((image) => getImage({ src: image.src, width: 1600, quality: 80 })));
 ---
 
 <section id={id} class:list={["relative overflow-hidden bg-[#f7f8fa] text-neutral-900", title ? "py-24 md:py-32" : "pb-24 pt-16 md:pb-32 md:pt-20"]}>
@@ -38,9 +41,14 @@ const pad = (n: number) => String(n).padStart(2, "0");
           >
             <!-- Más alto que la tarjeta para que el parallax no deje bordes -->
             <span class="work-media absolute inset-x-0 -inset-y-[8%] block">
+              <!-- object-cover recorta la foto horizontal: se pide ~1.5× el ancho de la tarjeta para que no se vea blanda -->
               <Image
                 src={image.src}
                 alt={image.alt}
+                widths={[480, 720, 960, 1280]}
+                sizes="(min-width: 1024px) 540px, (min-width: 640px) 75vw, 140vw"
+                quality={75}
+                data-full={fullImages[i].src}
                 class="gallery-img h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.06]"
               />
             </span>
@@ -144,7 +152,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
   const showImg = () => {
     const img = galleryImgs[currentIdx];
-    lbImg.src = img.currentSrc || img.src;
+    lbImg.src = img.dataset.full || img.currentSrc || img.src;
     lbImg.alt = img.alt;
     lbCaption.textContent = img.alt;
     lbIndex.textContent = String(currentIdx + 1).padStart(2, "0");
