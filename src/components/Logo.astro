@@ -1,0 +1,47 @@
+---
+/*
+  Isotipo GO ALIGNER redibujado en vector: la "C" queda detrás de la "G" con un corte
+  limpio alrededor, y la barra de la G entra hasta el centro. Acabado metálico sutil.
+  Geometría: anillos de radio 100/58 con centros a 92 de distancia.
+*/
+interface Props {
+  /** Muestra el texto "GO ALIGNER" junto al isotipo */
+  wordmark?: boolean;
+  class?: string;
+}
+
+const { wordmark = true, class: className } = Astro.props;
+
+// Ids únicos: el logo aparece varias veces en la misma página (nav, menú móvil, footer)
+const uid = Math.random().toString(36).slice(2, 8);
+const fill = `ga-fill-${uid}`;
+const cut = `ga-cut-${uid}`;
+
+const G = "M97.96 66A100 100 0 1 1 93.63 118L107 118A19 19 0 0 1 107 80L196 80A8 8 0 0 1 204 88L204 110A8 8 0 0 1 196 118L136.86 118A58 58 0 1 0 145.01 66Z";
+const C = "M0 100a100 100 0 1 0 200 0a100 100 0 1 0-200 0ZM42 100a58 58 0 1 0 116 0a58 58 0 1 0-116 0Z";
+---
+
+<span class:list={["inline-flex items-center gap-3", className]}>
+  <svg viewBox="0 0 292 200" class="h-[1.375rem] w-auto shrink-0" aria-hidden="true">
+    <defs>
+      <linearGradient id={fill} x1="0" y1="0" x2="0" y2="200" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#ffffff" />
+        <stop offset="0.55" stop-color="#b4b4ba" />
+        <stop offset="1" stop-color="#e4e4e7" />
+      </linearGradient>
+      <mask id={cut} maskUnits="userSpaceOnUse" x="0" y="0" width="292" height="200">
+        <rect width="292" height="200" fill="#fff" />
+        <circle cx="192" cy="100" r="110" fill="#000" />
+        <path d={G} fill="#000" stroke="#000" stroke-width="20" stroke-linejoin="round" />
+      </mask>
+    </defs>
+    <path d={C} fill={`url(#${fill})`} fill-rule="evenodd" mask={`url(#${cut})`} />
+    <path d={G} fill={`url(#${fill})`} />
+  </svg>
+  {wordmark && (
+    <span class="whitespace-nowrap text-[0.9375rem] leading-none tracking-[0.16em]">
+      <span class="font-semibold text-white">GO</span>
+      <span class="text-white/55">ALIGNER</span>
+    </span>
+  )}
+</span>

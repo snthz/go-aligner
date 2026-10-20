@@ -1,6 +1,5 @@
 ---
-import { Image } from "astro:assets";
-import Logo from "../assets/logo.png";
+import Logo from "./Logo.astro";
 const currentYear = new Date().getFullYear();
 
 const navLinks = [
@@ -19,10 +18,7 @@ const navLinks = [
     <div class="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
       <!-- Branding -->
       <div>
-        <div class="mb-5 flex items-center gap-3">
-          <Image src={Logo} alt="GO ALIGNER Logo" class="h-9 w-9 rounded-full" loading="lazy" />
-          <span class="text-xl font-medium tracking-tight text-white">GO ALIGNER</span>
-        </div>
+        <Logo class="mb-6" />
         <p class="max-w-sm text-sm leading-relaxed text-neutral-400/90">
           Alineadores invisibles con flujo 100% digital. Tu sonrisa, diseñada en 3D y fabricada con precisión.
         </p>

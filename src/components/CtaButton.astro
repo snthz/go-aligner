@@ -1,0 +1,44 @@
+---
+/*
+  Botón principal del sitio: pastilla de vidrio con línea fina (mismo lenguaje que los
+  botones circulares de redes y FAQ) y la flecha en su propio círculo. En hover el círculo
+  pasa a violeta y la flecha sale por la derecha mientras otra entra por la izquierda.
+*/
+interface Props {
+  href?: string;
+  size?: "sm" | "md" | "lg";
+  /** Ocupa todo el ancho: texto a la izquierda, flecha a la derecha */
+  full?: boolean;
+  class?: string;
+}
+
+const { href = "https://wa.link/42atxt", size = "md", full = false, class: className } = Astro.props;
+const external = href.startsWith("http");
+
+const sizes = {
+  sm: { root: "h-10 gap-3 pl-4 pr-1 text-sm", icon: "size-8", arrow: "h-3.5 w-3.5" },
+  md: { root: "h-12 gap-4 pl-5 pr-1.5 text-[0.9375rem]", icon: "size-9", arrow: "h-4 w-4" },
+  lg: { root: "h-14 gap-5 pl-6 pr-2 text-base", icon: "size-10", arrow: "h-4 w-4" },
+}[size];
+---
+
+<a
+  href={href}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener" : undefined}
+  class:list={[
+    "group items-center whitespace-nowrap rounded-full border border-white/15 bg-white/[0.06] font-medium text-white backdrop-blur-md transition-colors duration-300 hover:border-white/30 hover:bg-white/[0.12]",
+    full ? "flex w-full justify-between" : "inline-flex",
+    sizes.root,
+    className,
+  ]}
+>
+  <slot />
+  <span
+    aria-hidden="true"
+    class:list={["grid shrink-0 place-items-center overflow-hidden rounded-full bg-white text-neutral-900 transition-colors duration-300 group-hover:bg-violet-400", sizes.icon]}
+  >
+    <svg class:list={["col-start-1 row-start-1 transition-transform duration-300 ease-out group-hover:translate-x-[180%]", sizes.arrow]} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
+    <svg class:list={["col-start-1 row-start-1 -translate-x-[180%] transition-transform duration-300 ease-out group-hover:translate-x-0", sizes.arrow]} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
+  </span>
+</a>

@@ -1,12 +1,14 @@
 ---
-import LogoImage from "../assets/logo.png";
+import CtaButton from "./CtaButton.astro";
+import Logo from "./Logo.astro";
 
 // Las 3 primeras viven en el Home (scroll); FAQ es subpágina. El logo lleva al inicio.
+// `short` es la etiqueta de la barra de escritorio; `desktop: false` solo aparece en el menú móvil.
 const links = [
-  { href: "/#como-funciona", text: "Cómo funciona", sectionId: "como-funciona", path: "/como-funciona" },
-  { href: "/#resultados", text: "Resultados", sectionId: "resultados", path: "/resultados" },
-  { href: "/#por-que-elegirnos", text: "Por qué elegirnos", sectionId: "por-que-elegirnos", path: "/por-que-elegirnos" },
-  { href: "/preguntas-frecuentes", text: "Preguntas frecuentes", path: "/preguntas-frecuentes" },
+  { href: "/#como-funciona", text: "Cómo funciona", short: "Proceso", sectionId: "como-funciona", path: "/como-funciona" },
+  { href: "/#resultados", text: "Resultados", short: "Resultados", sectionId: "resultados", path: "/resultados" },
+  { href: "/#por-que-elegirnos", text: "Por qué elegirnos", sectionId: "por-que-elegirnos", path: "/por-que-elegirnos", desktop: false },
+  { href: "/preguntas-frecuentes", text: "Preguntas frecuentes", short: "Preguntas", path: "/preguntas-frecuentes" },
 ];
 
 // Audiencia distinta (B2B): va separada, junto al CTA.
@@ -20,59 +22,48 @@ const isActive = (path: string) => !isHome && currentPath === path;
 
 <header id="site-header" class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-colors duration-300">
   <nav
-    class="nav-bar mx-auto flex h-20 max-w-6xl items-center justify-between gap-8 px-6 transition-[height] duration-300"
+    class="nav-bar mx-auto grid h-20 max-w-6xl grid-cols-[1fr_auto] items-center gap-6 px-6 transition-[height] duration-300 lg:grid-cols-[1fr_auto_1fr]"
     aria-label="Navegación principal"
   >
-    <div class="flex items-center gap-12">
-      <!-- Brand -->
-      <a href="/" class="flex shrink-0 items-center gap-3" aria-label="GO ALIGNER, inicio">
-        <img src={LogoImage.src} alt="" class="h-8 w-8 rounded-full" width="32" height="32" />
-        <span class="text-[1.05rem] font-medium tracking-tight text-white">GO ALIGNER</span>
-      </a>
+    <!-- Brand -->
+    <a href="/" class="justify-self-start" aria-label="GO ALIGNER, inicio">
+      <Logo />
+    </a>
 
-      <!-- Desktop links -->
-      <ul class="hidden items-center gap-8 xl:flex">
-        {links.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              data-section={link.sectionId}
-              aria-current={isActive(link.path) ? "page" : undefined}
-              class:list={["nav-link relative py-2 text-sm transition-colors duration-200 hover:text-white", { "is-active": isActive(link.path) }]}
-            >
-              {link.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <!-- Desktop links: pocas y cortas, centradas -->
+    <ul class="hidden items-center gap-9 lg:flex">
+      {links.filter((link) => link.desktop !== false).map((link) => (
+        <li>
+          <a
+            href={link.href}
+            data-section={link.sectionId}
+            aria-current={isActive(link.path) ? "page" : undefined}
+            class:list={["nav-link relative py-2 text-sm transition-colors duration-200", { "is-active": isActive(link.path) }]}
+          >
+            {link.short}
+          </a>
+        </li>
+      ))}
+    </ul>
 
-    <div class="flex items-center gap-6">
+    <div class="flex items-center gap-4 justify-self-end xl:gap-6">
       <a
         href={clinicsLink.href}
         aria-current={isActive(clinicsLink.path) ? "page" : undefined}
-        class:list={["nav-link relative hidden py-2 text-sm transition-colors duration-200 hover:text-white xl:inline-block", { "is-active": isActive(clinicsLink.path) }]}
+        class:list={["nav-link relative hidden whitespace-nowrap py-2 text-sm transition-colors duration-200 hover:text-white lg:inline-block", { "is-active": isActive(clinicsLink.path) }]}
       >
         {clinicsLink.text}
       </a>
 
       <span aria-hidden="true" class="hidden h-4 w-px bg-white/15 xl:block"></span>
 
-      <a
-        href="https://wa.link/42atxt"
-        target="_blank"
-        rel="noopener"
-        class="group hidden items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-neutral-900 transition-colors duration-200 hover:bg-neutral-200 sm:inline-flex"
-      >
-        Agendar evaluación
-        <svg class="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" />
-        </svg>
-      </a>
+      <div class="hidden sm:block">
+        <CtaButton size="sm">Agendar evaluación</CtaButton>
+      </div>
 
       <!-- Mobile button -->
       <button
-        class="grid size-10 place-items-center rounded-full border border-white/10 text-neutral-200 transition-colors hover:border-white/25 hover:text-white xl:hidden"
+        class="grid size-10 place-items-center rounded-full border border-white/10 text-neutral-200 transition-colors hover:border-white/25 hover:text-white lg:hidden"
         aria-label="Abrir menú"
         aria-expanded="false"
         aria-controls="mobile-drawer"
@@ -88,16 +79,15 @@ const isActive = (path: string) => !isHome && currentPath === path;
   <!-- Drawer mobile -->
   <div
     id="mobile-drawer"
-    class="pointer-events-none fixed inset-0 bg-[#0a0a0b] opacity-0 transition-opacity duration-300 xl:hidden"
+    class="pointer-events-none fixed inset-0 bg-[#0a0a0b] opacity-0 transition-opacity duration-300 lg:hidden"
     role="dialog"
     aria-modal="true"
     aria-label="Menú de navegación"
   >
     <div class="mx-auto flex h-full max-w-6xl flex-col px-6">
       <div class="flex h-20 shrink-0 items-center justify-between">
-        <a href="/" class="flex items-center gap-3" data-mobile-link>
-          <img src={LogoImage.src} alt="" class="h-8 w-8 rounded-full" width="32" height="32" />
-          <span class="text-[1.05rem] font-medium tracking-tight text-white">GO ALIGNER</span>
+        <a href="/" data-mobile-link aria-label="GO ALIGNER, inicio">
+          <Logo />
         </a>
         <button
           class="grid size-10 place-items-center rounded-full border border-white/10 text-neutral-200 transition-colors hover:border-white/25 hover:text-white"
@@ -132,17 +122,7 @@ const isActive = (path: string) => !isHome && currentPath === path;
       </ul>
 
       <div class="mt-auto pb-10 pt-8">
-        <a
-          href="https://wa.link/42atxt"
-          target="_blank"
-          rel="noopener"
-          class="flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 font-medium text-neutral-900"
-        >
-          Agendar evaluación
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" />
-          </svg>
-        </a>
+        <CtaButton size="lg" full>Agendar evaluación</CtaButton>
         <p class="mt-4 text-center text-xs text-neutral-500">Lunes a viernes, 8am–5pm · San Pedro Sula</p>
       </div>
     </div>
@@ -174,11 +154,26 @@ const isActive = (path: string) => !isHome && currentPath === path;
     transform: scaleX(1);
   }
 
-  #site-header.is-scrolled {
+  /*
+    El fondo con blur va en un pseudo-elemento: un backdrop-filter en el propio header lo
+    volvería el contenedor de los `fixed` de adentro y el menú móvil quedaría del alto de la barra.
+  */
+  #site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background: rgb(10 10 11 / 0.85);
-    border-bottom-color: rgb(255 255 255 / 0.1);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  #site-header.is-scrolled::before {
+    opacity: 1;
+  }
+  #site-header.is-scrolled {
+    border-bottom-color: rgb(255 255 255 / 0.1);
   }
   #site-header.is-scrolled .nav-bar {
     height: 4rem;

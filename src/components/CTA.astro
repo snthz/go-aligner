@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Background from "../assets/img-4.jpg";
 import Video1 from "../assets/video-1.mp4";
+import CtaButton from "./CtaButton.astro";
 
 interface Props {
   title?: string;
@@ -34,15 +35,7 @@ const {
         {description}
       </p>
       <div class="mt-9 flex justify-center md:justify-start">
-        <a
-          href="https://wa.link/42atxt"
-          target="_blank"
-          rel="noopener"
-          class="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-medium text-neutral-900 transition-colors duration-200 hover:bg-neutral-200"
-        >
-          {button}
-          <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
-        </a>
+        <CtaButton size="lg">{button}</CtaButton>
       </div>
     </div>
 

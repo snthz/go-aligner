@@ -2,6 +2,7 @@
 
 /* ── Fonts (self-hosted) ── */
 @import "@fontsource-variable/schibsted-grotesk/wght.css";
+@import "@fontsource-variable/schibsted-grotesk/wght-italic.css";
 
 @theme {
     --font-sans: "Schibsted Grotesk Variable", ui-sans-serif, system-ui, sans-serif;

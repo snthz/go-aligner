@@ -5,6 +5,7 @@ import Img2 from "../assets/img-2.jpg";
 import Img3 from "../assets/img-3.jpg";
 import Img4 from "../assets/img-4.jpg";
 import Img6 from "../assets/img-6.jpg";
+import CtaButton from "./CtaButton.astro";
 
 /*
   Recorrido continuo con el scroll: la cámara se mete en cada foto hacia su punto focal
@@ -21,25 +22,26 @@ const scenes = [
   { src: Img6, focus: "50% 30%", focusMd: "82% 50%", out: true, contain: true },
 ];
 
+// `title`: la primera parte va en semibold y el remate en itálica.
 const chapters = [
   {
     label: "Escaneo digital",
-    title: "Empieza con un escaneo, no con un molde.",
+    title: ["Empieza con un escaneo,", "no con un molde."],
     body: "Escaneamos tu boca sin moldes ni pastas.",
   },
   {
     label: "Plan en 3D",
-    title: "Ves tu sonrisa antes de empezar.",
+    title: ["Ves tu sonrisa", "antes de empezar."],
     body: "Vemos en video cómo se moverá cada diente antes de fabricar, así sabes qué esperar desde el día uno.",
   },
   {
     label: "Fabricación",
-    title: "Precisión que se ve de cerca.",
+    title: ["Precisión", "que se ve de cerca."],
     body: "Resina certificada que, con agua tibia, toma la forma exacta de tu boca sin perder transparencia ni resistencia.",
   },
   {
     label: "Entrega",
-    title: "Listos en 7 días hábiles.",
+    title: ["Listos en", "7 días hábiles."],
     body: "Y el mismo equipo da seguimiento a tu caso de principio a fin.",
     cta: true,
   },
@@ -80,29 +82,22 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
     <!-- Scrims para legibilidad -->
     <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/60 to-transparent"></div>
-    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 h-3/4 bg-linear-to-t from-black/90 via-black/45 to-transparent"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 h-4/5 bg-linear-to-t from-black/90 via-black/55 to-transparent"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 left-0 hidden w-2/3 bg-linear-to-r from-black/45 to-transparent md:block"></div>
 
     <!-- Intro -->
     <div id="sw-intro" class="absolute inset-0 z-10 flex items-end">
       <div class="mx-auto w-full max-w-6xl px-6 pb-32 md:pb-40">
-        <h1 class="text-[clamp(2.75rem,7.4vw,6rem)] font-medium leading-[0.95] tracking-[-0.035em]">
-          <span class="sw-line block overflow-hidden pb-[0.06em]"><span class="block">Tu sonrisa,</span></span>
-          <span class="sw-line block overflow-hidden pb-[0.06em]"><span class="block">diseñada en <span class="text-violet-400">3D</span>.</span></span>
+        <h1 class="sw-title text-[clamp(2.75rem,7.4vw,6rem)] leading-[0.98] tracking-[-0.045em]">
+          <span class="block font-semibold"><span class="sw-word inline-block">Tu</span> <span class="sw-word inline-block">sonrisa,</span></span>
+          <span class="block font-normal italic"><span class="sw-word inline-block">diseñada</span> <span class="sw-word inline-block">en</span> <span class="sw-word inline-block"><span class="text-violet-400">3D</span>.</span></span>
         </h1>
         <div class="sw-fade mt-8 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <p class="max-w-md text-lg leading-relaxed text-neutral-300">
             Alineadores invisibles hechos a tu medida: escaneo digital, plan en 3D y seguimiento en línea.
           </p>
-          <div class="flex flex-col gap-x-7 gap-y-4 sm:flex-row sm:items-center">
-            <a
-              href="https://wa.link/42atxt"
-              target="_blank"
-              rel="noopener"
-              class="group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-white px-6 py-3 font-medium text-neutral-900 transition-colors duration-200 hover:bg-neutral-200"
-            >
-              Solicitar evaluación
-              <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
-            </a>
+          <div class="flex flex-col items-start gap-x-7 gap-y-5 sm:flex-row sm:items-center">
+            <CtaButton class="self-start sm:self-auto">Solicitar evaluación</CtaButton>
             <a
               href="#como-funciona"
               data-sw-goto="ch1"
@@ -117,21 +112,21 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
     <!-- Capítulos -->
     {chapters.map((ch, i) => (
-      <div class="sw-chapter invisible absolute inset-0 z-10 flex items-end opacity-0">
-        <div class="mx-auto w-full max-w-6xl px-6 pb-32 md:pb-40">
-          <h2 class="max-w-3xl text-balance text-[clamp(2.25rem,5.6vw,4.75rem)] font-medium leading-none tracking-[-0.03em]">{ch.title}</h2>
-          <div class="mt-6 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-            <p class="max-w-md text-lg leading-relaxed text-neutral-300">{ch.body}</p>
+      <div class="sw-chapter invisible absolute inset-0 z-10 flex items-end">
+        <div class="mx-auto grid w-full max-w-6xl gap-7 px-6 pb-32 md:grid-cols-[minmax(0,1fr)_19rem] md:items-end md:gap-16 md:pb-40">
+          <h2 class="sw-title text-[clamp(2.25rem,5.6vw,4.75rem)] leading-none tracking-[-0.04em]">
+            {ch.title.map((part, k) => (
+              <span class:list={["block", k === 0 ? "font-semibold" : "font-normal italic"]}>
+                {part.split(" ").map((word, j) => (
+                  <Fragment>{j > 0 && " "}<span class="sw-word inline-block">{word}</span></Fragment>
+                ))}
+              </span>
+            ))}
+          </h2>
+          <div class="md:pb-3">
+            <p class="sw-body text-base leading-relaxed text-neutral-300 md:text-[1.0625rem]">{ch.body}</p>
             {ch.cta && (
-              <a
-                href="https://wa.link/42atxt"
-                target="_blank"
-                rel="noopener"
-                class="group inline-flex items-center justify-center gap-2 self-start whitespace-nowrap rounded-full bg-white px-6 py-3 font-medium text-neutral-900 transition-colors duration-200 hover:bg-neutral-200 md:self-auto"
-              >
-                Solicitar evaluación
-                <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
-              </a>
+              <CtaButton class="sw-reveal-fade mt-7">Solicitar evaluación</CtaButton>
             )}
           </div>
         </div>
@@ -186,13 +181,17 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .sw-step.is-active .sw-step-label {
     color: #fff;
   }
+  /* Separa el texto de las texturas de la foto sin que se note como sombra */
+  .sw-title {
+    text-shadow: 0 1px 30px rgb(0 0 0 / 0.35);
+  }
 
   /* Estado previo al intro (la clase la pone el script inline) */
   :global(html.sw-on) #sw-nav {
     display: block;
   }
-  :global(html.sw-on) .sw-line > span {
-    transform: translateY(105%);
+  :global(html.sw-on) #sw-intro .sw-word {
+    opacity: 0;
   }
   :global(html.sw-on) .sw-fade {
     opacity: 0;
@@ -227,7 +226,12 @@ const pad = (n: number) => String(n).padStart(2, "0");
     /* ── Intro al cargar: titular + la cámara se asienta ── */
     gsap.timeline({ defaults: { ease: "power3.out" } })
       .fromTo(scenes[0].querySelector("img"), { scale: 1.18 }, { scale: 1, duration: 2.2, ease: "power2.out" }, 0)
-      .to(".sw-line > span", { y: 0, duration: 1.1, stagger: 0.1, ease: "expo.out" }, 0.2)
+      .fromTo(
+        "#sw-intro .sw-word",
+        { opacity: 0, yPercent: 45, filter: soft(12) },
+        { opacity: 1, yPercent: 0, filter: sharp, duration: 1.1, stagger: 0.08, ease: "expo.out" },
+        0.2
+      )
       .to(".sw-fade", { opacity: 1, duration: 0.8, stagger: 0.1 }, 0.5);
 
     /* ── Recorrido con el scroll ── */
@@ -257,7 +261,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
       const D = TRANSITION;
 
       // Punto de reposo del capítulo: ya llegó la escena y el texto está completo
-      tl.addLabel(`ch${i}`, t + D + 0.15);
+      tl.addLabel(`ch${i}`, t + D + 0.2);
 
       if (out) {
         // Saliendo: el detalle se aleja y aparece el alineador completo desde cerca
@@ -271,11 +275,26 @@ const pad = (n: number) => String(n).padStart(2, "0");
           .fromTo(next, { opacity: 0, scale: 1.35, filter: soft(16) }, { opacity: 1, scale: 1.02, filter: sharp, duration: D * 0.6, ease: "power2.out" }, t + D * 0.45);
       }
 
-      // Capítulo: entra al llegar, la escena sigue avanzando despacio, y sale antes del siguiente salto
+      // Capítulo: el título aparece palabra por palabra (sube y se enfoca), luego el texto de apoyo;
+      // antes del siguiente salto todo sale hacia arriba desenfocándose
       const isLast = i === scenes.length - 1;
-      tl.fromTo(chapter, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, t + D * 0.7)
+      const words = chapter.querySelectorAll(".sw-word");
+      const body = chapter.querySelector(".sw-body");
+      const fades = chapter.querySelectorAll(".sw-reveal-fade");
+      const enter = t + D * 0.5;
+      const exit = t + D + HOLD - 0.36;
+      const exitWords = 0.22 + 0.015 * (words.length - 1);
+
+      tl.set(chapter, { autoAlpha: 1 }, enter)
+        .fromTo(words, { autoAlpha: 0, yPercent: 55, filter: soft(10) }, { autoAlpha: 1, yPercent: 0, filter: sharp, duration: 0.3, stagger: 0.025, ease: "power3.out" }, enter)
+        .fromTo(body, { autoAlpha: 0, y: 18, filter: soft(6) }, { autoAlpha: 1, y: 0, filter: sharp, duration: 0.3, ease: "power2.out" }, enter + 0.15)
         .to(next, { scale: out ? 1.06 : "+=0.1", duration: HOLD + D * 0.4 }, t + D);
-      if (!isLast) tl.to(chapter, { autoAlpha: 0, y: -30, duration: 0.28, ease: "power2.in" }, t + D + HOLD - 0.28);
+      if (fades.length) tl.fromTo(fades, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, enter + 0.22);
+      if (!isLast) {
+        tl.to(words, { autoAlpha: 0, yPercent: -40, filter: soft(8), duration: 0.22, stagger: 0.015, ease: "power2.in" }, exit)
+          .to(body, { autoAlpha: 0, y: -12, filter: soft(6), duration: 0.22, ease: "power2.in" }, exit)
+          .set(chapter, { autoAlpha: 0 }, exit + exitWords);
+      }
 
       ranges.push([t, t + D + HOLD]);
       t += D + HOLD;
