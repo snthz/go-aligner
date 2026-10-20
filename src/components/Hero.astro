@@ -1,176 +1,314 @@
 ---
 import { Image } from "astro:assets";
-import AlignerTransparent from "../assets/aligner-transparent.png";
+import Img1 from "../assets/img-1.jpg";
+import Img2 from "../assets/img-2.jpg";
+import Img3 from "../assets/img-3.jpg";
+import Img4 from "../assets/img-4.jpg";
+import Img6 from "../assets/img-6.jpg";
+
+/*
+  Recorrido continuo con el scroll: la cámara se mete en cada foto hacia su punto focal
+  y aparece en la siguiente, cada vez más cerca del material; al final sale de vuelta
+  al alineador completo. `focus` es a la vez el encuadre y el punto hacia donde se entra.
+  `out` marca la escena a la que se llega alejándose en vez de acercándose.
+  `contain` muestra la foto completa sobre su propio fondo negro; `focusMd` la reubica en desktop.
+*/
+const scenes = [
+  { src: Img3, focus: "56% 27%" },
+  { src: Img4, focus: "46% 60%" },
+  { src: Img1, focus: "35% 55%" },
+  { src: Img2, focus: "50% 45%" },
+  { src: Img6, focus: "50% 30%", focusMd: "82% 50%", out: true, contain: true },
+];
+
+const chapters = [
+  {
+    label: "Escaneo digital",
+    title: "Empieza con un escaneo, no con un molde.",
+    body: "Escaneamos tu boca sin moldes ni pastas.",
+  },
+  {
+    label: "Plan en 3D",
+    title: "Ves tu sonrisa antes de empezar.",
+    body: "Vemos en video cómo se moverá cada diente antes de fabricar, así sabes qué esperar desde el día uno.",
+  },
+  {
+    label: "Fabricación",
+    title: "Precisión que se ve de cerca.",
+    body: "Resina certificada que, con agua tibia, toma la forma exacta de tu boca sin perder transparencia ni resistencia.",
+  },
+  {
+    label: "Entrega",
+    title: "Listos en 7 días hábiles.",
+    body: "Y el mismo equipo da seguimiento a tu caso de principio a fin.",
+    cta: true,
+  },
+];
+
+const pad = (n: number) => String(n).padStart(2, "0");
 ---
 
-<section id="hero" class="relative flex min-h-dvh items-center overflow-hidden bg-[#0a0a0b] text-white">
-  <!-- Calm background: single soft halo + faint grid -->
-  <div
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-0 z-0"
-    style="background: radial-gradient(70% 55% at 50% 0%, rgba(124,58,237,.16) 0%, transparent 65%);"
-  ></div>
-  <div
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-0 z-0 opacity-[0.04]"
-    style="background-image: linear-gradient(rgba(255,255,255,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(80% 60% at 50% 30%, black, transparent 80%);"
-  ></div>
+<!-- Activa el recorrido antes del primer paint; sin JS o con movimiento reducido queda un hero estático -->
+<script is:inline>
+  if (matchMedia("(prefers-reduced-motion: no-preference)").matches) document.documentElement.classList.add("sw-on");
+</script>
 
-  <div class="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-14 px-6 py-32 md:grid-cols-[1.05fr_0.95fr] md:py-36">
-    <!-- Left: Copy -->
-    <div class="text-center md:text-left">
-      <span class="hero-el eyebrow text-violet-300">Ortodoncia digital · Honduras</span>
-
-      <h1 class="hero-el mt-6 text-[2.6rem] font-medium leading-[1.05] tracking-tight sm:text-6xl md:text-[4rem]">
-        Tu sonrisa,<br />
-        diseñada en <span class="text-violet-400">3D</span>.
-      </h1>
-
-      <p class="hero-el mx-auto mt-6 max-w-md text-lg leading-relaxed text-neutral-400 md:mx-0">
-        Alineadores invisibles hechos a tu medida: escaneo digital, plan en 3D y seguimiento en línea.
-      </p>
-
-      <!-- CTAs -->
-      <div class="hero-el mt-9 flex flex-col items-center gap-3 sm:flex-row md:justify-start">
-        <a
-          href="https://wa.link/42atxt"
-          target="_blank"
-          rel="noopener"
-          class="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 font-medium text-neutral-900 transition-colors duration-200 hover:bg-neutral-200 sm:w-auto"
+<section id="hero" class="sw relative bg-[#0a0a0b] text-white">
+  <div class="sticky top-0 h-dvh overflow-hidden">
+    <!-- Escenas -->
+    <div aria-hidden="true" class="absolute inset-0">
+      {scenes.map((scene, i) => (
+        <div
+          class="sw-scene absolute inset-0"
+          data-out={scene.out ? "" : undefined}
+          style={`--pos:${scene.focus};--pos-md:${scene.focusMd ?? scene.focus};${i === 0 ? "" : "opacity:0"}`}
         >
-          Solicitar evaluación
-          <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
-        </a>
-        <a
-          href="#como-funciona"
-          class="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-3.5 font-medium text-white transition-colors duration-200 hover:bg-white/5 sm:w-auto"
-        >
-          Ver cómo funciona
-        </a>
-      </div>
-
-      <!-- Quiet stats -->
-      <dl class="hero-el mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-white/10 pt-7 text-center md:mx-0 md:text-left">
-        <div>
-          <dt class="text-2xl font-semibold tracking-tight">7 días</dt>
-          <dd class="mt-1 text-xs text-neutral-500">Entrega hábil</dd>
+          <Image
+            src={scene.src}
+            alt=""
+            widths={[960, 1600, 2400]}
+            sizes="100vw"
+            quality={72}
+            class:list={["sw-img h-full w-full", scene.contain ? "object-contain" : "object-cover"]}
+            data-contain={scene.contain ? "" : undefined}
+            loading="eager"
+            fetchpriority={i === 0 ? "high" : "low"}
+          />
         </div>
-        <div>
-          <dt class="text-2xl font-semibold tracking-tight">3D</dt>
-          <dd class="mt-1 text-xs text-neutral-500">Plan a medida</dd>
-        </div>
-        <div>
-          <dt class="text-2xl font-semibold tracking-tight">100%</dt>
-          <dd class="mt-1 text-xs text-neutral-500">Digital</dd>
-        </div>
-      </dl>
+      ))}
     </div>
 
-    <!-- Right: Aligner image -->
-    <div class="relative justify-self-center md:justify-self-end">
-      <!-- soft halo -->
-      <div
-        aria-hidden="true"
-        class="absolute left-1/2 top-1/2 -z-[1] h-[34rem] w-[34rem] max-w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style="background: radial-gradient(closest-side, rgba(124,58,237,.18), transparent 70%);"
-      ></div>
+    <!-- Scrims para legibilidad -->
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/60 to-transparent"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 h-3/4 bg-linear-to-t from-black/90 via-black/45 to-transparent"></div>
 
-      <div id="aligner-wrap" class="relative grid h-[clamp(260px,52vw,540px)] w-[clamp(260px,52vw,540px)] place-items-center">
-        <Image
-          src={AlignerTransparent}
-          alt="Alineador dental transparente GO ALIGNER hecho a la medida"
-          class="h-full w-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,.55)] will-change-transform"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
-
-        <div class="badge-float absolute -left-2 top-[20%] md:-left-6">
-          <div class="rounded-2xl bg-white px-3.5 py-2 text-xs font-medium text-neutral-900 shadow-lg shadow-black/30">
-            Plan 3D personalizado
-          </div>
-        </div>
-        <div class="badge-float absolute right-0 top-[48%] md:-right-6">
-          <div class="rounded-2xl bg-white px-3.5 py-2 text-xs font-medium text-neutral-900 shadow-lg shadow-black/30">
-            Prácticamente invisible
-          </div>
-        </div>
-        <div class="badge-float absolute bottom-[10%] left-[12%]">
-          <div class="rounded-2xl bg-white px-3.5 py-2 text-xs font-medium text-neutral-900 shadow-lg shadow-black/30">
-            Seguimiento en línea
+    <!-- Intro -->
+    <div id="sw-intro" class="absolute inset-0 z-10 flex items-end">
+      <div class="mx-auto w-full max-w-6xl px-6 pb-32 md:pb-40">
+        <h1 class="text-[clamp(2.75rem,7.4vw,6rem)] font-medium leading-[0.95] tracking-[-0.035em]">
+          <span class="sw-line block overflow-hidden pb-[0.06em]"><span class="block">Tu sonrisa,</span></span>
+          <span class="sw-line block overflow-hidden pb-[0.06em]"><span class="block">diseñada en <span class="text-violet-400">3D</span>.</span></span>
+        </h1>
+        <div class="sw-fade mt-8 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <p class="max-w-md text-lg leading-relaxed text-neutral-300">
+            Alineadores invisibles hechos a tu medida: escaneo digital, plan en 3D y seguimiento en línea.
+          </p>
+          <div class="flex flex-col gap-x-7 gap-y-4 sm:flex-row sm:items-center">
+            <a
+              href="https://wa.link/42atxt"
+              target="_blank"
+              rel="noopener"
+              class="group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-white px-6 py-3 font-medium text-neutral-900 transition-colors duration-200 hover:bg-neutral-200"
+            >
+              Solicitar evaluación
+              <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
+            </a>
+            <a
+              href="#como-funciona"
+              data-sw-goto="ch1"
+              class="inline-flex items-center justify-center gap-1.5 whitespace-nowrap font-medium text-white underline decoration-white/30 underline-offset-[6px] transition-colors duration-200 hover:decoration-white"
+            >
+              Ver el proceso
+            </a>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Scroll indicator -->
-  <div class="hero-el absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2.5">
-    <div class="relative h-8 w-5 rounded-full border border-white/20">
-      <span id="mouse-dot" class="absolute left-1/2 top-1.5 h-1 w-1 -translate-x-1/2 rounded-full bg-white/80"></span>
-    </div>
-    <span class="text-xs text-neutral-500">Desliza</span>
+    <!-- Capítulos -->
+    {chapters.map((ch, i) => (
+      <div class="sw-chapter invisible absolute inset-0 z-10 flex items-end opacity-0">
+        <div class="mx-auto w-full max-w-6xl px-6 pb-32 md:pb-40">
+          <h2 class="max-w-3xl text-balance text-[clamp(2.25rem,5.6vw,4.75rem)] font-medium leading-none tracking-[-0.03em]">{ch.title}</h2>
+          <div class="mt-6 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <p class="max-w-md text-lg leading-relaxed text-neutral-300">{ch.body}</p>
+            {ch.cta && (
+              <a
+                href="https://wa.link/42atxt"
+                target="_blank"
+                rel="noopener"
+                class="group inline-flex items-center justify-center gap-2 self-start whitespace-nowrap rounded-full bg-white px-6 py-3 font-medium text-neutral-900 transition-colors duration-200 hover:bg-neutral-200 md:self-auto"
+              >
+                Solicitar evaluación
+                <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" /></svg>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+
+    <!-- Índice de capítulos: progreso del recorrido y salto directo -->
+    <nav id="sw-nav" aria-label="Capítulos del proceso" class="sw-fade absolute inset-x-0 bottom-0 z-20 hidden">
+      <div class="mx-auto grid max-w-6xl grid-cols-4 gap-3 px-6 pb-8 md:gap-5 md:pb-10">
+        {chapters.map((ch, i) => (
+          <button type="button" data-sw-goto={`ch${i + 1}`} class="sw-step group text-left">
+            <span class="block h-px w-full overflow-hidden bg-white/20">
+              <span class="sw-fill block h-full w-full origin-left bg-white" style="transform:scaleX(0)"></span>
+            </span>
+            <span class="sw-step-label mt-3 flex gap-2 text-sm text-white/45 transition-colors group-hover:text-white/80">
+              <span>{pad(i + 1)}</span>
+              <span class="hidden md:inline">{ch.label}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+    </nav>
   </div>
 </section>
 
+<style>
+  .sw-scene {
+    transform-origin: var(--pos);
+    will-change: transform, opacity;
+  }
+  .sw-img {
+    object-position: var(--pos);
+    transform-origin: var(--pos);
+  }
+  @media (min-width: 768px) {
+    .sw-scene,
+    .sw-img {
+      transform-origin: var(--pos-md);
+    }
+    .sw-img {
+      object-position: var(--pos-md);
+    }
+    /*
+      La foto completa (vertical) ocupa el alto: su ancho es 2/3 del alto. La máscara funde
+      sus bordes con el fondo; el centro replica cómo object-position la ubica (82%).
+    */
+    .sw-img[data-contain] {
+      --w: 66.7dvh;
+      mask-image: radial-gradient(ellipse 32dvh 60dvh at calc((100% - var(--w)) * 0.82 + var(--w) / 2) 50%, #000 55%, transparent 100%);
+    }
+  }
+  .sw-step.is-active .sw-step-label {
+    color: #fff;
+  }
+
+  /* Estado previo al intro (la clase la pone el script inline) */
+  :global(html.sw-on) #sw-nav {
+    display: block;
+  }
+  :global(html.sw-on) .sw-line > span {
+    transform: translateY(105%);
+  }
+  :global(html.sw-on) .sw-fade {
+    opacity: 0;
+  }
+</style>
+
 <script>
   import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
 
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const TRANSITION = 0.75;
+  const HOLD = 0.95;
 
-  if (!prefersReduced) {
-    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-    tl.fromTo(".hero-el",
-      { opacity: 0, y: 18 },
-      { opacity: 1, y: 0, duration: 0.6, stagger: 0.08 }
-    )
-    .fromTo("#aligner-wrap",
-      { opacity: 0, scale: 0.95 },
-      { opacity: 1, scale: 1, duration: 0.8 },
-      "-=0.7"
-    )
-    .fromTo(".badge-float",
-      { opacity: 0, y: 8 },
-      { opacity: 1, y: 0, stagger: 0.1, duration: 0.45 },
-      "-=0.35"
-    );
+  const section = document.getElementById("hero") as HTMLElement;
+  const scenes = gsap.utils.toArray<HTMLElement>(".sw-scene");
+  const chapters = gsap.utils.toArray<HTMLElement>(".sw-chapter");
+  const steps = gsap.utils.toArray<HTMLElement>(".sw-step");
+  const fills = gsap.utils.toArray<HTMLElement>(".sw-fill");
 
-    /* Gentle float on the aligner */
-    gsap.to("#aligner-wrap img", {
-      y: -14,
-      duration: 4,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
+  const mm = gsap.matchMedia();
 
-    /* Subtle pointer parallax */
-    const wrap = document.getElementById("aligner-wrap") as HTMLElement;
-    const section = wrap?.closest("section");
-    if (wrap && section) {
-      section.addEventListener("mousemove", (e) => {
-        const rect = section.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        gsap.to(wrap, { x: x * 14, y: y * 8, duration: 0.7, ease: "sine.out" });
+  mm.add("(prefers-reduced-motion: no-preference)", () => {
+    // El blur en pantalla completa es caro: solo en desktop
+    const desktop = matchMedia("(min-width: 768px)").matches;
+    const blur = desktop;
+    // Cuánto scroll (en vh) equivale a 1 unidad del timeline
+    const VH_PER_UNIT = 100;
+    const sharp = blur ? "blur(0px)" : "none";
+    const soft = (px: number) => (blur ? `blur(${px}px)` : "none");
+
+    /* ── Intro al cargar: titular + la cámara se asienta ── */
+    gsap.timeline({ defaults: { ease: "power3.out" } })
+      .fromTo(scenes[0].querySelector("img"), { scale: 1.18 }, { scale: 1, duration: 2.2, ease: "power2.out" }, 0)
+      .to(".sw-line > span", { y: 0, duration: 1.1, stagger: 0.1, ease: "expo.out" }, 0.2)
+      .to(".sw-fade", { opacity: 1, duration: 0.8, stagger: 0.1 }, 0.5);
+
+    /* ── Recorrido con el scroll ── */
+    gsap.set(scenes, { filter: sharp });
+    const ranges: [number, number][] = [];
+    // Se sincroniza con el timeline (no con el scroll) para seguir el suavizado del scrub
+    const syncNav = () => {
+      const time = tl.time();
+      ranges.forEach(([a, b], k) => {
+        fills[k].style.transform = `scaleX(${gsap.utils.clamp(0, 1, (time - a) / (b - a))})`;
+        steps[k].classList.toggle("is-active", time >= a && time < b);
       });
-      section.addEventListener("mouseleave", () => {
-        gsap.to(wrap, { x: 0, y: 0, duration: 0.7, ease: "sine.out" });
-      });
+    };
+    const tl = gsap.timeline({ defaults: { ease: "none" }, onUpdate: syncNav });
+
+    // Intro: la cámara avanza despacio y el titular se va
+    tl.addLabel("intro", 0)
+      .to(scenes[0], { scale: 1.12, duration: 1 }, 0)
+      .to("#sw-intro", { autoAlpha: 0, y: -40, duration: 0.45, ease: "power2.in" }, 0.55);
+
+    let t = 1;
+    for (let i = 1; i < scenes.length; i++) {
+      const prev = scenes[i - 1];
+      const next = scenes[i];
+      const chapter = chapters[i - 1];
+      const out = next.hasAttribute("data-out");
+      const D = TRANSITION;
+
+      // Punto de reposo del capítulo: ya llegó la escena y el texto está completo
+      tl.addLabel(`ch${i}`, t + D + 0.15);
+
+      if (out) {
+        // Saliendo: el detalle se aleja y aparece el alineador completo desde cerca
+        tl.to(prev, { scale: 1, filter: soft(10), duration: D, ease: "power2.in" }, t)
+          .to(prev, { opacity: 0, duration: D * 0.5 }, t + D * 0.4)
+          .fromTo(next, { opacity: 0, scale: 2.6, filter: soft(14) }, { opacity: 1, scale: 1, filter: sharp, duration: D, ease: "power2.out" }, t + D * 0.3);
+      } else {
+        // Entrando: la cámara se mete en el punto focal y "llega" a la siguiente escena
+        tl.to(prev, { scale: "+=2.2", filter: soft(12), duration: D, ease: "power2.in" }, t)
+          .to(prev, { opacity: 0, duration: D * 0.45 }, t + D * 0.55)
+          .fromTo(next, { opacity: 0, scale: 1.35, filter: soft(16) }, { opacity: 1, scale: 1.02, filter: sharp, duration: D * 0.6, ease: "power2.out" }, t + D * 0.45);
+      }
+
+      // Capítulo: entra al llegar, la escena sigue avanzando despacio, y sale antes del siguiente salto
+      const isLast = i === scenes.length - 1;
+      tl.fromTo(chapter, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, t + D * 0.7)
+        .to(next, { scale: out ? 1.06 : "+=0.1", duration: HOLD + D * 0.4 }, t + D);
+      if (!isLast) tl.to(chapter, { autoAlpha: 0, y: -30, duration: 0.28, ease: "power2.in" }, t + D + HOLD - 0.28);
+
+      ranges.push([t, t + D + HOLD]);
+      t += D + HOLD;
     }
+    tl.set({}, {}, t + 0.3).addLabel("end"); // un respiro al final antes de soltar el sticky
 
-    /* Floating badges */
-    (gsap.utils.toArray(".badge-float") as HTMLElement[]).forEach((el, i) => {
-      gsap.to(el, {
-        y: i % 2 === 0 ? -7 : -4,
-        duration: 3 + i * 0.3,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        delay: i * 0.3,
-      });
+    section.style.height = `calc(${tl.duration() * VH_PER_UNIT}vh + 100dvh)`;
+
+    const st = ScrollTrigger.create({
+      animation: tl,
+      trigger: section,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: 1,
+      // Cada gesto lleva al siguiente capítulo en vez de pasar de largo
+      snap: { snapTo: "labelsDirectional", duration: { min: 0.3, max: 0.75 }, delay: 0.04, ease: "power2.out" },
     });
 
-    gsap.to("#mouse-dot", { y: 12, duration: 1.4, repeat: -1, yoyo: true, ease: "sine.inOut" });
-  }
+    ScrollTrigger.refresh(); // el resto de triggers de la página dependen de la nueva altura
+
+    /* Saltar a un capítulo desde el índice o desde "Ver el proceso" */
+    const goto = (e: Event) => {
+      const label = (e.currentTarget as HTMLElement).dataset.swGoto;
+      if (!label) return;
+      e.preventDefault();
+      window.scrollTo({ top: st.labelToScroll(label), behavior: "smooth" });
+    };
+    const triggers = document.querySelectorAll<HTMLElement>("[data-sw-goto]");
+    triggers.forEach((el) => el.addEventListener("click", goto));
+
+    return () => {
+      triggers.forEach((el) => el.removeEventListener("click", goto));
+      section.style.height = "";
+    };
+  });
 </script>

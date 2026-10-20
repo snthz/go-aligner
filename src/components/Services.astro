@@ -7,13 +7,12 @@ interface Service {
 
 interface Props {
   id?: string;
-  eyebrow?: string;
   title?: string;
   description?: string;
   services: Service[];
 }
 
-const { id, eyebrow, title, description, services } = Astro.props;
+const { id, title, description, services } = Astro.props;
 
 // Tailwind necesita clases literales
 const cols = services.length % 4 === 0 ? "lg:grid-cols-4" : "lg:grid-cols-3";
@@ -23,8 +22,7 @@ const cols = services.length % 4 === 0 ? "lg:grid-cols-4" : "lg:grid-cols-3";
   <div class="relative z-10 mx-auto max-w-6xl px-6">
     {title && (
       <div class="mb-14 max-w-2xl">
-        {eyebrow && <span class="eyebrow text-violet-300">{eyebrow}</span>}
-        <h2 class="mt-5 text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
+        <h2 class="text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
         {description && <p class="mt-5 text-lg leading-relaxed text-neutral-400">{description}</p>}
       </div>
     )}

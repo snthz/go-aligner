@@ -8,14 +8,13 @@ interface Step {
 
 interface Props {
   id?: string;
-  eyebrow?: string;
   title?: string;
   description?: string;
   steps: Step[];
   link?: { href: string; text: string };
 }
 
-const { id, eyebrow, title, description, steps, link } = Astro.props;
+const { id, title, description, steps, link } = Astro.props;
 
 // Tailwind necesita clases literales
 const cols: Record<number, string> = { 3: "md:grid-cols-3", 4: "md:grid-cols-4", 5: "md:grid-cols-5" };
@@ -25,8 +24,7 @@ const cols: Record<number, string> = { 3: "md:grid-cols-3", 4: "md:grid-cols-4",
   <div class="relative z-10 mx-auto max-w-6xl px-6">
     {title && (
       <div class="mb-16 max-w-2xl">
-        {eyebrow && <span class="eyebrow text-violet-300">{eyebrow}</span>}
-        <h2 class="mt-5 text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
+        <h2 class="text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
         {description && <p class="mt-5 text-lg leading-relaxed text-neutral-400">{description}</p>}
       </div>
     )}

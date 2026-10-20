@@ -4,14 +4,12 @@ import Background from "../assets/img-4.jpg";
 import Video1 from "../assets/video-1.mp4";
 
 interface Props {
-  eyebrow?: string;
   title?: string;
   description?: string;
   button?: string;
 }
 
 const {
-  eyebrow = "Empieza hoy",
   title = "Sonríe con confianza.",
   description = "Transforma tu sonrisa con alineadores invisibles. Agenda tu evaluación y da el primer paso hoy mismo.",
   button = "Agendar evaluación",
@@ -29,8 +27,7 @@ const {
   <div class="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2 md:gap-16">
     <!-- Copy -->
     <div class="text-center md:text-left">
-      <span class="eyebrow text-violet-300 md:justify-start">{eyebrow}</span>
-      <h2 class="mt-6 text-balance text-4xl font-medium leading-[1.08] tracking-tight md:text-6xl">
+      <h2 class="text-balance text-4xl font-medium leading-[1.08] tracking-tight md:text-6xl">
         {title}
       </h2>
       <p class="mx-auto mt-5 max-w-md text-lg leading-relaxed text-neutral-400 md:mx-0">

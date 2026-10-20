@@ -7,22 +7,20 @@ interface Feature {
 
 interface Props {
   id?: string;
-  eyebrow?: string;
   title?: string;
   description?: string;
   features: Feature[];
   link?: { href: string; text: string };
 }
 
-const { id, eyebrow, title, description, features, link } = Astro.props;
+const { id, title, description, features, link } = Astro.props;
 ---
 
 <section id={id} class:list={["relative overflow-hidden bg-[#f7f8fa] text-neutral-900", title ? "py-24 md:py-32" : "pb-24 pt-16 md:pb-32 md:pt-20"]}>
   <div class="relative z-10 mx-auto max-w-6xl px-6">
     {title && (
       <div class="mb-14 max-w-2xl">
-        {eyebrow && <span class="eyebrow text-violet-600">{eyebrow}</span>}
-        <h2 class="mt-5 text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
+        <h2 class="text-balance text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
         {description && <p class="mt-5 text-lg leading-relaxed text-neutral-500">{description}</p>}
       </div>
     )}

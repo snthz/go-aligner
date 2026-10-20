@@ -1,15 +1,16 @@
 ---
 import LogoImage from "../assets/logo.png";
 
-// Las 4 primeras viven en el Home (scroll); FAQ y Para clínicas son subpáginas.
+// Las 3 primeras viven en el Home (scroll); FAQ es subpágina. El logo lleva al inicio.
 const links = [
-  { href: "/", text: "Inicio", sectionId: "hero", path: "/" },
   { href: "/#como-funciona", text: "Cómo funciona", sectionId: "como-funciona", path: "/como-funciona" },
   { href: "/#resultados", text: "Resultados", sectionId: "resultados", path: "/resultados" },
   { href: "/#por-que-elegirnos", text: "Por qué elegirnos", sectionId: "por-que-elegirnos", path: "/por-que-elegirnos" },
   { href: "/preguntas-frecuentes", text: "Preguntas frecuentes", path: "/preguntas-frecuentes" },
-  { href: "/para-clinicas", text: "Para clínicas", path: "/para-clinicas" },
 ];
+
+// Audiencia distinta (B2B): va separada, junto al CTA.
+const clinicsLink = { href: "/para-clinicas", text: "Para clínicas", path: "/para-clinicas" };
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 const isHome = currentPath === "/";
@@ -17,59 +18,68 @@ const isHome = currentPath === "/";
 const isActive = (path: string) => !isHome && currentPath === path;
 ---
 
-<header id="site-header" class="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:pt-5">
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-colors duration-300">
   <nav
-    id="nav-pill"
-    class="mx-auto flex max-w-5xl items-center justify-between gap-3 rounded-full border border-white/10 bg-[#0a0a0b]/70 px-3 py-2 pl-4 backdrop-blur-xl transition-shadow duration-300"
+    class="nav-bar mx-auto flex h-20 max-w-6xl items-center justify-between gap-8 px-6 transition-[height] duration-300"
     aria-label="Navegación principal"
   >
-    <!-- Brand -->
-    <a href="/" class="flex shrink-0 items-center gap-2.5">
-      <img src={LogoImage.src} alt="GO ALIGNER logo" class="h-7 w-7 rounded-full" width="28" height="28" />
-      <span class="text-[0.95rem] font-medium tracking-tight text-white">GO ALIGNER</span>
-    </a>
+    <div class="flex items-center gap-12">
+      <!-- Brand -->
+      <a href="/" class="flex shrink-0 items-center gap-3" aria-label="GO ALIGNER, inicio">
+        <img src={LogoImage.src} alt="" class="h-8 w-8 rounded-full" width="32" height="32" />
+        <span class="text-[1.05rem] font-medium tracking-tight text-white">GO ALIGNER</span>
+      </a>
 
-    <!-- Desktop links -->
-    <ul class="hidden items-center gap-0.5 xl:flex">
-      {links.map((link) => (
-        <li>
-          <a
-            href={link.href}
-            data-section={link.sectionId}
-            aria-current={isActive(link.path) ? "page" : undefined}
-            class:list={[
-              "nav-link rounded-full px-3 py-1.5 text-[0.8rem] transition-colors duration-200 hover:text-white",
-              isActive(link.path) ? "bg-white/10 text-white" : "text-neutral-400",
-            ]}
-          >
-            {link.text}
-          </a>
-        </li>
-      ))}
-    </ul>
+      <!-- Desktop links -->
+      <ul class="hidden items-center gap-8 xl:flex">
+        {links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              data-section={link.sectionId}
+              aria-current={isActive(link.path) ? "page" : undefined}
+              class:list={["nav-link relative py-2 text-sm transition-colors duration-200 hover:text-white", { "is-active": isActive(link.path) }]}
+            >
+              {link.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-6">
+      <a
+        href={clinicsLink.href}
+        aria-current={isActive(clinicsLink.path) ? "page" : undefined}
+        class:list={["nav-link relative hidden py-2 text-sm transition-colors duration-200 hover:text-white xl:inline-block", { "is-active": isActive(clinicsLink.path) }]}
+      >
+        {clinicsLink.text}
+      </a>
+
+      <span aria-hidden="true" class="hidden h-4 w-px bg-white/15 xl:block"></span>
+
       <a
         href="https://wa.link/42atxt"
         target="_blank"
         rel="noopener"
-        class="hidden items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[0.8rem] font-medium text-neutral-900 transition-colors duration-200 hover:bg-neutral-200 sm:inline-flex"
+        class="group hidden items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-neutral-900 transition-colors duration-200 hover:bg-neutral-200 sm:inline-flex"
       >
         Agendar evaluación
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <svg class="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" />
         </svg>
       </a>
 
       <!-- Mobile button -->
       <button
-        class="inline-flex h-9 w-9 items-center justify-center rounded-full text-neutral-200 hover:bg-white/10 xl:hidden"
+        class="grid size-10 place-items-center rounded-full border border-white/10 text-neutral-200 transition-colors hover:border-white/25 hover:text-white xl:hidden"
         aria-label="Abrir menú"
         aria-expanded="false"
+        aria-controls="mobile-drawer"
         data-nav-toggle
       >
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16" />
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-width="2" d="M4 9h16M4 15h16" />
         </svg>
       </button>
     </div>
@@ -78,43 +88,107 @@ const isActive = (path: string) => !isHome && currentPath === path;
   <!-- Drawer mobile -->
   <div
     id="mobile-drawer"
-    class="pointer-events-none fixed inset-0 translate-y-[-8px] bg-[#0a0a0b]/95 opacity-0 backdrop-blur-xl transition-all duration-300 xl:hidden"
+    class="pointer-events-none fixed inset-0 bg-[#0a0a0b] opacity-0 transition-opacity duration-300 xl:hidden"
     role="dialog"
     aria-modal="true"
     aria-label="Menú de navegación"
   >
-    <div class="flex h-full flex-col items-center justify-center gap-6 px-6">
-      <button class="absolute right-5 top-5 p-2 text-white" aria-label="Cerrar menú" data-nav-toggle>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path d="M18 6 6 18M6 6l12 12" stroke-width="2" stroke-linecap="round" />
-        </svg>
-      </button>
-
-      {links.map((link) => (
-        <a
-          href={link.href}
-          data-mobile-link
-          aria-current={isActive(link.path) ? "page" : undefined}
-          class:list={["text-2xl font-medium tracking-tight transition hover:text-neutral-400", isActive(link.path) ? "text-violet-300" : "text-white"]}
-        >
-          {link.text}
+    <div class="mx-auto flex h-full max-w-6xl flex-col px-6">
+      <div class="flex h-20 shrink-0 items-center justify-between">
+        <a href="/" class="flex items-center gap-3" data-mobile-link>
+          <img src={LogoImage.src} alt="" class="h-8 w-8 rounded-full" width="32" height="32" />
+          <span class="text-[1.05rem] font-medium tracking-tight text-white">GO ALIGNER</span>
         </a>
-      ))}
+        <button
+          class="grid size-10 place-items-center rounded-full border border-white/10 text-neutral-200 transition-colors hover:border-white/25 hover:text-white"
+          aria-label="Cerrar menú"
+          data-nav-toggle
+        >
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-width="2" d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
 
-      <a
-        href="https://wa.link/42atxt"
-        target="_blank"
-        rel="noopener"
-        class="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 font-medium text-neutral-900"
-      >
-        Agendar evaluación
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" />
-        </svg>
-      </a>
+      <ul class="mt-10 border-t border-white/10">
+        {[...links, clinicsLink].map((link) => (
+          <li class="border-b border-white/10">
+            <a
+              href={link.href}
+              data-mobile-link
+              aria-current={isActive(link.path) ? "page" : undefined}
+              class:list={[
+                "group flex items-center justify-between py-5 text-2xl font-medium tracking-tight transition-colors hover:text-violet-300",
+                isActive(link.path) ? "text-violet-300" : "text-white",
+              ]}
+            >
+              {link.text}
+              <svg class="h-5 w-5 text-neutral-500 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" />
+              </svg>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-auto pb-10 pt-8">
+        <a
+          href="https://wa.link/42atxt"
+          target="_blank"
+          rel="noopener"
+          class="flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 font-medium text-neutral-900"
+        >
+          Agendar evaluación
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" />
+          </svg>
+        </a>
+        <p class="mt-4 text-center text-xs text-neutral-500">Lunes a viernes, 8am–5pm · San Pedro Sula</p>
+      </div>
     </div>
   </div>
 </header>
+
+<style>
+  .nav-link {
+    color: var(--color-neutral-400);
+  }
+  .nav-link:hover,
+  .nav-link.is-active {
+    color: #fff;
+  }
+  /* Indicador: línea fina en violeta bajo el link activo */
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 1px;
+    background: var(--color-violet-400);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .nav-link.is-active::after {
+    transform: scaleX(1);
+  }
+
+  #site-header.is-scrolled {
+    background: rgb(10 10 11 / 0.85);
+    border-bottom-color: rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  #site-header.is-scrolled .nav-bar {
+    height: 4rem;
+  }
+
+  #mobile-drawer.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
 
 <script>
   import gsap from "gsap";
@@ -125,52 +199,48 @@ const isActive = (path: string) => !isHome && currentPath === path;
   const toggles = document.querySelectorAll("[data-nav-toggle]");
   const drawer = document.getElementById("mobile-drawer") as HTMLElement;
 
-  const closeDrawer = () => {
-    drawer.classList.add("opacity-0", "pointer-events-none");
-    drawer.classList.remove("opacity-100");
-    toggles.forEach((btn) => btn.setAttribute("aria-expanded", "false"));
-  };
-  const openDrawer = () => {
-    drawer.classList.remove("opacity-0", "pointer-events-none");
-    drawer.classList.add("opacity-100");
-    toggles.forEach((btn) => btn.setAttribute("aria-expanded", "true"));
+  const setDrawer = (open: boolean) => {
+    drawer.classList.toggle("is-open", open);
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    toggles.forEach((btn) => btn.setAttribute("aria-expanded", String(open)));
   };
 
   toggles.forEach((btn) =>
-    btn.addEventListener("click", () => {
-      const isOpen = drawer.classList.contains("opacity-100");
-      isOpen ? closeDrawer() : openDrawer();
-    })
+    btn.addEventListener("click", () => setDrawer(!drawer.classList.contains("is-open")))
   );
   document.querySelectorAll("[data-mobile-link]").forEach((a) =>
-    a.addEventListener("click", closeDrawer)
+    a.addEventListener("click", () => setDrawer(false))
   );
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer.classList.contains("is-open")) setDrawer(false);
+  });
 
-  /* ── Pill elevation on scroll ── */
-  const pill = document.getElementById("nav-pill") as HTMLElement;
+  /* ── Header sólido al hacer scroll ── */
+  const header = document.getElementById("site-header") as HTMLElement;
   ScrollTrigger.create({
     start: "top -20",
     end: 99999,
-    onUpdate: (self) => {
-      const scrolled = self.scroll() > 24;
-      pill.style.boxShadow = scrolled ? "0 12px 40px rgba(0,0,0,.45)" : "none";
-      pill.style.borderColor = scrolled ? "rgba(255,255,255,.14)" : "rgba(255,255,255,.10)";
-    },
+    onUpdate: (self) => header.classList.toggle("is-scrolled", self.scroll() > 24),
   });
 
   /* ── Active nav link on scroll ── */
-  const navLinks = document.querySelectorAll(".nav-link") as NodeListOf<HTMLAnchorElement>;
-  const setActiveLink = (sectionId: string) => {
-    navLinks.forEach((link) => {
-      const isActive = link.dataset.section === sectionId;
-      link.classList.toggle("text-white", isActive);
-      link.classList.toggle("bg-white/10", isActive);
-      link.classList.toggle("text-neutral-400", !isActive);
-    });
+  const navLinks = document.querySelectorAll(".nav-link[data-section]") as NodeListOf<HTMLAnchorElement>;
+  const setActiveLink = (sectionId: string | null) => {
+    navLinks.forEach((link) => link.classList.toggle("is-active", link.dataset.section === sectionId));
   };
 
   /* Solo existen en el Home; en subpáginas no se encuentran y no hace nada */
-  ["hero", "como-funciona", "resultados", "por-que-elegirnos"].forEach((id) => {
+  const hero = document.getElementById("hero");
+  if (hero) {
+    ScrollTrigger.create({
+      trigger: hero,
+      start: "top center",
+      end: "bottom center",
+      onEnter: () => setActiveLink(null),
+      onEnterBack: () => setActiveLink(null),
+    });
+  }
+  ["como-funciona", "resultados", "por-que-elegirnos"].forEach((id) => {
     const el = document.getElementById(id);
     if (!el) return;
     ScrollTrigger.create({
