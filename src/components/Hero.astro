@@ -225,8 +225,8 @@ const emphasis = (text: string) => text.split("**").map((part, i) => ({ text: pa
     // El blur en pantalla completa es caro: solo en desktop
     const desktop = matchMedia("(min-width: 768px)").matches;
     const blur = desktop;
-    // Cuánto scroll (en vh) equivale a 1 unidad del timeline
-    const VH_PER_UNIT = 100;
+    // Cuánto scroll (en vh) equivale a 1 unidad del timeline; en mobile cada swipe avanza más
+    const VH_PER_UNIT = desktop ? 100 : 70;
     const sharp = blur ? "blur(0px)" : "none";
     const soft = (px: number) => (blur ? `blur(${px}px)` : "none");
 
@@ -315,7 +315,8 @@ const emphasis = (text: string) => text.split("**").map((part, i) => ({ text: pa
       trigger: section,
       start: "top top",
       end: "bottom bottom",
-      scrub: 1,
+      // En mobile el suavizado se nota como retraso respecto al dedo
+      scrub: desktop ? 1 : 0.6,
       // Cada gesto lleva al siguiente capítulo en vez de pasar de largo
       snap: { snapTo: "labelsDirectional", duration: { min: 0.3, max: 0.75 }, delay: 0.04, ease: "power2.out" },
     });
